@@ -48,6 +48,6 @@ app.get("/profile", (req, res, next) => {
   res.render("profile");
 });
 
-app.listen(3000, function() { //process.env.PORT || 
+app.listen(process.env.PORT || 3000, function() { // process.env.PORT ||
   console.log(`Server is running at port`);
 });
