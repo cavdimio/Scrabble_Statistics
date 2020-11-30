@@ -2,6 +2,10 @@ const e = require("express");
 
 module.exports = {
 
+  find2PlayersNames: function (gameTable) {
+    return [ gameTable[0].player1.name, gameTable[0].player2.name ];
+  },
+
   findTop5SingleGame: function (player) {
     var topplays = player.scores.sort((a, b) => b - a).slice(0, 5);
     return topplays;

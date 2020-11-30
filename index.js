@@ -27,6 +27,7 @@ app.get("/", (req, res, next) => {
   const findTopMovePerPlayer = scrabble_lib.findTopMovePerPlayer(scrabbledb);
   const findMedianPerPlayer = scrabble_lib.findMedianPerPlayer(scrabbledb);
   const findMedianPerMovePerPlayer = scrabble_lib.findMedianPerMovePerPlayer(scrabbledb);
+  const find2PlayersNames = scrabble_lib.find2PlayersNames(scrabbledb);
 
   res.render("mainView", {
      resultArray: winnersArray,
@@ -38,10 +39,15 @@ app.get("/", (req, res, next) => {
      maximumGameScore: maximumGameScore, 
      findTopMovePerPlayer: findTopMovePerPlayer,
      findMedianPerPlayer: findMedianPerPlayer, 
-     findMedianPerMovePerPlayer: findMedianPerMovePerPlayer
+     findMedianPerMovePerPlayer: findMedianPerMovePerPlayer, 
+     find2PlayersNames: find2PlayersNames
   });
  });
 
-app.listen(process.env.PORT || 3000, function() {
+app.get("/profile", (req, res, next) => {
+  res.render("profile");
+});
+
+app.listen(3000, function() { //process.env.PORT || 
   console.log(`Server is running at port`);
 });

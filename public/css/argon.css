@@ -55,11 +55,12 @@
 }
 
 *,
-*::before,
-*::after
+*:not(i)::before,
+*:not(i)::after
 {
     box-sizing: border-box;
 }
+
 
 html
 {
