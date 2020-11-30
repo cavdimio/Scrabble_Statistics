@@ -1,0 +1,22 @@
+.table th, .table td{
+  padding: 0.5rem;
+  font-size: 1rem;
+}
+
+.table thead th{
+  font-size: 0.9rem;
+}
+
+.player1-bg{
+ background-color: #D5FADE;
+}
+
+.player-text-sm{
+  font-size: 0.95rem;
+}
+
+.player2-bg{
+  background-color: #f5e9f8;
+}
+
+
