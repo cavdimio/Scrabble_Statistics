@@ -3,8 +3,35 @@
   font-size: 1rem;
 }
 
+tr:hover { 
+  background: rgba(185, 200, 219, 0.863); 
+  cursor: pointer;
+}
+
+.card .table td, .card .table th {
+  padding: 0;
+}
+
+th a, td a { 
+  display: block;
+  padding-top: 0.5rem !important;
+  padding-bottom: 0.5rem !important;
+  padding-right: 1.5rem !important;
+  padding-left: 1.5rem !important; 
+}
+
+.nav-link:hover{
+  text-decoration: none;
+  color: inherit;
+}
+
 .table thead th{
   font-size: 0.9rem;
+  text-align: center;
+}
+
+.table tbody td{
+  text-align: center;
 }
 
 .player1-bg{
@@ -19,4 +46,12 @@
   background-color: #f5e9f8;
 }
 
+.sgs_players_name{
+  margin: 0.2rem;
+  text-align: center;
+}
 
+.sgs_players_name tr:hover, .sgs_players_name td:hover {
+  background: inherit; 
+  cursor: none;
+}

@@ -2,6 +2,8 @@ const express  = require('express');
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
 const cors = require("cors");
+const Chart = require('chart.js');
+var $ = require('jquery');
 
 const scrabbledb = require("./database");
 const scrabble_lib = require("./scrabble_lib");
@@ -28,7 +30,6 @@ app.get("/", (req, res, next) => {
   const findMedianPerPlayer = scrabble_lib.findMedianPerPlayer(scrabbledb);
   const findMedianPerMovePerPlayer = scrabble_lib.findMedianPerMovePerPlayer(scrabbledb);
   const find2PlayersNames = scrabble_lib.find2PlayersNames(scrabbledb);
-
   res.render("mainView", {
      resultArray: winnersArray,
      differenceArray: differenceArray,
@@ -42,12 +43,21 @@ app.get("/", (req, res, next) => {
      findMedianPerMovePerPlayer: findMedianPerMovePerPlayer, 
      find2PlayersNames: find2PlayersNames
   });
+
  });
 
 app.get("/profile", (req, res, next) => {
   res.render("profile");
 });
 
-app.listen(process.env.PORT || 3000, function() { // process.env.PORT ||
+app.get("/single-game-stats",(req, res, next) => {
+  const findSpecificStats = scrabble_lib.findSpecificStats(scrabbledb , 0);
+  // const findDiscrepancies = scrabble_lib.findDiscrepancies(scrabbledb);
+  res.render("partials/single-game-stats", {
+    findSpecificStats: findSpecificStats
+  });
+});
+
+app.listen(3000, function() { // process.env.PORT ||
   console.log(`Server is running at port`);
 });

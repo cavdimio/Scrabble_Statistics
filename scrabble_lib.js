@@ -208,6 +208,23 @@ module.exports = {
     resultArray[0] = temp1.toFixed(2);
     resultArray[1] = temp2.toFixed(2);
     return resultArray;
-  }
+  },
+
+  findSpecificStats: function (gameTable, index) {
+    var resultArray = [ , ];
+    resultArray[0] = gameTable[index].player1;
+    resultArray[1] = gameTable[index].player2;
+    return resultArray;
+  },
+
+  // findDiscrepancies: function (gameTable){
+  //   gameTable.forEach(element => {
+  //     if(element.player1.scores.length !=  element.player2.scores.length){
+  //       console.log("-----");
+  //       console.log(element.player1.scores[0] + ":" + element.player1.scores.length); 
+  //       console.log(element.player2.scores[0] + ":" + element.player2.scores.length);
+  //     }
+  //   });
+  //}
 
 }
