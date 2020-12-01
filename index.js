@@ -18,7 +18,7 @@ app.use(cors());
 //Include public file for css
 app.use(express.static(__dirname + '/public'));
 
-app.get("/", (req, res, next) => {
+app.get("/scrabble-statistics", (req, res, next) => {
   const winnersArray = scrabble_lib.findAllWinners(scrabbledb);
   const differenceArray = scrabble_lib.findAllDifferences(scrabbledb);
   const losersArray = scrabble_lib.findAllLosers(scrabbledb);
@@ -30,7 +30,7 @@ app.get("/", (req, res, next) => {
   const findMedianPerPlayer = scrabble_lib.findMedianPerPlayer(scrabbledb);
   const findMedianPerMovePerPlayer = scrabble_lib.findMedianPerMovePerPlayer(scrabbledb);
   const find2PlayersNames = scrabble_lib.find2PlayersNames(scrabbledb);
-  res.render("mainView", {
+  res.render("scrabble_statistics", {
      resultArray: winnersArray,
      differenceArray: differenceArray,
      losersArray: losersArray,
@@ -46,8 +46,8 @@ app.get("/", (req, res, next) => {
 
  });
 
-app.get("/profile", (req, res, next) => {
-  res.render("profile");
+app.get("/", (req, res, next) => {
+  res.render("home");
 });
 
 app.get("/single-game-stats",(req, res, next) => {

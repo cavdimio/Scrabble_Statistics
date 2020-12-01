@@ -35,7 +35,7 @@ th a, td a {
 }
 
 .player1-bg{
- background-color: #D5FADE;
+ background-color:#dde0f3;
 }
 
 .player-text-sm{
@@ -43,7 +43,7 @@ th a, td a {
 }
 
 .player2-bg{
-  background-color: #f5e9f8;
+  background-color: #b9bdd6;
 }
 
 .sgs_players_name{
@@ -54,4 +54,23 @@ th a, td a {
 .sgs_players_name tr:hover, .sgs_players_name td:hover {
   background: inherit; 
   cursor: none;
+}
+
+.home-title, .home-subtitle{
+  width: 50rem;
+}
+
+.home-subtitle{
+  font-size: 15px;
+  color: #fff;
+}
+
+.home-btn-start-game{
+  padding: 1.2rem;
+}
+
+.home-btn-start-game:hover{
+  background-color: #5e72e4;
+  border-color: #5e72e4;
+  color: white;
 }
