@@ -58,6 +58,6 @@ app.get("/single-game-stats",(req, res, next) => {
   });
 });
 
-app.listen(3000, function() { // process.env.PORT ||
+app.listen(process.env.PORT || 3000, function() { // process.env.PORT ||
   console.log(`Server is running at port`);
 });
