@@ -1,6 +1,15 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <!-- Argon JS -->
-<script src="js/argon.js?v=1.2.0"></script>
+<script src="js/argon.js"></script>
+<script>
+    function CloseSideBar() {
+        $('body').removeClass('g-sidenav-pinned').addClass('g-sidenav-hidden');
+        $('body').find('.backdrop').remove();
+    }
+    if($(window).width() > 1200){
+        $('close')[0].addClass('hidden');
+    }
+</script>
 </body>
 
 </html>

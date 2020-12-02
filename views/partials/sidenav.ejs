@@ -1,6 +1,12 @@
 <nav class="sidenav navbar navbar-vertical  fixed-left  navbar-expand-xs navbar-light bg-white"
      id="sidenav-main">
   <div class="scrollbar-inner">
+    <button type="button"
+            class="close sidenav-toggler"
+            aria-label="Close"
+            onclick="CloseSideBar()">
+      <span aria-hidden="true">&times;</span>
+    </button>
     <!-- Brand -->
     <div class="sidenav-header  align-items-center">
       <a class="navbar-brand"
@@ -12,7 +18,7 @@
     </div>
     <div class="navbar-inner">
       <!-- Collapse -->
-      <div class="collapse navbar-collapse"
+      <div class="collapse navbar-collapse hidden"
            id="sidenav-collapse-main">
         <!-- Nav items -->
         <ul class="navbar-nav">
