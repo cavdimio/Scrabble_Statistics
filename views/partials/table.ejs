@@ -8,23 +8,26 @@
         </div>
         <!-- Light table -->
         <div class="table-responsive font-weight-bold">
-          <table class="table align-items-center table-flush">
+          <table id="myTable"
+                 class="table table-flush">
             <thead class="thead-light">
               <tr>
                 <th scope="col"
-                    class="sort"
-                    data-sort="name">Winner</th>
+                    class="left-header">Winner</th>
                 <th scope="col"
-                    class="sort text-center"
-                    data-sort="budget ">Score</th>
+                    class="text-center"
+                    id="score-0-column-id"
+                    onclick="sortTable(0)">Score &darr;</th>
                 <th scope="col"
-                    class="sort"
-                    data-sort="status">Loser</th>
+                    class="padding-header">Loser</th>
                 <th scope="col"
-                    class="text-center">Score</th>
+                    class="text-center"
+                    id="score-2-column-id"
+                    onclick="sortTable(2)">Score &darr;</th>
                 <th scope="col"
-                    class="sort text-center"
-                    data-sort="completion">Difference</th>
+                    class="text-center"
+                    id="score-3-column-id"
+                    onclick="sortTable(3)">Difference &darr;</th>
               </tr>
             </thead>
             <tbody class="list">
@@ -70,9 +73,7 @@
                 <td>
                   <a class="nav-link"
                      href="./single-game-stats">
-                    <div class="d-flex align-items-center">
-                      <span class="completion mr-2 text-center"><%= differenceArray[i] %></span>
-                    </div>
+                    <span class="status text-center"><%= differenceArray[i] %></span>
                   </a>
                 </td>
               </tr>
@@ -87,3 +88,65 @@
   <!-- Footer -->
   <%- include('footer'); -%>
 </div>
+
+<script>
+  function sortTable(buttonNum) {
+    var IsAscending = false;
+    var old_text = document.getElementById("score-" + buttonNum + "-column-id").innerHTML;
+    //Find if old_text has the ascending or the descending symbol
+    if (old_text.includes("↑", 0)) {
+      //Cut the old_text last character
+      old_text = old_text.slice(0, old_text.length-1);
+      //Set new text
+      document.getElementById("score-" + buttonNum + "-column-id").innerHTML = old_text + " &darr;";
+      //Set variable for sorting
+      IsAscending = false;
+    } else {
+      old_text = old_text.slice(0, old_text.length-1);
+      document.getElementById("score-" + buttonNum + "-column-id").innerHTML = old_text + " &uarr;";
+      IsAscending = true;
+    }
+
+    //Sort the table appropriately
+    var table, rows, switching, i, x, y, shouldSwitch;
+    table = document.getElementById("myTable");
+    switching = true;
+    /*Make a loop that will continue until
+    no switching has been done:*/
+    while (switching) {
+      //start by saying: no switching is done:
+      switching = false;
+      rows = table.rows;
+      /*Loop through all table rows (except the
+      first, which contains table headers):*/
+      for (i = 1; i < (rows.length - 1); i++) {
+        //start by saying there should be no switching:
+        shouldSwitch = false;
+        /*Get the two elements you want to compare,
+        one from current row and one from the next:*/
+        x = rows[i].getElementsByTagName("TD")[buttonNum];
+        y = rows[i + 1].getElementsByTagName("TD")[buttonNum];
+        //check if the two rows should switch place:
+        if (IsAscending) {
+          if (parseInt(x.textContent) < parseInt(y.textContent)) {
+            //if so, mark as a switch and break the loop:
+            shouldSwitch = true;
+            break;
+          }
+        } else {
+          if (parseInt(x.textContent) > parseInt(y.textContent)) {
+            //if so, mark as a switch and break the loop:
+            shouldSwitch = true;
+            break;
+          }
+        }
+      }
+      if (shouldSwitch) {
+        /*If a switch has been marked, make the switch
+        and mark that a switch has been done:*/
+        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+        switching = true;
+      }
+    }
+  }
+</script>

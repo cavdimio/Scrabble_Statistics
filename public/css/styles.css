@@ -74,3 +74,13 @@ th a, td a {
   border-color: #5e72e4;
   color: white;
 }
+
+.table thead th.left-header{
+  text-align: left;
+  padding-left: 1.5rem;
+}
+
+.table thead th.padding-header{
+  padding-left: 1.5rem;
+  padding-right: 3rem;
+}
