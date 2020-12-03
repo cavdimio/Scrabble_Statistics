@@ -71,6 +71,9 @@ app.get("/error-page", (req, res, next) => {
   res.render("error_page");
 });
 
+app.get("/test", (req, res, next) => {
+  res.render("partials/test");
+});
 
 app.listen(process.env.PORT || 3000, function() { 
   console.log(`Server is running at port`);
