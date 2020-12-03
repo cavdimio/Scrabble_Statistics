@@ -18,6 +18,10 @@ app.use(cors());
 //Include public file for css
 app.use(express.static(__dirname + '/public'));
 
+
+var numOfGame = 0;
+
+
 app.get("/scrabble-statistics", (req, res, next) => {
   const winnersArray = scrabble_lib.findAllWinners(scrabbledb);
   const differenceArray = scrabble_lib.findAllDifferences(scrabbledb);
@@ -50,14 +54,19 @@ app.get("/", (req, res, next) => {
   res.render("home");
 });
 
-app.get("/single-game-stats",(req, res, next) => {
-  const findSpecificStats = scrabble_lib.findSpecificStats(scrabbledb , 0);
+app.get("/single-game-stats", (req, res, next) => {
+  const findSpecificStats = scrabble_lib.findSpecificStats(scrabbledb , numOfGame);
   // const findDiscrepancies = scrabble_lib.findDiscrepancies(scrabbledb);
   res.render("partials/single-game-stats", {
     findSpecificStats: findSpecificStats
   });
 });
 
-app.listen(process.env.PORT || 3000, function() { // process.env.PORT ||
+app.post("/single-game-stats",  (req, res, next) => {
+  numOfGame = req.body.numOfGame;
+  res.redirect("/single-game-stats");
+});
+
+app.listen(process.env.PORT || 3000, function() { 
   console.log(`Server is running at port`);
 });

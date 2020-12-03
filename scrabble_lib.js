@@ -217,6 +217,7 @@ module.exports = {
     return resultArray;
   },
 
+
   // findDiscrepancies: function (gameTable){
   //   gameTable.forEach(element => {
   //     if(element.player1.scores.length !=  element.player2.scores.length){

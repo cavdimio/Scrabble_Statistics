@@ -37,44 +37,83 @@
                 <% } else { %>
               <tr class="player2-bg">
                 <% } %>
-
                 <th scope="row ">
-                  <a class="nav-link"
-                     href="./single-game-stats">
-                    <div class="media align-items-center">
-                      <div class="media-body">
-                        <span class="name mb-0 player-text-sm"><%= resultArray[i] %></span>
+                  <form action="/single-game-stats"
+                        method="post">
+                    <button type="submit"
+                            name="numOfGame"
+                            value="<%= i %>"
+                            class="my-btn-link">
+                      <!-- <a class="nav-link"
+                         href="./single-game-stats"> -->
+                      <div class="media align-items-center">
+                        <div class="media-body">
+                          <span class="name mb-0 player-text-sm"><%= resultArray[i] %></span>
+                        </div>
                       </div>
-                    </div>
-                  </a>
+                    </button>
+                  </form>
+                  <!-- </a> -->
                 </th>
                 <td class="budget text-center">
-                  <a class="nav-link"
-                     href="./single-game-stats"
-                     onclick="sortTable()">
-                    <%= findAllWinnerScores[i] %>
-                  </a>
+                  <form action="/single-game-stats"
+                        method="post">
+                    <button type="submit"
+                            name="numOfGame"
+                            value="<%= i %>"
+                            class="my-btn-link">
+                      <!-- <a class="nav-link"
+                         href="./single-game-stats"
+                         onclick="sortTable()"> -->
+                      <%= findAllWinnerScores[i] %>
+                      <!-- </a>  -->
+                    </button>
+                  </form>
                 </td>
                 <td>
-                  <a class="nav-link"
-                     href="./single-game-stats">
-                    <span class="badge badge-dot mr-4">
-                      <i class="bg-warning"></i>
-                      <span class="status"><%= losersArray[i] %></span>
-                    </span>
-                  </a>
+                  <form action="/single-game-stats"
+                        method="post">
+                    <button type="submit"
+                            name="numOfGame"
+                            value="<%= i %>"
+                            class="my-btn-link">
+                      <!-- <a class="nav-link"
+                     href="./single-game-stats"> -->
+                      <span class="badge badge-dot mr-4">
+                        <i class="bg-warning"></i>
+                        <span class="status"><%= losersArray[i] %></span>
+                      </span>
+                    </button>
+                  </form>
+                  <!-- </a> -->
                 </td>
                 <td>
-                  <a class="nav-link"
-                     href="./single-game-stats">
-                    <span class="status text-center"><%= findAllLoserScores[i] %></span>
-                  </a>
+                  <form action="/single-game-stats"
+                        method="post">
+                    <button type="submit"
+                            name="numOfGame"
+                            value="<%= i %>"
+                            class="my-btn-link">
+                      <!-- <a class="nav-link"
+                     href="./single-game-stats"> -->
+                      <span class="status text-center"><%= findAllLoserScores[i] %></span>
+                      <!-- </a> -->
+                    </button>
+                  </form>
                 </td>
                 <td>
-                  <a class="nav-link"
-                     href="./single-game-stats">
-                    <span class="status text-center"><%= differenceArray[i] %></span>
-                  </a>
+                  <form action="/single-game-stats"
+                        method="post">
+                    <button type="submit"
+                            name="numOfGame"
+                            value="<%= i %>"
+                            class="my-btn-link">
+                      <!-- <a class="nav-link"
+                     href="./single-game-stats"> -->
+                      <span class="status text-center"><%= differenceArray[i] %></span>
+                    </button>
+                  </form>
+                  <!-- </a> -->
                 </td>
               </tr>
               <% } %>
@@ -89,6 +128,21 @@
   <%- include('footer'); -%>
 </div>
 
+<form method="post"
+      action="some_page"
+      class="inline">
+  <input type="hidden"
+         name="extra_submit_param"
+         value="extra_submit_value">
+  <button type="submit"
+          name="submit_param"
+          value="submit_value"
+          class="link-button">
+    This is a link that sends a POST request
+  </button>
+</form>
+
+
 <script>
   function sortTable(buttonNum) {
     var IsAscending = false;
@@ -96,13 +150,13 @@
     //Find if old_text has the ascending or the descending symbol
     if (old_text.includes("↑", 0)) {
       //Cut the old_text last character
-      old_text = old_text.slice(0, old_text.length-1);
+      old_text = old_text.slice(0, old_text.length - 1);
       //Set new text
       document.getElementById("score-" + buttonNum + "-column-id").innerHTML = old_text + " &darr;";
       //Set variable for sorting
       IsAscending = false;
     } else {
-      old_text = old_text.slice(0, old_text.length-1);
+      old_text = old_text.slice(0, old_text.length - 1);
       document.getElementById("score-" + buttonNum + "-column-id").innerHTML = old_text + " &uarr;";
       IsAscending = true;
     }
