@@ -208,7 +208,7 @@ module.exports = {
   },
 
   findSpecificStats: function (gameTable, index) {
-    var resultArray = [, ];
+    var resultArray = [ , ];
     resultArray[0] = gameTable[index].player1;
     resultArray[1] = gameTable[index].player2;
     return resultArray;

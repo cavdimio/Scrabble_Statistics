@@ -67,6 +67,11 @@ app.post("/single-game-stats",  (req, res, next) => {
   res.redirect("/single-game-stats");
 });
 
+app.get("/error-page", (req, res, next) => {
+  res.render("error_page");
+});
+
+
 app.listen(process.env.PORT || 3000, function() { 
   console.log(`Server is running at port`);
 });
