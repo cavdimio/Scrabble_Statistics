@@ -83,7 +83,7 @@ module.exports =
     {
         player1 : {
           name: "Konstantina", 
-          scores: [ 9, 10, 23, 34, 10, 12, 7, 18, 10, 14, 17, 14, 42, 9, 8, 7, 5, 3, -10]
+          scores: [ 9, 10, 23, 34, 10, 12, 7, 18, 10, 14, 17, 14, 42, 9, 8, 7, 5, 3, 10]
         }, 
         player2 : {
           name: "Christos",

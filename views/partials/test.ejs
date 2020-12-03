@@ -2,39 +2,98 @@
 
 <!-- Main content -->
 <div class="main-content"
+     style="background-color:lightgrey;"
      id="panel">
     <!-- Topnav -->
     <%- include('topnav'); -%>
     <!-- Header -->
     <div class="header pb-6 d-flex align-items-center"
          style="min-height: 500px; background-size: cover; background-position: center top;">
-        <!-- Test here -->
-        <div class="col-lg-7 col-md-10 col-sm-10">
+        <div class="col-lg-12 col-md-12 col-sm-12">
             <h1 class="display-2 text-black home-title">This is the test page!</h1>
         </div>
-
-
     </div>
     <!-- Page content -->
     <div class="container-fluid mt--6">
+        <!-- Test here -->
+        <div class="chart-container"
+             style="width:900px;height:600px;background-color: #525f7f;">
+            <canvas id="myChart"></canvas>
+        </div>
         <!-- Footer -->
         <%- include('footer'); -%>
     </div>
 </div>
 
 <!-- Test script here -->
-<!-- {
-    player1 : {
-      name: "Konstantina", 
-      scores: [ 12, 9, 8, 10, 14, 7, 28, 5, 6, 0, 5, 2, 1, 1, 9, 1, 1, 12]
-    }, 
-    player2 : {
-      name: "Christos",
-      scores: [ 22, 18, 10, 10, 10, 36, 11, 23, 51, 6, 6, 26, 3, 6, 5, 2, 0, 0]
-    }
-  }, -->
-<script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+<script>
+    var player1Name = "Konstantina";
+    var player1Scores = [12, 9, 8, 10, 14, 7, 28, 5, 6, 0, 5, 2, 1, 1, 9, 1, 1, 12];
+    var player2Name = "Christos";
+    var player2Scores = [22, 18, 10, 10, 10, 36, 11, 23, 51, 6, 6, 26, 3, 6, 5, 2, 0, 0];
+    var rounds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18];
+
+    var ctx = document.getElementById('myChart');
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: rounds,
+            datasets: [{
+                    label: player1Name,
+                    borderColor: "#3e95cd",
+                    fill: false,
+                    data: player1Scores
+                },
+                {
+                    label: player2Name,
+                    borderColor: "#5e72e4",
+                    fill: false,
+                    data: player2Scores
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            legend: {
+                display: true,
+                position: "top",
+                align: "end",
+                labels: {
+                    fontSize: 18,
+                    fontFamily: "'Roboto', sans-serif",
+                    fontColor: '#FFFFFF',
+                    fontStyle: '500',
+                    boxWidth: 40
+                }
+            },
+            scales: {
+                xAxes: [{
+                    ticks: {
+                        fontSize: 14,
+                        fontFamily: "'Roboto', sans-serif",
+                        fontColor: '#FFFFFF',
+                        fontStyle: '500'
+                    },
+                    gridLines: {
+                        drawOnChartArea: false
+                    }
+                }],
+                yAxes: [{
+                    ticks: {
+                        fontSize: 14,
+                        fontFamily: "'Roboto', sans-serif",
+                        fontColor: '#ffffff',
+                        fontStyle: '500'
+                    },
+                    gridLines: {
+                        drawOnChartArea: false
+                    }
+                }]
+            }
+        }
+    });
 </script>
 
 <%- include('end_file'); -%>

@@ -33,7 +33,8 @@ app.get("/scrabble-statistics", (req, res, next) => {
   const findTopMovePerPlayer = scrabble_lib.findTopMovePerPlayer(scrabbledb);
   const findMedianPerPlayer = scrabble_lib.findMedianPerPlayer(scrabbledb);
   const findMedianPerMovePerPlayer = scrabble_lib.findMedianPerMovePerPlayer(scrabbledb);
-  const find2PlayersNames = scrabble_lib.find2PlayersNames(scrabbledb);
+  const findPlayersNames = scrabble_lib.findPlayersNames(scrabbledb , 0);
+  
   res.render("scrabble_statistics", {
      resultArray: winnersArray,
      differenceArray: differenceArray,
@@ -45,7 +46,7 @@ app.get("/scrabble-statistics", (req, res, next) => {
      findTopMovePerPlayer: findTopMovePerPlayer,
      findMedianPerPlayer: findMedianPerPlayer, 
      findMedianPerMovePerPlayer: findMedianPerMovePerPlayer, 
-     find2PlayersNames: find2PlayersNames
+     findPlayersNames: findPlayersNames
   });
 
  });
