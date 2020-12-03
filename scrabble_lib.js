@@ -3,7 +3,7 @@ const e = require("express");
 module.exports = {
 
   find2PlayersNames: function (gameTable) {
-    return [ gameTable[0].player1.name, gameTable[0].player2.name ];
+    return [gameTable[0].player1.name, gameTable[0].player2.name];
   },
 
   findTop5SingleGame: function (player) {
@@ -105,8 +105,6 @@ module.exports = {
       if (resultArray[0] < scoreOfPlayer1CurrentGame) {
         resultArray[0] = scoreOfPlayer1CurrentGame;
       } else if (resultArray[1] < scoreOfPlayer2CurrentGame) {
-        // console.log("bigger found");
-        // console.log()
         resultArray[1] = scoreOfPlayer2CurrentGame;
       } else {}
     });
@@ -198,20 +196,19 @@ module.exports = {
     var temp1 = 0;
     var temp2 = 0;
     gameTable.forEach(element => {
-      element.player1.scores.forEach(el => {
-        temp1 += (el / (element.player1.scores.length * gameTable.length));
-      });
-      element.player2.scores.forEach(el => {
-        temp2 += (el / (element.player2.scores.length * gameTable.length));
+      element.player1.scores.forEach((el, index) => {
+          temp1 += (el / (element.player1.scores.length * gameTable.length));
+          temp2 += (element.player2.scores[index] / (element.player1.scores.length * gameTable.length));
       });
     });
+    
     resultArray[0] = temp1.toFixed(2);
     resultArray[1] = temp2.toFixed(2);
     return resultArray;
   },
 
   findSpecificStats: function (gameTable, index) {
-    var resultArray = [ , ];
+    var resultArray = [, ];
     resultArray[0] = gameTable[index].player1;
     resultArray[1] = gameTable[index].player2;
     return resultArray;
