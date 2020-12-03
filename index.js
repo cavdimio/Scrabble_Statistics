@@ -1,9 +1,10 @@
-const express  = require('express');
+const express = require('express');
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
 const cors = require("cors");
 const Chart = require('chart.js');
 var $ = require('jquery');
+const _ = require("lodash");
 
 const scrabbledb = require("./database");
 const scrabble_lib = require("./scrabble_lib");
@@ -33,37 +34,37 @@ app.get("/scrabble-statistics", (req, res, next) => {
   const findTopMovePerPlayer = scrabble_lib.findTopMovePerPlayer(scrabbledb);
   const findMedianPerPlayer = scrabble_lib.findMedianPerPlayer(scrabbledb);
   const findMedianPerMovePerPlayer = scrabble_lib.findMedianPerMovePerPlayer(scrabbledb);
-  const findPlayersNames = scrabble_lib.findPlayersNames(scrabbledb , 0);
-  
+  const findPlayersNames = scrabble_lib.findPlayersNames(scrabbledb, 0);
+
   res.render("scrabble_statistics", {
-     resultArray: winnersArray,
-     differenceArray: differenceArray,
-     losersArray: losersArray,
-     findAllWinnerScores: findAllWinnerScores,
-     findAllLoserScores: findAllLoserScores, 
-     score: score, 
-     maximumGameScore: maximumGameScore, 
-     findTopMovePerPlayer: findTopMovePerPlayer,
-     findMedianPerPlayer: findMedianPerPlayer, 
-     findMedianPerMovePerPlayer: findMedianPerMovePerPlayer, 
-     findPlayersNames: findPlayersNames
+    resultArray: winnersArray,
+    differenceArray: differenceArray,
+    losersArray: losersArray,
+    findAllWinnerScores: findAllWinnerScores,
+    findAllLoserScores: findAllLoserScores,
+    score: score,
+    maximumGameScore: maximumGameScore,
+    findTopMovePerPlayer: findTopMovePerPlayer,
+    findMedianPerPlayer: findMedianPerPlayer,
+    findMedianPerMovePerPlayer: findMedianPerMovePerPlayer,
+    findPlayersNames: findPlayersNames
   });
 
- });
+});
 
 app.get("/", (req, res, next) => {
   res.render("home");
 });
 
 app.get("/single-game-stats", (req, res, next) => {
-  const findSpecificStats = scrabble_lib.findSpecificStats(scrabbledb , numOfGame);
+  const findSpecificStats = scrabble_lib.findSpecificStats(scrabbledb, numOfGame);
   // const findDiscrepancies = scrabble_lib.findDiscrepancies(scrabbledb);
   res.render("partials/single-game-stats", {
     findSpecificStats: findSpecificStats
   });
 });
 
-app.post("/single-game-stats",  (req, res, next) => {
+app.post("/single-game-stats", (req, res, next) => {
   numOfGame = req.body.numOfGame;
   res.redirect("/single-game-stats");
 });
@@ -72,10 +73,30 @@ app.get("/error-page", (req, res, next) => {
   res.render("error_page");
 });
 
+app.get("/:name", (req, res, next) => {
+  const user = _.capitalize(req.params.name);
+  const findPlayersNames = scrabble_lib.findPlayersNames(scrabbledb, 0);
+
+  findPlayersNames.forEach((player) => {
+    
+    if (_.capitalize(player) === user) {
+      console.log(player);
+      res.render("my_profile_page", {
+        name: player
+        //games num 
+        //opponents
+        //stats 
+        //victories-losses
+      });
+    }
+  });
+  res.render("error_page");
+});
+
 app.get("/test", (req, res, next) => {
   res.render("partials/test");
 });
 
-app.listen(process.env.PORT || 3000, function() { 
+app.listen(process.env.PORT || 3000, function () {
   console.log(`Server is running at port`);
 });
