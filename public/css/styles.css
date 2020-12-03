@@ -101,3 +101,18 @@ th a, td a {
 .my-btn-link:active, .my-btn-link:focus{
   outline : none;
 }
+
+.home-page-bg-img, .error-page-bg-img{
+  min-height: 500px;
+  background-image: url(../assets/mick-haupt-MHeyjronqzw-unsplash.jpg);
+  background-size: 100%;
+  background-position: center top;
+}
+
+.scrabble-stats-page-bg-img{
+  min-height: 500px;
+  background-image: url(../assets/hannah-rodrigo-mf_3yZnC6ug-unsplash.jpg);
+  background-size: 100%;
+  background-position: center top;
+}
+
