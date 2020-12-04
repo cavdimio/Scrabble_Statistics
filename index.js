@@ -6,7 +6,9 @@ const Chart = require('chart.js');
 var $ = require('jquery');
 const _ = require("lodash");
 
-const scrabbledb = require("./database");
+/* Dummy Databases */
+const userdb = require("./userdb") 
+const scrabbledb = require("./gamedb");
 const scrabble_lib = require("./scrabble_lib");
 
 const app = express();
@@ -73,24 +75,40 @@ app.get("/error-page", (req, res, next) => {
   res.render("error_page");
 });
 
-app.get("/:name", (req, res, next) => {
-  const user = _.capitalize(req.params.name);
-  const findPlayersNames = scrabble_lib.findPlayersNames(scrabbledb, 0);
+app.get("/:id", (req, res, next) => {
 
-  findPlayersNames.forEach((player) => {
+  /* Find user */ 
+  const userID = (req.params.id);
+  const findPlayersNameFromID = scrabble_lib.findPlayersNameFromID(userdb, userID);
+  
+  /* Check if user exists */
+  if(findPlayersNameFromID != null){
+    const findPlayersGameStats= scrabble_lib.findPlayersGameStats(scrabbledb, userID);
+    res.render("my_profile_page", {
+      name: findPlayersNameFromID
+      //gamesNum:  
+      //opponents
+      //stats 
+      //victories-losses
+    });
+  }
+  else{
+    /* User doesn't exist */
+    res.render("error_page");
+  }
+  // findPlayersNameFromID.forEach((player) => {
     
-    if (_.capitalize(player) === user) {
-      console.log(player);
-      res.render("my_profile_page", {
-        name: player
-        //games num 
-        //opponents
-        //stats 
-        //victories-losses
-      });
-    }
-  });
-  res.render("error_page");
+  //   if (_.capitalize(player) === user) {
+  //     res.render("my_profile_page", {
+  //       name: player
+  //       //games num 
+  //       //opponents
+  //       //stats 
+  //       //victories-losses
+  //     });
+  //   }
+  // });
+  // res.render("error_page");
 });
 
 app.get("/test", (req, res, next) => {
