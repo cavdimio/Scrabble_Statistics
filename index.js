@@ -60,6 +60,7 @@ app.get("/", (req, res, next) => {
 
 app.get("/single-game-stats", (req, res, next) => {
   const findSpecificStats = scrabble_lib.findSpecificStats(scrabbledb, numOfGame);
+
   // const findDiscrepancies = scrabble_lib.findDiscrepancies(scrabbledb);
   res.render("partials/single-game-stats", {
     findSpecificStats: findSpecificStats
@@ -84,6 +85,7 @@ app.get("/:id", (req, res, next) => {
   /* Check if user exists */
   if(findPlayersNameFromID != null){
     const findPlayersGameStats= scrabble_lib.findPlayersGameStats(scrabbledb, userID);
+    
     res.render("my_profile_page", {
       name: findPlayersNameFromID
       //gamesNum:  

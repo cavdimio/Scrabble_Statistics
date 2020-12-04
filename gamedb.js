@@ -12,14 +12,14 @@ module.exports =
           scores: [22, 18, 10, 10, 10, 36, 11, 23, 51, 6, 6, 26, 3, 6, 5, 2, 0, 0]
         },
         {
-          _id: null,
-          name: null,
-          scores: null
+          _id: "12xxae6b01eeasdsqw78c1207essq",
+          name: "Thanos",
+          scores: [212, 418, 10, 10, 10, 36, 11, 23, 51, 6, 6, 26, 3, 6, 5, 2, 0, 0]
         },
         {
-          _id: null,
-          name: null,
-          scores: null
+          _id: "12456ae6b01eeasdsqw78c1207ggrt",
+          name: "Afroditi",
+          scores: [612, 418, 10, 10, 10, 36, 11, 23, 51, 6, 6, 26, 3, 6, 5, 2, 0, 0]
         }
       ]
     },

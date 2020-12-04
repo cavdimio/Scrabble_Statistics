@@ -3,7 +3,7 @@ const e = require("express");
 module.exports = {
 
   findPlayersNames: function (gameTable, index) {
-    var resultArray = [ , ];
+    var resultArray = [, ];
     resultArray[0] = gameTable[index].players[0].name;
     resultArray[1] = gameTable[index].players[1].name;
     return resultArray;
@@ -200,18 +200,18 @@ module.exports = {
     var temp2 = 0;
     gameTable.forEach(element => {
       element.players[0].scores.forEach((el, index) => {
-          temp1 += (el / (element.players[0].scores.length * gameTable.length));
-          temp2 += (element.players[1].scores[index] / (element.players[0].scores.length * gameTable.length));
+        temp1 += (el / (element.players[0].scores.length * gameTable.length));
+        temp2 += (element.players[1].scores[index] / (element.players[0].scores.length * gameTable.length));
       });
     });
-    
+
     resultArray[0] = temp1.toFixed(2);
     resultArray[1] = temp2.toFixed(2);
     return resultArray;
   },
 
   findSpecificStats: function (gameTable, index) {
-    var resultArray = [ , ];
+    var resultArray = [, ];
     resultArray[0] = gameTable[index].players[0];
     resultArray[1] = gameTable[index].players[1];
     return resultArray;
@@ -252,33 +252,213 @@ module.exports = {
     return resultArray;
   }, */
 
-  findPlayersNameFromID: function(users, userID){
+  findPlayersNameFromID: function (users, userID) {
 
-    for(var i=0; i< users.length; i++){
-      if(users[i]._id === userID){
+    for (var i = 0; i < users.length; i++) {
+      if (users[i]._id === userID) {
         return users[i].name;
       }
     }
     return null;
   },
 
-  findPlayersGameStats: function(gameTable, userID){
+  compare: function (player1, player2) { //Compare function in order to sort the scoreboard 
+    if (player1.score < player2.score) {
+      return 1;
+    }
+    if (player1.score > player2.score) {
+      return -1;
+    }
+    return 0;
+  },
 
+  findScoresForSpecificGame: function (game) {
+
+    /* Returned information: array of elements { _id: id of player, score: total score of player}*/
+    var scoreboard = [];
+
+    game.players.forEach(element => {
+      var score = 0;
+      var _id = null;
+      if (element.scores != null) {
+        score = element.scores.reduce(this.findTotalScoreSingleGameEachPlayer);
+        _id = element._id;
+      }
+
+      scoreboard.push({
+        _id,
+        score
+      });
+    });
+    //Sort players depend on score (bigger first)
+    scoreboard.sort(this.compare);
+
+    return scoreboard;
+  },
+
+  calculateDiffs: function (playersPosition, scoreboard) {
+    var diff = [null, null, null];
+
+    switch (playersPosition) {
+
+      case 0:
+        /* Player is in 1st position*/
+        /* Calculate difference with 2nd player : Definitely exists since at least 2 players */
+        diff[0] = scoreboard[0].score - scoreboard[1].score;
+        /* Check if 3rd player exists */
+        if (scoreboard[2]._id != null) {
+          /* Calculate difference with 3rd player*/
+          diff[1] = scoreboard[0].score - scoreboard[2].score;
+        }
+        /* Check if 4th player exists*/
+        if (scoreboard[3]._id != null) {
+          /* Calculate difference with 4th player */
+          diff[2] = scoreboard[0].score - scoreboard[3].score;
+        }
+        break;
+      case 1:
+        /* Player is in 2st position*/
+        /* Calculate difference with 1st player; Definitely exists since at least 2 players; Difference always positive */
+        diff[0] = scoreboard[0].score - scoreboard[1].score;
+        if (scoreboard[2]._id != null) {
+          diff[1] = scoreboard[1].score - scoreboard[2].score;
+        }
+        if (scoreboard[3]._id != null) {
+          diff[2] = scoreboard[1].score - scoreboard[3].score;
+        }
+        break;
+      case 2:
+        /* Player is in 3rd position*/
+        /* Calculate difference with 1st & 2nd player; Previous players definitely exist; Difference always positive */
+        diff[0] = scoreboard[0].score - scoreboard[2].score;
+        diff[1] = scoreboard[1].score - scoreboard[2].score;
+        if (scoreboard[3]._id != null) {
+          diff[2] = scoreboard[2].score - scoreboard[3].score;
+        }
+        break;
+      case 3:
+        /* Player is in 4th position*/
+        /* Calculate difference with all players; Previous players definitely exist; Difference always positive */
+        diff[0] = scoreboard[0].score - scoreboard[3].score;
+        diff[1] = scoreboard[1].score - scoreboard[3].score;
+        diff[2] = scoreboard[2].score - scoreboard[3].score;
+        break;
+      default:
+        break;
+    }
+    return diff;
+  },
+
+  IsNewOpponent: function (opponents , currentID) {
+    var IsNewOpponent = true;
+
+    opponents.forEach(el => {
+      if(currentID === el._id){
+        IsNewOpponent = false;
+      }
+    });
+
+    return IsNewOpponent;
+  },
+
+  findPlayersGameStats: function (gameTable, userID) {
+
+    //Returned Struct
     var player = {
-      numOfGames : 0 
+      numOfGames: 0,
+      positionStats: {
+        pos1num: 0,
+        pos1stats: {
+          games: [],
+          diff: []
+        },
+        pos2num: 0,
+        pos2stats: {
+          games: [],
+          diff: []
+        },
+        pos3num: 0,
+        pos3stats: {
+          games: [],
+          diff: []
+        },
+        pos4num: 0,
+        pos4stats: {
+          games: [],
+          diff: [],
+        }
+      },
+      opponents: []
     }
 
-    //Find in how many games participated 
-    
-    //Find in which games won and by how much 
+    //Games in which player participated
+    var games = [];
 
-    //Find in which games lost and by how much 
+    //Find in how many games participated and which 
+    gameTable.forEach(element => {
+      if (element.players[0]._id === userID || element.players[1]._id === userID || element.players[2]._id === userID || element.players[3]._id === userID) {
+        games.push(element);
+      }
+    });
+
+    //Store numOfGames
+    numOfGames = games.length;
+
+    //Find all different opponents   
+    games.forEach(element => {
+      element.players.forEach(el => {
+        /* Check if opponent is not current player & if he exists */
+        if (el._id != null && el._id != userID) {
+          /* An opponent found. 
+          Check if new opponent */
+          if (this.IsNewOpponent(player.opponents, el._id)) {
+            /* A new opponent found */
+            var newOpponent = {
+              _id: el._id,
+              name: el.name,
+              victories: 0,
+              losses: 0,
+              ties: 0,
+            }
+            player.opponents.push(newOpponent);
+          }
+        }
+      })
+    });
+  
+    //Find in which games won & lost and the difference in each occasion 
+    games.forEach(element => {
+      var scoreboard = this.findScoresForSpecificGame(element);
+      if (userID === scoreboard[0]._id) {
+        //First Positions
+        player.positionStats.pos1num++;
+        player.positionStats.pos1stats.games.push(element);
+        player.positionStats.pos1stats.diff.push(this.calculateDiffs(0, scoreboard));
+      } else if (userID === scoreboard[1]._id) {
+        //Second Positions
+        player.positionStats.pos2num++;
+        player.positionStats.pos2stats.games.push(element);
+        player.positionStats.pos2stats.diff.push(this.calculateDiffs(1, scoreboard));
+      } else if (userID === scoreboard[2]._id) {
+        //Third Positions
+        player.positionStats.pos3num++;
+        player.positionStats.pos3stats.games.push(element);
+        player.positionStats.pos3stats.diff.push(this.calculateDiffs(2, scoreboard));
+      } else {
+        //Fourth Positions
+        player.positionStats.pos4num++;
+        player.positionStats.pos4stats.games.push(element);
+        player.positionStats.pos4stats.diff.push(this.calculateDiffs(3, scoreboard));
+      }
+    });
+
 
     //Find top 5 games 
 
     //Find least 5 games
 
-    //Find how much times won or lose against an opponent 
+    //Find how much times won or lose against a specific opponent
+
   }
 
 }
