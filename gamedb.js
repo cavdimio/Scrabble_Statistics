@@ -14,7 +14,7 @@ module.exports =
         {
           _id: "12xxae6b01eeasdsqw78c1207essq",
           name: "Thanos",
-          scores: [212, 418, 10, 10, 10, 36, 11, 23, 51, 6, 6, 26, 3, 6, 5, 2, 0, 0]
+          scores: [0, 0, 0, 0, 0, 0, 11, 23, 0, 6, 6, 0, 3, 6, 5, 2, 0, 0]
         },
         {
           _id: "12456ae6b01eeasdsqw78c1207ggrt",

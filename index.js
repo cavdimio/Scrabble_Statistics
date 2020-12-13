@@ -87,7 +87,10 @@ app.get("/:id", (req, res, next) => {
     const findPlayersGameStats= scrabble_lib.findPlayersGameStats(scrabbledb, userID);
     
     res.render("my_profile_page", {
-      name: findPlayersNameFromID
+      name: findPlayersNameFromID,
+      games: findPlayersGameStats.games,
+      positionStats: findPlayersGameStats.positionStats,
+      opponents: findPlayersGameStats.opponents
       //gamesNum:  
       //opponents
       //stats 

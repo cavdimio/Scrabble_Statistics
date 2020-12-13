@@ -349,11 +349,11 @@ module.exports = {
     return diff;
   },
 
-  IsNewOpponent: function (opponents , currentID) {
+  IsNewOpponent: function (opponents, currentID) {
     var IsNewOpponent = true;
 
     opponents.forEach(el => {
-      if(currentID === el._id){
+      if (currentID === el._id) {
         IsNewOpponent = false;
       }
     });
@@ -361,11 +361,84 @@ module.exports = {
     return IsNewOpponent;
   },
 
+  calculateStatsVsOpponent: function (result, opponents, firstOppID, secondOppID, thirdOppID) {
+
+    switch (result) {
+      case "1st":
+        opponents.forEach(opponent => {
+          //Second player definitely exists 
+          if(opponent._id === firstOppID){
+            opponent.victories++;
+          }
+          //Check if third player exists 
+          if(secondOppID != null && opponent._id === secondOppID){
+            opponent.victories++;
+          }
+          //Check if fourth player exists 
+          if(thirdOppID != null && opponent._id === thirdOppID){
+            opponent.victories++;
+          }
+        });
+        break;
+      case "2nd":
+        opponents.forEach(opponent => {
+          //Second player definitely exists 
+          if(opponent._id === firstOppID){
+            opponent.losses++;
+          }
+          //Check if third player exists
+          if(secondOppID != null && opponent._id === secondOppID){
+            opponent.victories++;
+          }
+          //Check if fourth player exists 
+          if(thirdOppID != null && opponent._id === thirdOppID){
+            opponent.victories++;
+          }
+        });
+        break;
+      case "3rd":
+        opponents.forEach(opponent => {
+          //Second player definitely exists
+          if(opponent._id === firstOppID){
+            opponent.losses++;
+          }
+          //Third player definitely exists
+          if(secondOppID != null && opponent._id === secondOppID){
+            opponent.losses++;
+          }
+          //Check if fourth player exists 
+          if(thirdOppID != null && opponent._id === thirdOppID){
+            opponent.victories++;
+          }
+        });
+        break;
+      case "4th":
+        opponents.forEach(opponent => {
+          //Second player definitely exists 
+          if(opponent._id === firstOppID){
+            opponent.losses++;
+          }
+          //Third player definitely exists
+          if(opponent._id === secondOppID){
+            opponent.losses++;
+          }
+          //Fourth player definitely exists
+          if(opponent._id === thirdOppID){
+            opponent.losses++;
+          }
+        });
+        break;
+      default:
+        break;
+    }
+  },
+
   findPlayersGameStats: function (gameTable, userID) {
 
     //Returned Struct
     var player = {
-      numOfGames: 0,
+      //numOfGames: 0,
+      games: [],
       positionStats: {
         pos1num: 0,
         pos1stats: {
@@ -392,20 +465,20 @@ module.exports = {
     }
 
     //Games in which player participated
-    var games = [];
+    // var games = [];
 
     //Find in how many games participated and which 
     gameTable.forEach(element => {
       if (element.players[0]._id === userID || element.players[1]._id === userID || element.players[2]._id === userID || element.players[3]._id === userID) {
-        games.push(element);
+        player.games.push(element);
       }
     });
 
     //Store numOfGames
-    numOfGames = games.length;
+    //numOfGames = player.games.length;
 
     //Find all different opponents   
-    games.forEach(element => {
+    player.games.forEach(element => {
       element.players.forEach(el => {
         /* Check if opponent is not current player & if he exists */
         if (el._id != null && el._id != userID) {
@@ -425,40 +498,52 @@ module.exports = {
         }
       })
     });
-  
+
     //Find in which games won & lost and the difference in each occasion 
-    games.forEach(element => {
+    player.games.forEach(element => {
       var scoreboard = this.findScoresForSpecificGame(element);
       if (userID === scoreboard[0]._id) {
-        //First Positions
+        /* First Positions  */
         player.positionStats.pos1num++;
+        /* Save relative games */
         player.positionStats.pos1stats.games.push(element);
+        /* Calculate differences */
         player.positionStats.pos1stats.diff.push(this.calculateDiffs(0, scoreboard));
+        /* Add victory to opponent table */
+        this.calculateStatsVsOpponent("1st", player.opponents, scoreboard[1]._id, scoreboard[2]._id, scoreboard[3]._id);
+
       } else if (userID === scoreboard[1]._id) {
         //Second Positions
         player.positionStats.pos2num++;
         player.positionStats.pos2stats.games.push(element);
         player.positionStats.pos2stats.diff.push(this.calculateDiffs(1, scoreboard));
+        /* Add loss to opponent table */
+        this.calculateStatsVsOpponent("2nd", player.opponents, scoreboard[0]._id, scoreboard[2]._id, scoreboard[3]._id);
+
       } else if (userID === scoreboard[2]._id) {
         //Third Positions
         player.positionStats.pos3num++;
         player.positionStats.pos3stats.games.push(element);
         player.positionStats.pos3stats.diff.push(this.calculateDiffs(2, scoreboard));
+        /* Add loss to opponent table */
+        this.calculateStatsVsOpponent("3rd", player.opponents, scoreboard[0]._id, scoreboard[1]._id, scoreboard[3]._id);
+
       } else {
         //Fourth Positions
         player.positionStats.pos4num++;
         player.positionStats.pos4stats.games.push(element);
         player.positionStats.pos4stats.diff.push(this.calculateDiffs(3, scoreboard));
+        /* Add loss to opponent table */
+        this.calculateStatsVsOpponent("4th", player.opponents, scoreboard[0]._id, scoreboard[1]._id, scoreboard[2]._id);
+
       }
     });
 
-
     //Find top 5 games 
 
+
     //Find least 5 games
-
-    //Find how much times won or lose against a specific opponent
-
+    return player;
   }
 
 }
