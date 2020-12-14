@@ -1,231 +1,512 @@
 <%- include('partials/header'); -%>
 
-  <!-- Main content -->
-  <div class="main-content" id="panel">
-    <!-- Topnav -->
-    <%- include('partials/topnav'); -%> 
-    <!-- Header -->
-    <!-- Header -->
-    <div class="header pb-6 d-flex align-items-center" style="min-height: 500px; background-image: url(../assets/img/theme/profile-cover.jpg); background-size: cover; background-position: center top;">
-      <!-- Mask -->
-      <span class="mask bg-gradient-default opacity-8"></span>
-      <!-- Header container -->
-      <div class="container-fluid d-flex align-items-center">
-        <div class="row">
-          <div class="col-lg-7 col-md-10">
-            <h1 class="display-2 text-white">Hello <%= name %></h1>
-            <p class="text-white mt-0 mb-5">This is your profile page. You can see the progress you've made with your work and manage your projects or assigned tasks</p>
-            <a href="/euxp1q23yqfg167s4316g4sq" class="btn btn-neutral">Go to Konstantina's profile</a>
-            <a href="/5fae6b01eeab478c1207e2bf" class="btn btn-neutral">Go to Christos' profile</a>
-          </div>
+<!-- Main content -->
+<div class="main-content"
+     id="panel">
+  <!-- Topnav -->
+  <%- include('partials/topnav'); -%>
+  <!-- Header -->
+  <!-- Header -->
+  <div class="header pb-6 d-flex align-items-center"
+       style="min-height: 500px; background-image: url(../assets/profile-cover.jpg); background-size: cover; background-position: center top;">
+    <!-- Mask -->
+    <span class="mask bg-gradient-default opacity-8"></span>
+    <!-- Header container -->
+    <div class="container-fluid d-flex align-items-center">
+      <div class="row">
+        <div class="col-lg-7 col-md-10">
+          <h1 class="display-2 text-white">Hello <%= name %></h1>
+          <p class="text-white mt-0 mb-5">This is your profile page. You can see the progress you've made with your work
+            and manage your projects or assigned tasks</p>
+          <a href="/euxp1q23yqfg167s4316g4sq"
+             class="btn btn-neutral">Go to Konstantina's profile</a>
+          <a href="/5fae6b01eeab478c1207e2bf"
+             class="btn btn-neutral">Go to Christos' profile</a>
         </div>
       </div>
     </div>
-    <!-- Page content -->
-    <div class="container-fluid mt--6">
-      <div class="row">
-        <div class="col-xl-4">
-           <!-- Card header -->
-           <div class="card-header border-0">
-            <h3 class="mb-0">Your statistics, <%= name %></h3>
-          </div>
-          <!-- Light table -->
-          <div class="table-responsive">
-            <table class="table align-items-center table-flush">
-              <thead class="thead-light">
-                <tr>
-                  <th scope="col" class="sort" data-sort="name">Category</th>
-                  <th scope="col" class="sort" data-sort="budget">Statistic</th>
-                </tr>
-              </thead>
-              <tbody class="list">
-                <tr>
-                  <th scope="row">
-                    <div class="media align-items-center"
-                    onclick="populateTable('victories')">
-                      <div class="media-body">
-                        <span class="name mb-0 text-sm">Victories</span>
-                      </div>
-                    </div>
-                  </th>
-                  <td class="budget"
-                  onclick="populateTable('victories')">
-                    <%= positionStats.pos1num %>
-                  </td>
-                </tr>             
-                <tr>
-                  <th scope="row">
-                    <div class="media align-items-center"
-                    onclick="populateTable('2ndPosition')">
-                      <div class="media-body">
-                        <span class="name mb-0 text-sm">2nd Positions</span>
-                      </div>
-                    </div>
-                  </th>
-                  <td class="budget"
-                  onclick="populateTable('2ndPosition')">
-                    <%= positionStats.pos2num %>
-                  </td>
-                </tr>
-                <tr>
-                  <th scope="row">
-                    <div class="media align-items-center"
-                    onclick="populateTable('3rdPosition')">
-                      <div class="media-body">
-                        <span class="name mb-0 text-sm">3rd Positions</span>
-                      </div>
-                    </div>
-                  </th>
-                  <td class="budget"
-                  onclick="populateTable('3rdPosition')">
-                    <%= positionStats.pos3num %>
-                  </td>
-                </tr>
-                <tr>
-                  <th scope="row">
-                    <div class="media align-items-center"
-                    onclick="populateTable('4thPosition')">
-                      <div class="media-body">
-                        <span class="name mb-0 text-sm">4th Positions</span>
-                      </div>
-                    </div>
-                  </th>
-                  <td class="budget"
-                  onclick="populateTable('4thPosition')">
-                    <%= positionStats.pos4num %>
-                  </td>
-                </tr>
-                <tr>
-                  <th scope="row">
-                    <div class="media align-items-center"
-                    onclick="populateTable('allLoses')">
-                      <div class="media-body">
-                        <span class="name mb-0 text-sm">Losses Total</span>
-                      </div>
-                    </div>
-                  </th>
-                  <td class="budget"
-                  onclick="populateTable('allLoses')">
-                    <%= positionStats.pos2num + positionStats.pos3num + positionStats.pos4num %>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-           <!-- Card header -->
-           <div class="card-header border-0">
-            <h3 class="mb-0">Your opponents, <%= name %></h3>
-          </div>
-          <!-- Light table -->
-          <div class="table-responsive">
-            <table class="table align-items-center table-flush">
-              <thead class="thead-light">
-                <tr>
-                  <th scope="col" class="sort" data-sort="name">Name</th>
-                  <th scope="col" class="sort" data-sort="budget">Wins</th>
-                  <th scope="col" class="sort" data-sort="budget">Lost</th>
-                  <th scope="col" class="sort" data-sort="budget">Ties</th>
-                </tr>
-              </thead>
-              <tbody class="list">
-                <tr>
-                  <% for (var i=0; i<opponents.length; i++){ %>
-                  <th scope="row">
-                    <div class="media align-items-center">
-                      <div class="media-body">
-                        <span class="name mb-0 text-sm"><%= opponents[i].name %> </span>
-                      </div>
-                    </div>
-                  </th>
-                  <td class="budget">
-                    <%= opponents[i].victories %>
-                  </td>
-                  <td class="budget">
-                    <%= opponents[i].losses %>
-                  </td>
-                  <td class="budget">
-                    <%= opponents[i].ties %>
-                  </td>
-                </tr>
-                <% } %>          
-              </tbody>
-            </table>
-          </div>
+  </div>
+  <!-- Page content -->
+  <div class="container-fluid mt--6">
+    <div class="row">
+      <div class="col-xl-3">
+        <!-- Card header -->
+        <div class="card-header border-0">
+          <h3 class="mb-0">Your statistics, <%= name %></h3>
         </div>
-        <div class="col-xl-8">
-          <div class="col">
-            <div class="card">
-              <!-- Card header -->
-              <div class="card-header border-0">
-                <h3 class="mb-0">Your games <%= name %></h3>
-              </div>
-              <!-- Light table -->
-              <div class="table-responsive">
-                <table class="table align-items-center table-flush">
-                  <thead class="thead-light">
-                    <tr>
-                      <th scope="col" class="sort" data-sort="name">Player 1</th>
-                      <th scope="col" class="sort" data-sort="budget">Player 2</th>
-                      <th scope="col" class="sort" data-sort="status">Player 3</th>
-                      <th scope="col" class="sort" data-sort="status">Player 4</th>
-                      <th scope="col" class="sort" data-sort="status">Diff from 1st pos</th>
-                    </tr>
-                  </thead>
-                  <tbody class="list">
-                    <% for (var i=0; i<games.length; i++){ %>
-                    <tr>
-                      <th scope="row">
-                        <div class="media align-items-center">
-                          <div class="media-body">
-                            <span class="name mb-0 text-sm"> <%= games[i].players[0].name %></span>
-                          </div>
-                        </div>
-                      </th>
-                      <td class="budget">
-                        <%= games[i].players[1].name %>
-                      </td>
-                      <td>
-                        <span class="badge badge-dot mr-4">
-                          <span class="status"> <%= games[i].players[2].name %> </span>
-                        </span>
-                      </td>
-                      <td>
-                        <div class="avatar-group">
-                          <span class="badge badge-dot mr-4">
-                            <span class="status"> <%= games[i].players[3].name %> </span>
-                          </span>
-                        </div>
-                      </td>
-                      <td>
-                        <div class="d-flex align-items-center">
-                          <!-- <span class="completion mr-2">60%</span>
-                          <div>
-                            <div class="progress">
-                              <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;"></div>
-                            </div>
-                          </div> -->
-                        </div>
-                      </td>
-                    </tr>
-                    <% } %> 
-                  </tbody>
-                </table>
-              </div>
+        <!-- Light table -->
+        <div class="table-responsive">
+          <table class="table align-items-center table-flush">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col"
+                    class="sort"
+                    data-sort="name">Category</th>
+                <th scope="col"
+                    class="sort"
+                    data-sort="budget">Statistic</th>
+              </tr>
+            </thead>
+            <tbody class="list">
+              <tr>
+                <th scope="row">
+                  <div class="media align-items-center"
+                       onclick="populateTable('victories')">
+                    <div class="media-body">
+                      <span class="name mb-0 text-sm">Victories</span>
+                    </div>
+                  </div>
+                </th>
+                <td class="budget"
+                    onclick="populateTable('victories')">
+                  <%= positionStats.pos1num %>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">
+                  <div class="media align-items-center"
+                       onclick="populateTable('2ndPosition')">
+                    <div class="media-body">
+                      <span class="name mb-0 text-sm">2nd Positions</span>
+                    </div>
+                  </div>
+                </th>
+                <td class="budget"
+                    onclick="populateTable('2ndPosition')">
+                  <%= positionStats.pos2num %>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">
+                  <div class="media align-items-center"
+                       onclick="populateTable('3rdPosition')">
+                    <div class="media-body">
+                      <span class="name mb-0 text-sm">3rd Positions</span>
+                    </div>
+                  </div>
+                </th>
+                <td class="budget"
+                    onclick="populateTable('3rdPosition')">
+                  <%= positionStats.pos3num %>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">
+                  <div class="media align-items-center"
+                       onclick="populateTable('4thPosition')">
+                    <div class="media-body">
+                      <span class="name mb-0 text-sm">4th Positions</span>
+                    </div>
+                  </div>
+                </th>
+                <td class="budget"
+                    onclick="populateTable('4thPosition')">
+                  <%= positionStats.pos4num %>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">
+                  <div class="media align-items-center"
+                       onclick="populateTable('allLoses')">
+                    <div class="media-body">
+                      <span class="name mb-0 text-sm">Losses Total</span>
+                    </div>
+                  </div>
+                </th>
+                <td class="budget"
+                    onclick="populateTable('allLoses')">
+                  <%= positionStats.pos2num + positionStats.pos3num + positionStats.pos4num %>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">
+                  <div class="media align-items-center"
+                       onclick="populateTable('allLoses')">
+                    <div class="media-body">
+                      <span class="name mb-0 text-sm">Games Total</span>
+                    </div>
+                  </div>
+                </th>
+                <td class="budget"
+                    onclick="populateTable('allGames')">
+                  <%= games.length %>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- Card header -->
+        <div class="card-header border-0">
+          <h3 class="mb-0">Your opponents, <%= name %></h3>
+        </div>
+        <!-- Light table -->
+        <div class="table-responsive">
+          <table class="table align-items-center table-flush">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col"
+                    class="sort"
+                    data-sort="name">Name</th>
+                <th scope="col"
+                    class="sort"
+                    data-sort="budget">Wins</th>
+                <th scope="col"
+                    class="sort"
+                    data-sort="budget">Lost</th>
+                <th scope="col"
+                    class="sort"
+                    data-sort="budget">Ties</th>
+              </tr>
+            </thead>
+            <tbody class="list">
+              <tr>
+                <% for (var i=0; i<opponents.length; i++){ %>
+                <th scope="row">
+                  <div class="media align-items-center">
+                    <div class="media-body">
+                      <span class="name mb-0 text-sm"><%= opponents[i].name %> </span>
+                    </div>
+                  </div>
+                </th>
+                <td class="budget">
+                  <%= opponents[i].victories %>
+                </td>
+                <td class="budget">
+                  <%= opponents[i].losses %>
+                </td>
+                <td class="budget">
+                  <%= opponents[i].ties %>
+                </td>
+              </tr>
+              <% } %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col-xl-9">
+        <div class="col">
+          <div class="card">
+            <!-- Card header -->
+            <div class="card-header border-0">
+              <h3 class="mb-0"
+                  id="general-table-title">Your games, <%= name %></h3>
+            </div>
+            <!-- Light table -->
+            <div class="table-responsive">
+              <table class="table align-items-center table-flush">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col"
+                        class="sort"
+                        data-sort="name">Player 1</th>
+                    <th scope="col"
+                        class="sort"
+                        data-sort="budget">Player 2</th>
+                    <th scope="col"
+                        class="sort"
+                        data-sort="status">Player 3</th>
+                    <th scope="col"
+                        class="sort"
+                        data-sort="status">Player 4</th>
+                    <!-- <th scope="col"
+                        class="sort"
+                        data-sort="status">Statistics</th> -->
+                  </tr>
+                </thead>
+                <tbody class="list">
+                  <tr>
+                    <td scope="row">
+                      <table class="table align-items-center table-flush">
+                        <thead class="thead-light">
+                          <tr>
+                            <th scope="col"
+                                class="sort"
+                                data-sort="name">Name</th>
+                            <th scope="col"
+                                class="sort"
+                                data-sort="budget">Score</th>
+                          </tr>
+                        </thead>
+                        <tbody class="list"
+                               id="general-player0-table-body">
+                          <% for (var i=0; i<games.length; i++){ %>
+                          <tr>
+                            <td>
+                              <div class="media align-items-center">
+                                <div class="media-body">
+                                  <span class="name mb-0 text-sm"> <%= games[i].players[0].name %></span>
+                                </div>
+                              </div>
+                            </td>
+                            <td>
+                              <div class="media align-items-center">
+                                <div class="media-body">
+                                  <span class="name mb-0 text-sm"> <%= scores[i][0] %> </span>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                          <% } %>
+                        </tbody>
+                      </table>
+                    </td>
+                    <td scope="row">
+                      <table class="table align-items-center table-flush">
+                        <thead class="thead-light">
+                          <tr>
+                            <th scope="col"
+                                class="sort"
+                                data-sort="name">Name</th>
+                            <th scope="col"
+                                class="sort"
+                                data-sort="budget">Score</th>
+                          </tr>
+                        </thead>
+                        <tbody class="list"
+                               id="general-player1-table-body">
+                          <% for (var i=0; i<games.length; i++){ %>
+                          <tr>
+                            <td>
+                              <div class="media align-items-center">
+                                <div class="media-body">
+                                  <span class="name mb-0 text-sm"> <%= games[i].players[1].name %></span>
+                                </div>
+                              </div>
+                            </td>
+                            <td>
+                              <div class="media align-items-center">
+                                <div class="media-body">
+                                  <span class="name mb-0 text-sm"> <%= scores[i][1] %> </span>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                          <% } %>
+                        </tbody>
+                      </table>
+                    </td>
+                    <td scope="row">
+                      <table class="table align-items-center table-flush">
+                        <thead class="thead-light">
+                          <tr>
+                            <th scope="col"
+                                class="sort"
+                                data-sort="name">Name</th>
+                            <th scope="col"
+                                class="sort"
+                                data-sort="budget">Score</th>
+                          </tr>
+                        </thead>
+                        <tbody class="list"
+                               id="general-player2-table-body">
+                          <% for (var i=0; i<games.length; i++){ %>
+                          <tr>
+                            <td>
+                              <div class="media align-items-center">
+                                <div class="media-body">
+                                  <% if ( games[i].players[2].name != null){ %>
+                                  <span class="name mb-0 text-sm">
+                                    <%= games[i].players[2].name %> </span>
+                                  <% } else { %>
+                                  <span class="name mb-0 text-sm">
+                                    &nbsp; </span>
+                                  <% } %>
+                                </div>
+                              </div>
+                            </td>
+                            <td>
+                              <div class="media align-items-center">
+                                <div class="media-body">
+                                  <% if ( scores[i][2] > 0){ %>
+                                  <span class="name mb-0 text-sm">
+                                    <%= scores[i][2] %> </span>
+                                  <% } else { %>
+                                  <span class="name mb-0 text-sm">
+                                    &nbsp; </span>
+                                  <% } %>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                          <% } %>
+                        </tbody>
+                      </table>
+                    </td>
+                    <td scope="row">
+                      <table class="table align-items-center table-flush">
+                        <thead class="thead-light">
+                          <tr>
+                            <th scope="col"
+                                class="sort"
+                                data-sort="name">Name</th>
+                            <th scope="col"
+                                class="sort"
+                                data-sort="budget">Score</th>
+                          </tr>
+                        </thead>
+                        <tbody class="list"
+                               id="general-player3-table-body">
+                          <% for (var i=0; i<games.length; i++){ %>
+                          <tr>
+                            <td>
+                              <div class="media align-items-center">
+                                <div class="media-body">
+                                  <% if ( games[i].players[3].name != null){ %>
+                                  <span class="name mb-0 text-sm">
+                                    <%= games[i].players[3].name %> </span>
+                                  <% } else { %>
+                                  <span class="name mb-0 text-sm">
+                                    &nbsp; </span>
+                                  <% } %>
+                                </div>
+                              </div>
+                            </td>
+                            <td>
+                              <div class="media align-items-center">
+                                <div class="media-body">
+                                  <% if ( scores[i][3] > 0){ %>
+                                  <span class="name mb-0 text-sm">
+                                    <%= scores[i][3] %> </span>
+                                  <% } else { %>
+                                  <span class="name mb-0 text-sm">
+                                    &nbsp; </span>
+                                  <% } %>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                          <% } %>
+                        </tbody>
+                      </table>
+                    </td>
+                    <!-- <td scope="row">
+                      <table class="table align-items-center table-flush">
+                        <thead class="thead-light">
+                          <tr>
+                            <th scope="col"
+                                class="sort"
+                                data-sort="name">Position</th>
+                            <th scope="col"
+                                class="sort"
+                                data-sort="budget">Difference</th>
+                          </tr>
+                        </thead>
+                        <tbody class="list">
+                           <% for (var i=0; i<games.length; i++){ %>
+                          <tr>
+                            <td>
+                              <div class="media align-items-center">
+                                <div class="media-body">
+                                  <span class="name mb-0 text-sm"> <%= games[i].players[3].name %></span>
+                                </div>
+                              </div>
+                            </td>
+                            <td>
+                              <div class="media align-items-center">
+                                <div class="media-body">
+                                  <span class="name mb-0 text-sm"> 110 </span>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                          <% } %> 
+                        </tbody>
+                      </table>
+                    </td> -->
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
-
       </div>
-      <!-- Footer -->
-      <%- include('partials/footer'); -%>
+
     </div>
+    <!-- Footer -->
+    <%- include('partials/footer'); -%>
   </div>
- 
+</div>
+
 <%- include('partials/end_file'); -%>
 
 <script>
   function populateTable(category) {
-    console.log(category);
-  }
 
+    //Change the title of the general table & initialize variables
+    var length = 0;
+    var positionStats = <%-JSON.stringify(positionStats) %>;
+    var posStats;
+
+    switch (category) {
+      case "victories":
+        $("#general-table-title").text('Your victories, <%= name %>');
+        length = positionStats.pos1num;
+        posStats = positionStats.pos1stats;
+        break;
+      case "2ndPosition":
+        $("#general-table-title").text('Your 2nd positions, <%= name %>');
+        length = positionStats.pos2num;
+        posStats = positionStats.pos2stats;
+        break;
+      case "3rdPosition":
+        $("#general-table-title").text('Your 3rd positions, <%= name %>');
+        length = positionStats.pos3num;
+        posStats = positionStats.pos3stats;
+        break;
+      case "4thPosition":
+        $("#general-table-title").text('Your 4th positions, <%= name %>');
+        length = positionStats.pos4num;
+        posStats = positionStats.pos4stats;
+        break;
+      case "allLoses": //TODO IMPLEMENTATION OF ALL LOSES --> current implementation errors
+        $("#general-table-title").text('Your defeats, <%= name %>');
+        length = positionStats.pos2num + positionStats.pos3num + positionStats.pos4num;
+        posStats = positionStats.pos2stats + positionStats.pos3stats + positionStats.pos4stats;
+        break;
+      default: //TODO IMPLEMENTATION OF ALL GAMES 
+        break;
+    }
+
+    //Delete previous tables
+    $('#general-player0-table-body').empty();
+    $('#general-player1-table-body').empty();
+    $('#general-player2-table-body').empty();
+    $('#general-player3-table-body').empty();
+
+    for (var i = 0; i < length; i++) {
+      for (var j = 0; j < 4; j++) {
+        var tempName = posStats.games[i].players[j].name;
+        if(posStats.games[i].players[j].name == null){
+          tempName = "\xa0";
+        }
+        var tempScore = posStats.scores[i][j];
+        if(posStats.scores[i][j] == 0){
+          tempScore = "\xa0";
+        }
+        //Change names of first player 
+        $('#general-player'+j+'-table-body').append(
+          '<tr>  \
+            <td> \
+              <div class="media align-items-center" > \
+                <div class="media-body" > \
+                  <span class="name mb-0 text-sm">' + tempName + 
+                  '</span> \
+                </div> \
+              </div> \
+            </td> \
+            <td > \
+              <div class="media align-items-center" > \
+                <div class="media-body"> \
+                  <span class="name mb-0 text-sm">' + tempScore + 
+                  '</span> \
+                </div> \
+              </div> \
+            </td> \
+          </tr>'
+        );
+      }
+    }
+
+
+  }
 </script>

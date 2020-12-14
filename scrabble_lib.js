@@ -217,41 +217,6 @@ module.exports = {
     return resultArray;
   },
 
-
-  // findDiscrepancies: function (gameTable){
-  //   gameTable.forEach(element => {
-  //     if(element.players[0].scores.length !=  element.players[1].scores.length){
-  //       console.log("-----");
-  //       console.log(element.players[0].scores[0] + ":" + element.players[0].scores.length); 
-  //       console.log(element.players[1].scores[0] + ":" + element.players[1].scores.length);
-  //     }
-  //   });
-  //}
-
-  /* Profile functions */
-  /*findPlayersNames2: function(gameTable, users, gameID) {
-    var resultArray = [ , ];
-    var player1ID = 0;
-    var player2ID = 0;
-
-    gameTable.forEach(element => {  //TODO better with if in order to use break
-      if(element._id === gameID){
-        player1ID = element.players[0]._id;
-        player2ID = element.players[1]._id;
-      }
-    });
-
-    users.forEach(user => {
-      if(player1ID === user._id){
-        resultArray[0] = user.name;
-      }
-      else if(player2ID === user._id){
-        resultArray[1] = user.name;
-      }
-    });
-    return resultArray;
-  }, */
-
   findPlayersNameFromID: function (users, userID) {
 
     for (var i = 0; i < users.length; i++) {
@@ -272,7 +237,7 @@ module.exports = {
     return 0;
   },
 
-  findScoresForSpecificGame: function (game) {
+  findSortedScoreBoard: function (game) {
 
     /* Returned information: array of elements { _id: id of player, score: total score of player}*/
     var scoreboard = [];
@@ -433,51 +398,81 @@ module.exports = {
     }
   },
 
+  findScoresSingleGame: function(game){
+    var scoreboard = [];
+
+    game.players.forEach(element => {
+      var score = 0;
+      if (element.scores != null) {
+        score = element.scores.reduce(this.findTotalScoreSingleGameEachPlayer);
+      }
+      scoreboard.push(score);
+    });
+
+    return scoreboard;
+  },
+
   findPlayersGameStats: function (gameTable, userID) {
 
     //Returned Struct
     var player = {
-      //numOfGames: 0,
       games: [],
+      scores: [],
       positionStats: {
         pos1num: 0,
         pos1stats: {
           games: [],
+          scores: [],
           diff: []
         },
         pos2num: 0,
         pos2stats: {
           games: [],
+          scores: [],
           diff: []
         },
         pos3num: 0,
         pos3stats: {
           games: [],
+          scores: [],
           diff: []
         },
         pos4num: 0,
         pos4stats: {
           games: [],
+          scores: [],
           diff: [],
         }
       },
       opponents: []
     }
 
-    //Games in which player participated
-    // var games = [];
+    //General Statistics
 
-    //Find in how many games participated and which 
+    //1. Find in which games the player participated 
     gameTable.forEach(element => {
       if (element.players[0]._id === userID || element.players[1]._id === userID || element.players[2]._id === userID || element.players[3]._id === userID) {
         player.games.push(element);
       }
     });
+ 
+    //2. Find players scores in these games 
+    player.games.forEach(game => {
+      var scoreboard = [];
+      game.players.forEach(element => {
+        if (element.scores != null) {
+          score = element.scores.reduce(this.findTotalScoreSingleGameEachPlayer);
+          scoreboard.push(score);
+        }
+        else{
+          scoreboard.push(0);
+        }
+      });
+      player.scores.push(scoreboard);
+    });
+    
 
-    //Store numOfGames
-    //numOfGames = player.games.length;
-
-    //Find all different opponents   
+    //3. Find all different opponents and initialize them  
     player.games.forEach(element => {
       element.players.forEach(el => {
         /* Check if opponent is not current player & if he exists */
@@ -499,14 +494,20 @@ module.exports = {
       })
     });
 
+    //Specific statistics 
+
     //Find in which games won & lost and the difference in each occasion 
     player.games.forEach(element => {
-      var scoreboard = this.findScoresForSpecificGame(element);
+      var scoreboard = this.findSortedScoreBoard(element);
+      var currentGamesScores = this.findScoresSingleGame(element);
+
       if (userID === scoreboard[0]._id) {
         /* First Positions  */
         player.positionStats.pos1num++;
         /* Save relative games */
         player.positionStats.pos1stats.games.push(element);
+        /* Save scores of current game */
+        player.positionStats.pos1stats.scores.push(currentGamesScores);
         /* Calculate differences */
         player.positionStats.pos1stats.diff.push(this.calculateDiffs(0, scoreboard));
         /* Add victory to opponent table */
@@ -516,6 +517,7 @@ module.exports = {
         //Second Positions
         player.positionStats.pos2num++;
         player.positionStats.pos2stats.games.push(element);
+        player.positionStats.pos2stats.scores.push(currentGamesScores);
         player.positionStats.pos2stats.diff.push(this.calculateDiffs(1, scoreboard));
         /* Add loss to opponent table */
         this.calculateStatsVsOpponent("2nd", player.opponents, scoreboard[0]._id, scoreboard[2]._id, scoreboard[3]._id);
@@ -524,6 +526,7 @@ module.exports = {
         //Third Positions
         player.positionStats.pos3num++;
         player.positionStats.pos3stats.games.push(element);
+        player.positionStats.pos3stats.scores.push(currentGamesScores);
         player.positionStats.pos3stats.diff.push(this.calculateDiffs(2, scoreboard));
         /* Add loss to opponent table */
         this.calculateStatsVsOpponent("3rd", player.opponents, scoreboard[0]._id, scoreboard[1]._id, scoreboard[3]._id);
@@ -532,6 +535,7 @@ module.exports = {
         //Fourth Positions
         player.positionStats.pos4num++;
         player.positionStats.pos4stats.games.push(element);
+        player.positionStats.pos4stats.scores.push(currentGamesScores);
         player.positionStats.pos4stats.diff.push(this.calculateDiffs(3, scoreboard));
         /* Add loss to opponent table */
         this.calculateStatsVsOpponent("4th", player.opponents, scoreboard[0]._id, scoreboard[1]._id, scoreboard[2]._id);
