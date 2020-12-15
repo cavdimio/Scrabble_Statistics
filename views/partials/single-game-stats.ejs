@@ -17,63 +17,9 @@
             <h6 class="h2 text-white d-inline-block mb-0">
               Scrabble Statistics</h6>
           </div>
-          <div class="col-lg-6 col-5">
-            <a href="/scrabble-statistics"
-               class="btn btn-neutral rounded-pill home-btn-start-game">Go back to Scrabble Statistics</a>
-          </div>
         </div>
-      </div>
-      <!-- Dark table -->
-      <div class="row">
-        <div class="col">
-          <div class="card bg-default shadow">
-            <div class="card-header bg-transparent">
-              <h3 class="text-white mb-0">Points per Round</h3>
-            </div>
-            <div class="table-responsive">
-              <table class="table align-items-center table-dark table-flush">
-                <thead class="thead-dark">
-                  <tr>
-                    <th scope="col"
-                        class="sort"
-                        data-sort="name">Players</th>
-                    <% for (var i=0; i<findSpecificStats[0].scores.length; i++){ %>
-                    <th scope="col"
-                        class="sort"
-                        data-sort="budget"><%= i+1 %></th>
-                    <% } %>
-                  </tr>
-                </thead>
-                <tbody class="list">
-                  <tr>
-                    <th scope="row">
-                      <div id="player1name" class="budget sgs_players_name">
-                        <span class="name mb-0 text-sm"><%= findSpecificStats[0].name %></span>
-                      </div>
-                    </th>
-                    <% for (var i=0; i<findSpecificStats[0].scores.length; i++){ %>
-                    <td class="budget sgs_players_name">
-                      <%= findSpecificStats[0].scores[i] %>
-                    </td>
-                    <% } %>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      <div class="budget sgs_players_name">
-                        <span class="name mb-0 text-sm"> <%= findSpecificStats[1].name %></span>
-                      </div>
-                    </th>
-                    <% for (var i=0; i<findSpecificStats[0].scores.length; i++){ %>
-                    <td class="budget sgs_players_name">
-                      <%= findSpecificStats[1].scores[i] %>
-                    </td>
-                    <% } %>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
+        <!-- Card stats -->
+        <%- include('card_stats'); -%>
       </div>
     </div>
 
@@ -81,7 +27,62 @@
   <!-- Page content -->
   <div class="container-fluid mt--6">
     <div class="row">
-      <div class="col-xl-12">
+      <div class="col-xl-5">
+        <div class="card bg-default shadow">
+          <div class="card-header bg-transparent">
+            <h3 class="text-white mb-0">Points per Round</h3>
+          </div>
+          <div class="table-responsive">
+            <table class="table align-items-center table-dark table-flush">
+              <thead class="thead-dark">
+                <tr>
+                  <th scope="col"
+                      class="sort"
+                      data-sort="name">Rounds</th>
+                  <% for (var i=0; i<currentGame.players.length; i++){ %>
+                  <th scope="col"
+                      class="sort"
+                      data-sort="budget">
+                    <% if ( currentGame.players[i].name != null){ %>
+                    <%= currentGame.players[i].name %>
+                    <% } %>
+                  </th>
+                  <% } %>
+                </tr>
+              </thead>
+              <tbody class="list">
+                <% for (var i=0; i<currentGame.players[0].scores.length; i++){ %>
+                <tr>
+                  <th scope="row">
+                    <div id="player1name"
+                         class="budget sgs_players_name">
+                      <span class="name mb-0 text-sm"><%= i+1 %></span>
+                    </div>
+                  </th>
+                  <td class="budget sgs_players_name">
+                    <%= currentGame.players[0].scores[i] %>
+                  </td>
+                  <td class="budget sgs_players_name">
+                    <%= currentGame.players[1].scores[i] %>
+                  </td>
+                  <% if ( currentGame.players[2].scores != null){ %>
+                  <td class="budget sgs_players_name">
+                    <%= currentGame.players[2].scores[i] %>
+                  </td>
+                  <% } %>
+                  <% if ( currentGame.players[3].scores != null){ %>
+                  <td class="budget sgs_players_name">
+                    <%= currentGame.players[3].scores[i] %>
+                  </td>
+                  <% } %>
+                </tr>
+                <% } %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-7">
         <div class="card bg-default">
           <div class="card-header bg-transparent">
             <div class="row align-items-center">
@@ -93,7 +94,7 @@
           </div>
           <div class="card-body">
             <!-- Chart -->
-              <canvas id="myChart"></canvas>
+            <canvas id="myChart"></canvas>
           </div>
         </div>
       </div>
@@ -105,18 +106,17 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
 
-<script>
-
+<script> //TODO implementation for up to 4 players 
   /* Get stats of first player */
-  var player1Name = "<%= findSpecificStats[0].name %>";
-  var player1Scores = "<%= findSpecificStats[0].scores %>".split(',').map(Number);
+  var player1Name = "<%= currentGame.players[0].name %>";
+  var player1Scores = "<%= currentGame.players[0].scores %>".split(',').map(Number);
   /* Get stats of second player */
-  var player2Name = "<%= findSpecificStats[1].name %>";
-  var player2Scores = "<%= findSpecificStats[1].scores %>".split(',').map(Number);
+  var player2Name = "<%= currentGame.players[1].name %>";
+  var player2Scores = "<%= currentGame.players[1].scores %>".split(',').map(Number);
   /* Get number of rounds in a table */
-  var length = parseInt("<%= findSpecificStats[0].scores.length %>");
+  var length = parseInt("<%= currentGame.players[0].scores.length %>");
   var rounds = [];
-  for(var i=1;i<=length;i++){
+  for (var i = 1; i <= length; i++) {
     rounds.push(i);
   }
 

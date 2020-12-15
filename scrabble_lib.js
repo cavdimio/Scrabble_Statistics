@@ -51,9 +51,7 @@ module.exports = {
     return topScorer;
   },
 
-  findTotalScoreSingleGameEachPlayer: function (total, num) {
-    return total + num;
-  },
+
 
   findWinner: function (game) {
     const score1 = game.players[0].scores.reduce(this.findTotalScoreSingleGameEachPlayer);
@@ -210,13 +208,7 @@ module.exports = {
     return resultArray;
   },
 
-  findSpecificStats: function (gameTable, index) {
-    var resultArray = [, ];
-    resultArray[0] = gameTable[index].players[0];
-    resultArray[1] = gameTable[index].players[1];
-    return resultArray;
-  },
-
+  /*----- Player profile's functions ------*/
   findPlayersNameFromID: function (users, userID) {
 
     for (var i = 0; i < users.length; i++) {
@@ -235,6 +227,10 @@ module.exports = {
       return -1;
     }
     return 0;
+  },
+
+  findTotalScoreSingleGameEachPlayer: function (total, num) {
+    return total + num;
   },
 
   findSortedScoreBoard: function (game) {
@@ -332,15 +328,15 @@ module.exports = {
       case "1st":
         opponents.forEach(opponent => {
           //Second player definitely exists 
-          if(opponent._id === firstOppID){
+          if (opponent._id === firstOppID) {
             opponent.victories++;
           }
           //Check if third player exists 
-          if(secondOppID != null && opponent._id === secondOppID){
+          if (secondOppID != null && opponent._id === secondOppID) {
             opponent.victories++;
           }
           //Check if fourth player exists 
-          if(thirdOppID != null && opponent._id === thirdOppID){
+          if (thirdOppID != null && opponent._id === thirdOppID) {
             opponent.victories++;
           }
         });
@@ -348,15 +344,15 @@ module.exports = {
       case "2nd":
         opponents.forEach(opponent => {
           //Second player definitely exists 
-          if(opponent._id === firstOppID){
+          if (opponent._id === firstOppID) {
             opponent.losses++;
           }
           //Check if third player exists
-          if(secondOppID != null && opponent._id === secondOppID){
+          if (secondOppID != null && opponent._id === secondOppID) {
             opponent.victories++;
           }
           //Check if fourth player exists 
-          if(thirdOppID != null && opponent._id === thirdOppID){
+          if (thirdOppID != null && opponent._id === thirdOppID) {
             opponent.victories++;
           }
         });
@@ -364,15 +360,15 @@ module.exports = {
       case "3rd":
         opponents.forEach(opponent => {
           //Second player definitely exists
-          if(opponent._id === firstOppID){
+          if (opponent._id === firstOppID) {
             opponent.losses++;
           }
           //Third player definitely exists
-          if(secondOppID != null && opponent._id === secondOppID){
+          if (secondOppID != null && opponent._id === secondOppID) {
             opponent.losses++;
           }
           //Check if fourth player exists 
-          if(thirdOppID != null && opponent._id === thirdOppID){
+          if (thirdOppID != null && opponent._id === thirdOppID) {
             opponent.victories++;
           }
         });
@@ -380,15 +376,15 @@ module.exports = {
       case "4th":
         opponents.forEach(opponent => {
           //Second player definitely exists 
-          if(opponent._id === firstOppID){
+          if (opponent._id === firstOppID) {
             opponent.losses++;
           }
           //Third player definitely exists
-          if(opponent._id === secondOppID){
+          if (opponent._id === secondOppID) {
             opponent.losses++;
           }
           //Fourth player definitely exists
-          if(opponent._id === thirdOppID){
+          if (opponent._id === thirdOppID) {
             opponent.losses++;
           }
         });
@@ -397,21 +393,8 @@ module.exports = {
         break;
     }
   },
-  opponentAddGames(playerID, opponents, game) {
-    game.players.forEach(player => {
-      if(player._id != null && player._id != playerID){
-        opponents.forEach(opponent => {
-          if(opponent._id === player._id){
-            opponent.opponentsStats.games.push(game);
-            opponent.opponentsStats.scores.push(this.findScoresSingleGame(game));
-          }
-        })
-      }
-    });
-    
-  },
 
-  findScoresSingleGame: function(game){
+  findScoresSingleGame: function (game) {
     var scoreboard = [];
 
     game.players.forEach(element => {
@@ -425,13 +408,27 @@ module.exports = {
     return scoreboard;
   },
 
+  opponentAddGames(playerID, opponents, game) {
+    game.players.forEach(player => {
+      if (player._id != null && player._id != playerID) {
+        opponents.forEach(opponent => {
+          if (opponent._id === player._id) {
+            opponent.opponentsStats.games.push(game);
+            opponent.opponentsStats.scores.push(this.findScoresSingleGame(game));
+          }
+        })
+      }
+    });
+
+  },
+
   findPlayersGameStats: function (gameTable, userID) {
 
     //Returned Struct
     var player = {
       positionStats: {
         pos1stats: {
-          games: [],
+          games: [], //TODO only games.length and games.players.names are being used 
           scores: [],
           diff: []
         },
@@ -449,13 +446,13 @@ module.exports = {
           games: [],
           scores: [],
           diff: [],
-        },  
-        posAllLosesStats:{
+        },
+        posAllLosesStats: {
           games: [],
           scores: [],
           diff: []
         },
-        posAllGamesStats:{
+        posAllGamesStats: {
           games: [],
           scores: [],
           diff: []
@@ -475,8 +472,8 @@ module.exports = {
     });
 
     //Store all games 
-    player.positionStats.posAllGamesStats.games = games; 
- 
+    player.positionStats.posAllGamesStats.games = games;
+
     //2. Find players scores in these games 
     games.forEach(game => {
       var scoreboard = [];
@@ -484,14 +481,13 @@ module.exports = {
         if (element.scores != null) {
           score = element.scores.reduce(this.findTotalScoreSingleGameEachPlayer);
           scoreboard.push(score);
-        }
-        else{
+        } else {
           scoreboard.push(0);
         }
       });
       player.positionStats.posAllGamesStats.scores.push(scoreboard);
     });
-    
+
 
     //3. Find all different opponents and initialize them  
     games.forEach(element => {
@@ -508,11 +504,11 @@ module.exports = {
               victories: 0,
               losses: 0,
               ties: 0,
-              opponentsStats:{
+              opponentsStats: {
                 games: [],
                 scores: [],
                 diff: []
-              } 
+              }
             }
             player.opponents.push(newOpponent);
           }
@@ -582,9 +578,71 @@ module.exports = {
 
     //Find top 5 games 
 
-
     //Find least 5 games
     return player;
-  }
+  },
 
+  /*----- End of Player profile's functions ------*/
+
+  findSpecificGame: function (gameTable, index) {
+    var resultGame = null;
+    gameTable.forEach(game => {
+      if (game._id === index) {
+        resultGame = game;
+      }
+    });
+    return resultGame;
+  },
+
+  findPositionSingleGame: function (scoreTable) {
+    //In case of tie, players are returned both as top position 
+    scoreTable = [200, 300, 200, 200];
+    var scoreTableTemp = scoreTable.sort(function (a, b) {
+      return b - a
+    });
+    //console.log(scoreTableTemp);
+    var tempPosition = [0, 0, 0, 0];
+    var currentPosition = 1;
+
+    for (var i = 0; i < scoreTableTemp.length; i++) {
+      
+      if (i === scoreTableTemp.length - 1) {
+        tempPosition[i] = currentPosition;
+        break;
+      } else {
+        if (scoreTableTemp[i] > scoreTableTemp[i + 1]) {
+          tempPosition[i] = currentPosition;
+          currentPosition++;
+        } else if (scoreTableTemp[i] === scoreTableTemp[i + 1]) {
+          //Tie 
+          tempPosition[i] = currentPosition;
+          tempPosition[i + 1] = currentPosition;
+        } else {}
+      }
+
+    }
+    //TODO return to unsorted 
+
+
+    return position;
+  },
+
+  findGameStats: function (game) {
+    /* Function that needs: Position per game, Total score for game, Top single move
+                          Median points per move, Worst Move */
+    var gameStats = {
+      position: [],
+      score: [],
+      topSingleMove: [],
+      medianPerMove: [],
+      WorstMove: [],
+    }
+
+    /* Find Score for each player */
+    gameStats.score = this.findScoresSingleGame(game);
+
+    /*Find Position for each player */
+    //gameStats.position = this.findPositionSingleGame(gameStats.score);
+
+  }
 }

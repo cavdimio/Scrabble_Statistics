@@ -3,10 +3,9 @@
   font-size: 1rem;
 }
 
-tr:hover { 
-  /*  background: rgba(185, 200, 219, 0.863);   */
-   cursor: pointer;
- } 
+ tr:hover {   
+   cursor: default;
+ }  
 
  tr#cell_hover:hover {
   background: rgba(185, 200, 219, 0.863);  

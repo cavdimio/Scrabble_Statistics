@@ -1,148 +1,129 @@
 <!-- Card stats -->
 <div class="row">
-    <div class="col-xl-4 col-md-6 col-sm-6">
-      <div class="card card-stats">
-        <!-- Card body -->
-        <div class="card-body">
-          <div class="row">
-            <div class="col">
-              <h5 class="card-title text-uppercase text-muted mb-0">Score</h5>
-              <div>
-                <span class="h2 font-weight-bold mb-0"><%= findPlayersNames[0] %> </span>
-                <span class="h2 font-weight-bold mb-0 float-right"> <%= score[0] %></span>
-              </div>
-              <div>
-                <span class="h2 font-weight-bold mb-0"><%= findPlayersNames[1] %></span>
-                <span class="h2 font-weight-bold mb-0 float-right"> <%= score[1] %></span>
-              </div>
+  <div class="col-xl-4 col-md-6 col-sm-6">
+    <div class="card card-stats">
+      <!-- Card body -->
+      <div class="card-body">
+        <div class="row">
+          <div class="col">
+            <h5 class="card-title text-uppercase text-muted mb-0">Position</h5>
+            <% for (var i=0; i<currentGame.players.length; i++){ %>
+            <div>
+              <% if ( currentGame.players[i].name != null){ %>
+              <span class="h2 font-weight-bold mb-0"><%= currentGame.players[i].name %> </span>
+              <!-- <span class="h2 font-weight-bold mb-0 float-right">  score[0] </span> -->
+              <% } %>
             </div>
-            <div class="col-auto">
-              <div class="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
-                <i class="ni ni-active-40"></i>
-              </div>
+            <% } %>
+          </div>
+          <div class="col-auto">
+            <div class="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
+              <i class="ni ni-active-40"></i>
             </div>
           </div>
-          <!-- <p class="mt-3 mb-0 text-sm">
-          <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
-          <span class="text-nowrap">Since last month</span>
-        </p> -->
-        </div>
-      </div>
-    </div>
-    <div class="col-xl-4 col-md-6 col-sm-6">
-      <div class="card card-stats">
-        <!-- Card body -->
-        <div class="card-body">
-          <div class="row">
-            <div class="col">
-              <h5 class="card-title text-uppercase text-muted mb-0">Top Game Score</h5>
-              <div>
-                <span class="h2 font-weight-bold mb-0"><%= findPlayersNames[0] %></span>
-                <span class="h2 font-weight-bold mb-0 float-right"> <%= maximumGameScore[0] %> </span>
-              </div>
-              <div>
-                <span class="h2 font-weight-bold mb-0"><%= findPlayersNames[1] %></span>
-                <span class="h2 font-weight-bold mb-0 float-right"><%= maximumGameScore[1] %></span>
-              </div>
-            </div>
-            <div class="col-auto">
-              <div class="icon icon-shape bg-gradient-orange text-white rounded-circle shadow">
-                <i class="ni ni-chart-pie-35"></i>
-              </div>
-            </div>
-          </div>
-          <!-- <p class="mt-3 mb-0 text-sm">
-          <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
-          <span class="text-nowrap">Since last month</span>
-        </p> -->
-        </div>
-      </div>
-    </div>
-    <div class="col-xl-4 col-md-6 col-sm-6">
-      <div class="card card-stats">
-        <!-- Card body -->
-        <div class="card-body">
-          <div class="row">
-            <div class="col">
-              <h5 class="card-title text-uppercase text-muted mb-0">Top Single Move</h5>
-              <div>
-                <span class="h2 font-weight-bold mb-0"><%= findPlayersNames[0] %></span>
-                <span class="h2 font-weight-bold mb-0 float-right"><%= findTopMovePerPlayer[0] %></span>
-              </div>
-              <div>
-                <span class="h2 font-weight-bold mb-0"><%= findPlayersNames[1] %></span>
-                <span class="h2 font-weight-bold mb-0 float-right"><%= findTopMovePerPlayer[1] %></span>
-              </div>
-            </div>
-            <div class="col-auto">
-              <div class="icon icon-shape bg-gradient-green text-white rounded-circle shadow">
-                <i class="ni ni-money-coins"></i>
-              </div>
-            </div>
-          </div>
-          <!-- <p class="mt-3 mb-0 text-sm">
-          <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
-          <span class="text-nowrap">Since last month</span>
-        </p> -->
-        </div>
-      </div>
-    </div>
-    <div class="col-xl-4 col-md-6 col-sm-6">
-      <div class="card card-stats">
-        <!-- Card body -->
-        <div class="card-body">
-          <div class="row">
-            <div class="col">
-              <h5 class="card-title text-uppercase text-muted mb-0">Points per game</h5>
-              <div>
-                <span class="h2 font-weight-bold mb-0"><%= findPlayersNames[0] %></span>
-                <span class="h2 font-weight-bold mb-0 float-right"><%= findMedianPerPlayer[0] %></span>
-              </div>
-              <div>
-                <span class="h2 font-weight-bold mb-0"><%= findPlayersNames[1] %></span>
-                <span class="h2 font-weight-bold mb-0 float-right"><%= findMedianPerPlayer[1] %></span>
-              </div>
-            </div>
-            <div class="col-auto">
-              <div class="icon icon-shape bg-gradient-info text-white rounded-circle shadow">
-                <i class="ni ni-chart-bar-32"></i>
-              </div>
-            </div>
-          </div>
-          <!-- <p class="mt-3 mb-0 text-sm">
-          <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
-          <span class="text-nowrap">Since last month</span>
-        </p> -->
-        </div>
-      </div>
-    </div>
-    <div class="col-xl-4 col-md-6 cols-sm-6">
-      <div class="card card-stats">
-        <!-- Card body -->
-        <div class="card-body">
-          <div class="row">
-            <div class="col">
-              <h5 class="card-title text-uppercase text-muted mb-0">Points per move</h5>
-              <div>
-                <span class="h2 font-weight-bold mb-0"><%= findPlayersNames[0] %></span>
-                <span class="h2 font-weight-bold mb-0 float-right"><%= findMedianPerMovePerPlayer[0] %></span>
-              </div>
-              <div>
-                <span class="h2 font-weight-bold mb-0"><%= findPlayersNames[1] %></span>
-                <span class="h2 font-weight-bold mb-0 float-right"><%= findMedianPerMovePerPlayer[1] %></span>
-              </div>
-            </div>
-            <div class="col-auto">
-              <div class="icon icon-shape bg-gradient-purple text-white rounded-circle shadow">
-                <i class="ni ni-money-coins"></i>
-              </div>
-            </div>
-          </div>
-          <!-- <p class="mt-3 mb-0 text-sm">
-          <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
-          <span class="text-nowrap">Since last month</span>
-        </p> -->
         </div>
       </div>
     </div>
   </div>
+  <div class="col-xl-4 col-md-6 col-sm-6">
+    <div class="card card-stats">
+      <!-- Card body -->
+      <div class="card-body">
+        <div class="row">
+          <div class="col">
+            <h5 class="card-title text-uppercase text-muted mb-0"> Score </h5>
+            <% for (var i=0; i<currentGame.players.length; i++){ %>
+            <div>
+              <% if ( currentGame.players[i].name != null){ %>
+              <span class="h2 font-weight-bold mb-0"><%= currentGame.players[i].name %></span>
+              <!-- <span class="h2 font-weight-bold mb-0 float-right">  maximumGameScore[0] </span> -->
+              <% } %>
+            </div>
+            <% } %>
+
+          </div>
+          <div class="col-auto">
+            <div class="icon icon-shape bg-gradient-orange text-white rounded-circle shadow">
+              <i class="ni ni-chart-pie-35"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-4 col-md-6 col-sm-6">
+    <div class="card card-stats">
+      <!-- Card body -->
+      <div class="card-body">
+        <div class="row">
+          <div class="col">
+            <h5 class="card-title text-uppercase text-muted mb-0">Top Single Move</h5>
+            <% for (var i=0; i<currentGame.players.length; i++){ %>
+            <div>
+              <% if ( currentGame.players[i].name != null){ %>
+              <span class="h2 font-weight-bold mb-0"><%= currentGame.players[i].name %></span>
+              <!-- <span class="h2 font-weight-bold mb-0 float-right"> findTopMovePerPlayer[0] </span> -->
+              <% } %>
+            </div>
+            <% } %>
+          </div>
+          <div class="col-auto">
+            <div class="icon icon-shape bg-gradient-green text-white rounded-circle shadow">
+              <i class="ni ni-money-coins"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-4 col-md-6 col-sm-6">
+    <div class="card card-stats">
+      <!-- Card body -->
+      <div class="card-body">
+        <div class="row">
+          <div class="col">
+            <h5 class="card-title text-uppercase text-muted mb-0">Median Points per move</h5>
+            <% for (var i=0; i<currentGame.players.length; i++){ %>
+            <div>
+              <% if ( currentGame.players[i].name != null){ %>
+              <span class="h2 font-weight-bold mb-0"><%= currentGame.players[i].name %></span>
+              <!-- <span class="h2 font-weight-bold mb-0 float-right"> findMedianPerPlayer[0] </span> -->
+              <% } %>
+            </div>
+            <% } %>
+          </div>
+          <div class="col-auto">
+            <div class="icon icon-shape bg-gradient-info text-white rounded-circle shadow">
+              <i class="ni ni-chart-bar-32"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-4 col-md-6 cols-sm-6">
+    <div class="card card-stats">
+      <!-- Card body -->
+      <div class="card-body">
+        <div class="row">
+          <div class="col">
+            <h5 class="card-title text-uppercase text-muted mb-0">Worst move</h5>
+            <% for (var i=0; i<currentGame.players.length; i++){ %>
+            <div>
+              <% if ( currentGame.players[i].name != null){ %>
+              <span class="h2 font-weight-bold mb-0"><%= currentGame.players[i].name %></span>
+              <!-- <span class="h2 font-weight-bold mb-0 float-right"> findMedianPerMovePerPlayer[0] </span> -->
+              <% } %>
+            </div>
+            <% } %>
+          </div>
+          <div class="col-auto">
+            <div class="icon icon-shape bg-gradient-purple text-white rounded-circle shadow">
+              <i class="ni ni-money-coins"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

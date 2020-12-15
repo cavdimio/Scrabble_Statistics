@@ -22,7 +22,7 @@ app.use(cors());
 app.use(express.static(__dirname + '/public'));
 
 
-var numOfGame = 0;
+var gameID;
 
 
 app.get("/scrabble-statistics", (req, res, next) => {
@@ -44,10 +44,10 @@ app.get("/scrabble-statistics", (req, res, next) => {
     losersArray: losersArray,
     findAllWinnerScores: findAllWinnerScores,
     findAllLoserScores: findAllLoserScores,
-    score: score,
-    maximumGameScore: maximumGameScore,
-    findTopMovePerPlayer: findTopMovePerPlayer,
-    findMedianPerPlayer: findMedianPerPlayer,
+    score: score, //TODO new implementation 
+    maximumGameScore: maximumGameScore, //TODO new implementation
+    findTopMovePerPlayer: findTopMovePerPlayer, //TODO new implementation
+    findMedianPerPlayer: findMedianPerPlayer, //TODO new implementation
     findMedianPerMovePerPlayer: findMedianPerMovePerPlayer,
     findPlayersNames: findPlayersNames
   });
@@ -59,16 +59,31 @@ app.get("/", (req, res, next) => {
 });
 
 app.get("/single-game-stats", (req, res, next) => {
-  const findSpecificStats = scrabble_lib.findSpecificStats(scrabbledb, numOfGame);
+  const currentGame = scrabble_lib.findSpecificGame(scrabbledb, gameID);
+  // score: score, //TODO new implementation 
+  // maximumGameScore: maximumGameScore, //TODO new implementation
+  // findTopMovePerPlayer: findTopMovePerPlayer, //TODO new implementation
+  // findMedianPerPlayer: findMedianPerPlayer, //TODO new implementation
+  /* Function that needs: Position per game, Total score for game, Top single move
+                          Median points per move, Worst Move */
 
-  // const findDiscrepancies = scrabble_lib.findDiscrepancies(scrabbledb);
-  res.render("partials/single-game-stats", {
-    findSpecificStats: findSpecificStats
-  });
+  /* Check if game exists */
+  if(currentGame != null){
+    const findGameStats= scrabble_lib.findGameStats(currentGame);
+    res.render("partials/single-game-stats", {
+      currentGame: currentGame
+    });
+  }
+  else{
+    /* Game doesn't exist */
+    res.render("error_page");
+  } 
 });
 
 app.post("/single-game-stats", (req, res, next) => {
-  numOfGame = req.body.numOfGame;
+  console.log(req.body);
+  gameID = req.body.game_id;
+  console.log(gameID);
   res.redirect("/single-game-stats");
 });
 
