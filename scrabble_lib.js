@@ -397,6 +397,19 @@ module.exports = {
         break;
     }
   },
+  opponentAddGames(playerID, opponents, game) {
+    game.players.forEach(player => {
+      if(player._id != null && player._id != playerID){
+        opponents.forEach(opponent => {
+          if(opponent._id === player._id){
+            opponent.opponentsStats.games.push(game);
+            opponent.opponentsStats.scores.push(this.findScoresSingleGame(game));
+          }
+        })
+      }
+    });
+    
+  },
 
   findScoresSingleGame: function(game){
     var scoreboard = [];
@@ -416,48 +429,56 @@ module.exports = {
 
     //Returned Struct
     var player = {
-      games: [],
-      scores: [],
       positionStats: {
-        pos1num: 0,
         pos1stats: {
           games: [],
           scores: [],
           diff: []
         },
-        pos2num: 0,
         pos2stats: {
           games: [],
           scores: [],
           diff: []
         },
-        pos3num: 0,
         pos3stats: {
           games: [],
           scores: [],
           diff: []
         },
-        pos4num: 0,
         pos4stats: {
           games: [],
           scores: [],
           diff: [],
+        },  
+        posAllLosesStats:{
+          games: [],
+          scores: [],
+          diff: []
+        },
+        posAllGamesStats:{
+          games: [],
+          scores: [],
+          diff: []
         }
       },
       opponents: []
     }
 
     //General Statistics
+    var games = [];
 
     //1. Find in which games the player participated 
     gameTable.forEach(element => {
       if (element.players[0]._id === userID || element.players[1]._id === userID || element.players[2]._id === userID || element.players[3]._id === userID) {
-        player.games.push(element);
+        games.push(element);
       }
     });
+
+    //Store all games 
+    player.positionStats.posAllGamesStats.games = games; 
  
     //2. Find players scores in these games 
-    player.games.forEach(game => {
+    games.forEach(game => {
       var scoreboard = [];
       game.players.forEach(element => {
         if (element.scores != null) {
@@ -468,12 +489,12 @@ module.exports = {
           scoreboard.push(0);
         }
       });
-      player.scores.push(scoreboard);
+      player.positionStats.posAllGamesStats.scores.push(scoreboard);
     });
     
 
     //3. Find all different opponents and initialize them  
-    player.games.forEach(element => {
+    games.forEach(element => {
       element.players.forEach(el => {
         /* Check if opponent is not current player & if he exists */
         if (el._id != null && el._id != userID) {
@@ -487,6 +508,11 @@ module.exports = {
               victories: 0,
               losses: 0,
               ties: 0,
+              opponentsStats:{
+                games: [],
+                scores: [],
+                diff: []
+              } 
             }
             player.opponents.push(newOpponent);
           }
@@ -497,13 +523,12 @@ module.exports = {
     //Specific statistics 
 
     //Find in which games won & lost and the difference in each occasion 
-    player.games.forEach(element => {
+    games.forEach(element => {
       var scoreboard = this.findSortedScoreBoard(element);
       var currentGamesScores = this.findScoresSingleGame(element);
 
       if (userID === scoreboard[0]._id) {
         /* First Positions  */
-        player.positionStats.pos1num++;
         /* Save relative games */
         player.positionStats.pos1stats.games.push(element);
         /* Save scores of current game */
@@ -512,34 +537,46 @@ module.exports = {
         player.positionStats.pos1stats.diff.push(this.calculateDiffs(0, scoreboard));
         /* Add victory to opponent table */
         this.calculateStatsVsOpponent("1st", player.opponents, scoreboard[1]._id, scoreboard[2]._id, scoreboard[3]._id);
+        /* Add game to these opponents */
+        this.opponentAddGames(userID, player.opponents, element);
 
       } else if (userID === scoreboard[1]._id) {
         //Second Positions
-        player.positionStats.pos2num++;
         player.positionStats.pos2stats.games.push(element);
         player.positionStats.pos2stats.scores.push(currentGamesScores);
         player.positionStats.pos2stats.diff.push(this.calculateDiffs(1, scoreboard));
         /* Add loss to opponent table */
         this.calculateStatsVsOpponent("2nd", player.opponents, scoreboard[0]._id, scoreboard[2]._id, scoreboard[3]._id);
+        /* Add game to these opponents */
+        this.opponentAddGames(userID, player.opponents, element);
+        //Add to all loses
+        player.positionStats.posAllLosesStats.games.push(element);
+        player.positionStats.posAllLosesStats.scores.push(currentGamesScores);
 
       } else if (userID === scoreboard[2]._id) {
         //Third Positions
-        player.positionStats.pos3num++;
         player.positionStats.pos3stats.games.push(element);
         player.positionStats.pos3stats.scores.push(currentGamesScores);
         player.positionStats.pos3stats.diff.push(this.calculateDiffs(2, scoreboard));
         /* Add loss to opponent table */
         this.calculateStatsVsOpponent("3rd", player.opponents, scoreboard[0]._id, scoreboard[1]._id, scoreboard[3]._id);
-
+        /* Add game to these opponents */
+        this.opponentAddGames(userID, player.opponents, element);
+        //Add to all loses
+        player.positionStats.posAllLosesStats.games.push(element);
+        player.positionStats.posAllLosesStats.scores.push(currentGamesScores);
       } else {
         //Fourth Positions
-        player.positionStats.pos4num++;
         player.positionStats.pos4stats.games.push(element);
         player.positionStats.pos4stats.scores.push(currentGamesScores);
         player.positionStats.pos4stats.diff.push(this.calculateDiffs(3, scoreboard));
         /* Add loss to opponent table */
         this.calculateStatsVsOpponent("4th", player.opponents, scoreboard[0]._id, scoreboard[1]._id, scoreboard[2]._id);
-
+        /* Add game to these opponents */
+        this.opponentAddGames(userID, player.opponents, element);
+        //Add to all loses
+        player.positionStats.posAllLosesStats.games.push(element);
+        player.positionStats.posAllLosesStats.scores.push(currentGamesScores);
       }
     });
 

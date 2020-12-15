@@ -85,55 +85,17 @@ app.get("/:id", (req, res, next) => {
   /* Check if user exists */
   if(findPlayersNameFromID != null){
     const findPlayersGameStats= scrabble_lib.findPlayersGameStats(scrabbledb, userID);
-    const myTable = [
-      ["Takis" , "Babis", "Bob", "Maria"], 
-      ["Takis" , "Babis", "Bob", "Maria"], 
-      ["Takis" , "Babis", "Bob", "Maria"], 
-    ];
-    const myscores = [
-      [110 , 220, 330, 450], 
-      [11 , 20, 3, 4], 
-      [140 , 320, 330, 650], 
-    ];
-
-    const myObject = {
-      name: "blue", 
-      score: 1123
-    };
 
     res.render("my_profile_page", {
       name: findPlayersNameFromID,
-      games: findPlayersGameStats.games,
-      scores: findPlayersGameStats.scores,
       positionStats: findPlayersGameStats.positionStats,
-      pos1stats: findPlayersGameStats.positionStats.pos1stats.games,
       opponents: findPlayersGameStats.opponents,
-      myTable: myTable, 
-      myscores: myscores,
-      myObject: myObject,
-      //gamesNum:  
-      //opponents
-      //stats 
-      //victories-losses
     });
   }
   else{
     /* User doesn't exist */
     res.render("error_page");
   }
-  // findPlayersNameFromID.forEach((player) => {
-    
-  //   if (_.capitalize(player) === user) {
-  //     res.render("my_profile_page", {
-  //       name: player
-  //       //games num 
-  //       //opponents
-  //       //stats 
-  //       //victories-losses
-  //     });
-  //   }
-  // });
-  // res.render("error_page");
 });
 
 app.get("/test", (req, res, next) => {

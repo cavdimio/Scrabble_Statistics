@@ -48,7 +48,7 @@
               </tr>
             </thead>
             <tbody class="list">
-              <tr>
+              <tr id="cell_hover">
                 <th scope="row">
                   <div class="media align-items-center"
                        onclick="populateTable('victories')">
@@ -59,10 +59,10 @@
                 </th>
                 <td class="budget"
                     onclick="populateTable('victories')">
-                  <%= positionStats.pos1num %>
+                  <%= positionStats.pos1stats.games.length %>
                 </td>
               </tr>
-              <tr>
+              <tr id="cell_hover">
                 <th scope="row">
                   <div class="media align-items-center"
                        onclick="populateTable('2ndPosition')">
@@ -73,10 +73,10 @@
                 </th>
                 <td class="budget"
                     onclick="populateTable('2ndPosition')">
-                  <%= positionStats.pos2num %>
+                  <%= positionStats.pos2stats.games.length %>
                 </td>
               </tr>
-              <tr>
+              <tr id="cell_hover">
                 <th scope="row">
                   <div class="media align-items-center"
                        onclick="populateTable('3rdPosition')">
@@ -87,10 +87,10 @@
                 </th>
                 <td class="budget"
                     onclick="populateTable('3rdPosition')">
-                  <%= positionStats.pos3num %>
+                  <%= positionStats.pos3stats.games.length %>
                 </td>
               </tr>
-              <tr>
+              <tr id="cell_hover">
                 <th scope="row">
                   <div class="media align-items-center"
                        onclick="populateTable('4thPosition')">
@@ -101,10 +101,10 @@
                 </th>
                 <td class="budget"
                     onclick="populateTable('4thPosition')">
-                  <%= positionStats.pos4num %>
+                  <%= positionStats.pos4stats.games.length %>
                 </td>
               </tr>
-              <tr>
+              <tr id="cell_hover">
                 <th scope="row">
                   <div class="media align-items-center"
                        onclick="populateTable('allLoses')">
@@ -115,13 +115,13 @@
                 </th>
                 <td class="budget"
                     onclick="populateTable('allLoses')">
-                  <%= positionStats.pos2num + positionStats.pos3num + positionStats.pos4num %>
+                  <%= positionStats.posAllLosesStats.games.length %>
                 </td>
               </tr>
-              <tr>
+              <tr id="cell_hover">
                 <th scope="row">
                   <div class="media align-items-center"
-                       onclick="populateTable('allLoses')">
+                       onclick="populateTable('allGames')">
                     <div class="media-body">
                       <span class="name mb-0 text-sm">Games Total</span>
                     </div>
@@ -129,7 +129,7 @@
                 </th>
                 <td class="budget"
                     onclick="populateTable('allGames')">
-                  <%= games.length %>
+                  <%= positionStats.posAllGamesStats.games.length %>
                 </td>
               </tr>
             </tbody>
@@ -159,22 +159,26 @@
               </tr>
             </thead>
             <tbody class="list">
-              <tr>
-                <% for (var i=0; i<opponents.length; i++){ %>
-                <th scope="row">
+              <% for (var i=0; i<opponents.length; i++){ %>
+              <tr id="cell_hover">
+                <th scope="row"
+                    onclick="populateTable('UserID:' + '<%= opponents[i]._id %>')">
                   <div class="media align-items-center">
                     <div class="media-body">
                       <span class="name mb-0 text-sm"><%= opponents[i].name %> </span>
                     </div>
                   </div>
                 </th>
-                <td class="budget">
+                <td class="budget"
+                    onclick="populateTable(opponents[i])">
                   <%= opponents[i].victories %>
                 </td>
-                <td class="budget">
+                <td class="budget"
+                    onclick="populateTable(opponents[i])">
                   <%= opponents[i].losses %>
                 </td>
-                <td class="budget">
+                <td class="budget"
+                    onclick="populateTable(opponents[i])">
                   <%= opponents[i].ties %>
                 </td>
               </tr>
@@ -189,11 +193,12 @@
             <!-- Card header -->
             <div class="card-header border-0">
               <h3 class="mb-0"
-                  id="general-table-title">Your games, <%= name %></h3>
+                  id="general-table-title">Your Games, <%= name %></h3>
             </div>
             <!-- Light table -->
             <div class="table-responsive">
-              <table class="table align-items-center table-flush">
+              <table class="table align-items-center table-flush"
+                     id="parentDiv">
                 <thead class="thead-light">
                   <tr>
                     <th scope="col"
@@ -229,19 +234,22 @@
                         </thead>
                         <tbody class="list"
                                id="general-player0-table-body">
-                          <% for (var i=0; i<games.length; i++){ %>
-                          <tr>
+                          <% for (var i=0; i<positionStats.posAllGamesStats.games.length; i++){ %>
+                          <tr id="cell_hover"
+                              class="all_cells_hover">
                             <td>
                               <div class="media align-items-center">
                                 <div class="media-body">
-                                  <span class="name mb-0 text-sm"> <%= games[i].players[0].name %></span>
+                                  <span class="name mb-0 text-sm">
+                                    <%= positionStats.posAllGamesStats.games[i].players[0].name %></span>
                                 </div>
                               </div>
                             </td>
                             <td>
                               <div class="media align-items-center">
                                 <div class="media-body">
-                                  <span class="name mb-0 text-sm"> <%= scores[i][0] %> </span>
+                                  <span class="name mb-0 text-sm"> <%= positionStats.posAllGamesStats.scores[i][0] %>
+                                  </span>
                                 </div>
                               </div>
                             </td>
@@ -264,19 +272,22 @@
                         </thead>
                         <tbody class="list"
                                id="general-player1-table-body">
-                          <% for (var i=0; i<games.length; i++){ %>
-                          <tr>
+                          <% for (var i=0; i<positionStats.posAllGamesStats.games.length; i++){ %>
+                          <tr id="cell_hover"
+                              class="all_cells_hover">
                             <td>
                               <div class="media align-items-center">
                                 <div class="media-body">
-                                  <span class="name mb-0 text-sm"> <%= games[i].players[1].name %></span>
+                                  <span class="name mb-0 text-sm">
+                                    <%= positionStats.posAllGamesStats.games[i].players[1].name %></span>
                                 </div>
                               </div>
                             </td>
                             <td>
                               <div class="media align-items-center">
                                 <div class="media-body">
-                                  <span class="name mb-0 text-sm"> <%= scores[i][1] %> </span>
+                                  <span class="name mb-0 text-sm"> <%= positionStats.posAllGamesStats.scores[i][1] %>
+                                  </span>
                                 </div>
                               </div>
                             </td>
@@ -299,14 +310,15 @@
                         </thead>
                         <tbody class="list"
                                id="general-player2-table-body">
-                          <% for (var i=0; i<games.length; i++){ %>
-                          <tr>
+                          <% for (var i=0; i<positionStats.posAllGamesStats.games.length; i++){ %>
+                          <tr id="cell_hover"
+                              class="all_cells_hover">
                             <td>
                               <div class="media align-items-center">
                                 <div class="media-body">
-                                  <% if ( games[i].players[2].name != null){ %>
+                                  <% if ( positionStats.posAllGamesStats.games[i].players[2].name != null){ %>
                                   <span class="name mb-0 text-sm">
-                                    <%= games[i].players[2].name %> </span>
+                                    <%= positionStats.posAllGamesStats.games[i].players[2].name %> </span>
                                   <% } else { %>
                                   <span class="name mb-0 text-sm">
                                     &nbsp; </span>
@@ -317,9 +329,9 @@
                             <td>
                               <div class="media align-items-center">
                                 <div class="media-body">
-                                  <% if ( scores[i][2] > 0){ %>
+                                  <% if ( positionStats.posAllGamesStats.scores[i][2] > 0){ %>
                                   <span class="name mb-0 text-sm">
-                                    <%= scores[i][2] %> </span>
+                                    <%= positionStats.posAllGamesStats.scores[i][2] %> </span>
                                   <% } else { %>
                                   <span class="name mb-0 text-sm">
                                     &nbsp; </span>
@@ -346,14 +358,15 @@
                         </thead>
                         <tbody class="list"
                                id="general-player3-table-body">
-                          <% for (var i=0; i<games.length; i++){ %>
-                          <tr>
+                          <% for (var i=0; i<positionStats.posAllGamesStats.games.length; i++){ %>
+                          <tr id="cell_hover"
+                              class="all_cells_hover">
                             <td>
                               <div class="media align-items-center">
                                 <div class="media-body">
-                                  <% if ( games[i].players[3].name != null){ %>
+                                  <% if ( positionStats.posAllGamesStats.games[i].players[3].name != null){ %>
                                   <span class="name mb-0 text-sm">
-                                    <%= games[i].players[3].name %> </span>
+                                    <%= positionStats.posAllGamesStats.games[i].players[3].name %> </span>
                                   <% } else { %>
                                   <span class="name mb-0 text-sm">
                                     &nbsp; </span>
@@ -364,9 +377,9 @@
                             <td>
                               <div class="media align-items-center">
                                 <div class="media-body">
-                                  <% if ( scores[i][3] > 0){ %>
+                                  <% if ( positionStats.posAllGamesStats.scores[i][3] > 0){ %>
                                   <span class="name mb-0 text-sm">
-                                    <%= scores[i][3] %> </span>
+                                    <%= positionStats.posAllGamesStats.scores[i][3] %> </span>
                                   <% } else { %>
                                   <span class="name mb-0 text-sm">
                                     &nbsp; </span>
@@ -392,12 +405,12 @@
                           </tr>
                         </thead>
                         <tbody class="list">
-                           <% for (var i=0; i<games.length; i++){ %>
+                           <% for (var i=0; i<positionStats.posAllGamesStats.games.length; i++){ %>
                           <tr>
                             <td>
                               <div class="media align-items-center">
                                 <div class="media-body">
-                                  <span class="name mb-0 text-sm"> <%= games[i].players[3].name %></span>
+                                  <span class="name mb-0 text-sm"> <%= positionStats.posAllGamesStats.games[i].players[3].name %></span>
                                 </div>
                               </div>
                             </td>
@@ -437,36 +450,65 @@
     var positionStats = <%-JSON.stringify(positionStats) %>;
     var posStats;
 
-    switch (category) {
-      case "victories":
-        $("#general-table-title").text('Your victories, <%= name %>');
-        length = positionStats.pos1num;
-        posStats = positionStats.pos1stats;
-        break;
-      case "2ndPosition":
-        $("#general-table-title").text('Your 2nd positions, <%= name %>');
-        length = positionStats.pos2num;
-        posStats = positionStats.pos2stats;
-        break;
-      case "3rdPosition":
-        $("#general-table-title").text('Your 3rd positions, <%= name %>');
-        length = positionStats.pos3num;
-        posStats = positionStats.pos3stats;
-        break;
-      case "4thPosition":
-        $("#general-table-title").text('Your 4th positions, <%= name %>');
-        length = positionStats.pos4num;
-        posStats = positionStats.pos4stats;
-        break;
-      case "allLoses": //TODO IMPLEMENTATION OF ALL LOSES --> current implementation errors
-        $("#general-table-title").text('Your defeats, <%= name %>');
-        length = positionStats.pos2num + positionStats.pos3num + positionStats.pos4num;
-        posStats = positionStats.pos2stats + positionStats.pos3stats + positionStats.pos4stats;
-        break;
-      default: //TODO IMPLEMENTATION OF ALL GAMES 
-        break;
-    }
 
+    //Check if category is a specific user id or a general category 
+    if (category.includes("UserID:")) {
+      //Specific user ID
+
+      //Bring all opponents 
+      var opponents = <%-JSON.stringify(opponents) %>;
+
+      //Store current opponent id 
+      var userID = category.replace("UserID:", "");
+
+      /* Find opponent */
+      opponents.forEach(opponent => {
+        if (opponent._id === userID) {
+
+          //Replace title 
+          $("#general-table-title").text('Your matches against ' + opponent.name);
+          length = opponent.opponentsStats.games.length;
+          posStats = opponent.opponentsStats;
+        }
+      });
+    } else {
+      //General category
+      switch (category) {
+        case "victories":
+          $("#general-table-title").text('Your Victories, <%= name %>');
+          length = positionStats.pos1stats.games.length;
+          posStats = positionStats.pos1stats;
+          break;
+        case "2ndPosition":
+          $("#general-table-title").text('Your 2nd positions, <%= name %>');
+          length = positionStats.pos2stats.games.length;
+          posStats = positionStats.pos2stats;
+          break;
+        case "3rdPosition":
+          $("#general-table-title").text('Your 3rd positions, <%= name %>');
+          length = positionStats.pos3stats.games.length;
+          posStats = positionStats.pos3stats;
+          break;
+        case "4thPosition":
+          $("#general-table-title").text('Your 4th positions, <%= name %>');
+          length = positionStats.pos4stats.games.length;
+          posStats = positionStats.pos4stats;
+          break;
+        case "allLoses":
+          $("#general-table-title").text('Your Defeats, <%= name %>');
+          length = positionStats.posAllLosesStats.games.length;
+          posStats = positionStats.posAllLosesStats;
+          break;
+        case "allGames":
+          $("#general-table-title").text('Your Games, <%= name %>');
+          length = positionStats.posAllGamesStats.games.length;
+          posStats = positionStats.posAllGamesStats;
+          break;
+        default:
+          $("#general-table-title").text('Arrived here!!');
+          break;
+      }
+    }
     //Delete previous tables
     $('#general-player0-table-body').empty();
     $('#general-player1-table-body').empty();
@@ -476,29 +518,29 @@
     for (var i = 0; i < length; i++) {
       for (var j = 0; j < 4; j++) {
         var tempName = posStats.games[i].players[j].name;
-        if(posStats.games[i].players[j].name == null){
+        if (posStats.games[i].players[j].name == null) {
           tempName = "\xa0";
         }
         var tempScore = posStats.scores[i][j];
-        if(posStats.scores[i][j] == 0){
+        if (posStats.scores[i][j] == 0) {
           tempScore = "\xa0";
         }
         //Change names of first player 
-        $('#general-player'+j+'-table-body').append(
-          '<tr>  \
+        $('#general-player' + j + '-table-body').append(
+          '<tr id="cell_hover" class="all_cells_hover">  \
             <td> \
               <div class="media align-items-center" > \
                 <div class="media-body" > \
-                  <span class="name mb-0 text-sm">' + tempName + 
-                  '</span> \
+                  <span class="name mb-0 text-sm">' + tempName +
+          '</span> \
                 </div> \
               </div> \
             </td> \
             <td > \
               <div class="media align-items-center" > \
                 <div class="media-body"> \
-                  <span class="name mb-0 text-sm">' + tempScore + 
-                  '</span> \
+                  <span class="name mb-0 text-sm">' + tempScore +
+          '</span> \
                 </div> \
               </div> \
             </td> \
@@ -507,6 +549,30 @@
       }
     }
 
+    //Handles the highlight of same rows in different elements (works after user clicks on a category)
+    $('.all_cells_hover').hover(
+      function () {
+        var childNum = $(this).index() + 1;
+        $('#parentDiv table tr:nth-child(' + childNum + ')').css("background-color", "rgba(185, 200, 219, 0.863)");
+      },
+      function () {
+        var childNum = $(this).index() + 1;
+        $('#parentDiv table tr:nth-child(' + childNum + ')').css("background-color", "inherit");
+      }
+    );
+
 
   }
+
+  //Handles the highlight of same rows in different elements (works in initialization)
+  $('.all_cells_hover').hover(
+    function () {
+      var childNum = $(this).index() + 1;
+      $('#parentDiv table tr:nth-child(' + childNum + ')').css("background-color", "rgba(185, 200, 219, 0.863)");
+    },
+    function () {
+      var childNum = $(this).index() + 1;
+      $('#parentDiv table tr:nth-child(' + childNum + ')').css("background-color", "inherit");
+    }
+  );
 </script>
