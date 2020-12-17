@@ -106,13 +106,21 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
 
-<script> //TODO implementation for up to 4 players 
+<script> 
+
+  //TODO implementation for up to 4 players 
+
+  var currentGame = <%-JSON.stringify(currentGame) %> ;
+  console.log(currentGame);
+  
   /* Get stats of first player */
-  var player1Name = "<%= currentGame.players[0].name %>";
-  var player1Scores = "<%= currentGame.players[0].scores %>".split(',').map(Number);
-  /* Get stats of second player */
-  var player2Name = "<%= currentGame.players[1].name %>";
-  var player2Scores = "<%= currentGame.players[1].scores %>".split(',').map(Number);
+  // var player1Name = "<%= currentGame.players[0].name %>";
+  // var player1Scores = "<%= currentGame.players[0].scores %>".split(',').map(Number);
+  // /* Get stats of second player */
+  // var player2Name = "<%= currentGame.players[1].name %>";
+  // var player2Scores = "<%= currentGame.players[1].scores %>".split(',').map(Number);
+
+
   /* Get number of rounds in a table */
   var length = parseInt("<%= currentGame.players[0].scores.length %>");
   var rounds = [];
@@ -120,24 +128,26 @@
     rounds.push(i);
   }
 
+  var colors = ["#3e95cd", "#5e72e4",  "#77e673" , "#e6c473"]; 
+  var datasets = []; 
+
+  for(var i=0; i<4; i++){
+    if( currentGame.players[i].name != null){
+      datasets.push({
+          label: currentGame.players[i].name,
+          borderColor: colors[i],
+          fill: false,
+          data: currentGame.players[i].scores
+      });
+    }
+  }
+
   var ctx = document.getElementById('myChart');
   var myChart = new Chart(ctx, {
     type: 'line',
     data: {
       labels: rounds,
-      datasets: [{
-          label: player1Name,
-          borderColor: "#3e95cd",
-          fill: false,
-          data: player1Scores
-        },
-        {
-          label: player2Name,
-          borderColor: "#5e72e4",
-          fill: false,
-          data: player2Scores
-        }
-      ]
+      datasets: datasets
     },
     options: {
       responsive: true,

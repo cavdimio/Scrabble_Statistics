@@ -21,37 +21,6 @@ app.use(cors());
 //Include public file for css
 app.use(express.static(__dirname + '/public'));
 
-//var gameID;
-
-
-app.get("/scrabble-statistics", (req, res, next) => {
-  const winnersArray = scrabble_lib.findAllWinners(scrabbledb);
-  const differenceArray = scrabble_lib.findAllDifferences(scrabbledb);
-  const losersArray = scrabble_lib.findAllLosers(scrabbledb);
-  const findAllWinnerScores = scrabble_lib.findAllWinnerScores(scrabbledb);
-  const findAllLoserScores = scrabble_lib.findAllLoserScores(scrabbledb);
-  const score = scrabble_lib.countAllWinners(scrabbledb);
-  const maximumGameScore = scrabble_lib.countMaximumGameScoreForEachPlayer(scrabbledb);
-  const findTopMovePerPlayer = scrabble_lib.findTopMovePerPlayer(scrabbledb);
-  const findMedianPerPlayer = scrabble_lib.findMedianPerPlayer(scrabbledb);
-  const findMedianPerMovePerPlayer = scrabble_lib.findMedianPerMovePerPlayer(scrabbledb);
-  const findPlayersNames = scrabble_lib.findPlayersNames(scrabbledb, 0);
-
-  res.render("scrabble_statistics", {
-    resultArray: winnersArray,
-    differenceArray: differenceArray,
-    losersArray: losersArray,
-    findAllWinnerScores: findAllWinnerScores,
-    findAllLoserScores: findAllLoserScores,
-    score: score, //TODO new implementation 
-    maximumGameScore: maximumGameScore, //TODO new implementation
-    findTopMovePerPlayer: findTopMovePerPlayer, //TODO new implementation
-    findMedianPerPlayer: findMedianPerPlayer, //TODO new implementation
-    findMedianPerMovePerPlayer: findMedianPerMovePerPlayer,
-    findPlayersNames: findPlayersNames
-  });
-
-});
 
 app.get("/", (req, res, next) => {
   res.render("home");
