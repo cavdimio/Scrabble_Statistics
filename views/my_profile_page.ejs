@@ -236,39 +236,25 @@
                           <tr id="cell_hover"
                               class="all_cells_hover">
                             <td>
-                              <form action="/single-game-stats"
-                                    method="post">
-                                <button type="submit"
-                                        name="game_id"
-                                        value="<%= positionStats.posAllGamesStats.games[i]._id %>"
-                                        class="my-btn-link">
-                                  <div class="media align-items-center">
-
-                                    <div class="media-body">
-                                      <span class="name mb-0 text-sm">
-                                        <%= positionStats.posAllGamesStats.games[i].players[0].name %></span>
-                                    </div>
-
+                              <a href="/game/<%= positionStats.posAllGamesStats.games[i]._id %>">
+                                <div class="media align-items-center">
+                                  <div class="media-body">
+                                    <span class="name mb-0 text-sm">
+                                      <%= positionStats.posAllGamesStats.games[i].players[0].name %></span>
                                   </div>
-                                </button>
-                              </form>
+                                </div>
+                              </a>
                             </td>
                             <td>
-                              <form action="/single-game-stats"
-                                    method="post">
-                                <button type="submit"
-                                        name="game_id"
-                                        value="<%= positionStats.posAllGamesStats.games[i]._id %>"
-                                        class="my-btn-link">
-                                  <div class="media align-items-center">
-                                    <div class="media-body">
-                                      <span class="name mb-0 text-sm">
-                                        <%= positionStats.posAllGamesStats.scores[i][0] %>
-                                      </span>
-                                    </div>
+                              <a href="/game/<%= positionStats.posAllGamesStats.games[i]._id %>">
+                                <div class="media align-items-center">
+                                  <div class="media-body">
+                                    <span class="name mb-0 text-sm">
+                                      <%= positionStats.posAllGamesStats.scores[i][0] %>
+                                    </span>
                                   </div>
-                                </button>
-                              </form>
+                                </div>
+                              </a>
                             </td>
                           </tr>
                           <% } %>
@@ -293,37 +279,25 @@
                           <tr id="cell_hover"
                               class="all_cells_hover">
                             <td>
-                              <form action="/single-game-stats"
-                                    method="post">
-                                <button type="submit"
-                                        name="game_id"
-                                        value="<%= positionStats.posAllGamesStats.games[i]._id %>"
-                                        class="my-btn-link">
-                                  <div class="media align-items-center">
-                                    <div class="media-body">
-                                      <span class="name mb-0 text-sm">
-                                        <%= positionStats.posAllGamesStats.games[i].players[1].name %></span>
-                                    </div>
+                              <a href="/game/<%= positionStats.posAllGamesStats.games[i]._id %>">
+                                <div class="media align-items-center">
+                                  <div class="media-body">
+                                    <span class="name mb-0 text-sm">
+                                      <%= positionStats.posAllGamesStats.games[i].players[1].name %></span>
                                   </div>
-                                </button>
-                              </form>
+                                </div>
+                              </a>
                             </td>
                             <td>
-                              <form action="/single-game-stats"
-                                    method="post">
-                                <button type="submit"
-                                        name="game_id"
-                                        value="<%= positionStats.posAllGamesStats.games[i]._id %>"
-                                        class="my-btn-link">
-                                  <div class="media align-items-center">
-                                    <div class="media-body">
-                                      <span class="name mb-0 text-sm">
-                                        <%= positionStats.posAllGamesStats.scores[i][1] %>
-                                      </span>
-                                    </div>
+                              <a href="/game/<%= positionStats.posAllGamesStats.games[i]._id %>">
+                                <div class="media align-items-center">
+                                  <div class="media-body">
+                                    <span class="name mb-0 text-sm">
+                                      <%= positionStats.posAllGamesStats.scores[i][1] %>
+                                    </span>
                                   </div>
-                                </button>
-                              </form>
+                                </div>
+                              </a>
                             </td>
                           </tr>
                           <% } %>
@@ -348,46 +322,34 @@
                           <tr id="cell_hover"
                               class="all_cells_hover">
                             <td>
-                              <form action="/single-game-stats"
-                                    method="post">
-                                <button type="submit"
-                                        name="game_id"
-                                        value="<%= positionStats.posAllGamesStats.games[i]._id %>"
-                                        class="my-btn-link">
-                                  <div class="media align-items-center">
-                                    <div class="media-body">
-                                      <% if ( positionStats.posAllGamesStats.games[i].players[2].name != null){ %>
-                                      <span class="name mb-0 text-sm">
-                                        <%= positionStats.posAllGamesStats.games[i].players[2].name %> </span>
-                                      <% } else { %>
-                                      <span class="name mb-0 text-sm">
-                                        &nbsp; </span>
-                                      <% } %>
-                                    </div>
+                              <a href="/game/<%= positionStats.posAllGamesStats.games[i]._id %>">
+                                <div class="media align-items-center">
+                                  <div class="media-body">
+                                    <% if ( positionStats.posAllGamesStats.games[i].players[2].name != null){ %>
+                                    <span class="name mb-0 text-sm">
+                                      <%= positionStats.posAllGamesStats.games[i].players[2].name %> </span>
+                                    <% } else { %>
+                                    <span class="name mb-0 text-sm">
+                                      &nbsp; </span>
+                                    <% } %>
                                   </div>
-                                </button>
-                              </form>
+                                </div>
+                              </a>
                             </td>
                             <td>
-                              <form action="/single-game-stats"
-                                    method="post">
-                                <button type="submit"
-                                        name="game_id"
-                                        value="<%= positionStats.posAllGamesStats.games[i]._id %>"
-                                        class="my-btn-link">
-                                  <div class="media align-items-center">
-                                    <div class="media-body">
-                                      <% if ( positionStats.posAllGamesStats.scores[i][2] > 0){ %>
-                                      <span class="name mb-0 text-sm">
-                                        <%= positionStats.posAllGamesStats.scores[i][2] %> </span>
-                                      <% } else { %>
-                                      <span class="name mb-0 text-sm">
-                                        &nbsp; </span>
-                                      <% } %>
-                                    </div>
+                              <a href="/game/<%= positionStats.posAllGamesStats.games[i]._id %>">
+                                <div class="media align-items-center">
+                                  <div class="media-body">
+                                    <% if ( positionStats.posAllGamesStats.scores[i][2] > 0){ %>
+                                    <span class="name mb-0 text-sm">
+                                      <%= positionStats.posAllGamesStats.scores[i][2] %> </span>
+                                    <% } else { %>
+                                    <span class="name mb-0 text-sm">
+                                      &nbsp; </span>
+                                    <% } %>
                                   </div>
-                                </button>
-                              </form>
+                                </div>
+                              </a>
                             </td>
                           </tr>
                           <% } %>
@@ -412,46 +374,34 @@
                           <tr id="cell_hover"
                               class="all_cells_hover">
                             <td>
-                              <form action="/single-game-stats"
-                                    method="post">
-                                <button type="submit"
-                                        name="game_id"
-                                        value="<%= positionStats.posAllGamesStats.games[i]._id %>"
-                                        class="my-btn-link">
-                                  <div class="media align-items-center">
-                                    <div class="media-body">
-                                      <% if ( positionStats.posAllGamesStats.games[i].players[3].name != null){ %>
-                                      <span class="name mb-0 text-sm">
-                                        <%= positionStats.posAllGamesStats.games[i].players[3].name %> </span>
-                                      <% } else { %>
-                                      <span class="name mb-0 text-sm">
-                                        &nbsp; </span>
-                                      <% } %>
-                                    </div>
+                              <a href="/game/<%= positionStats.posAllGamesStats.games[i]._id %>">
+                                <div class="media align-items-center">
+                                  <div class="media-body">
+                                    <% if ( positionStats.posAllGamesStats.games[i].players[3].name != null){ %>
+                                    <span class="name mb-0 text-sm">
+                                      <%= positionStats.posAllGamesStats.games[i].players[3].name %> </span>
+                                    <% } else { %>
+                                    <span class="name mb-0 text-sm">
+                                      &nbsp; </span>
+                                    <% } %>
                                   </div>
-                                </button>
-                              </form>
+                                </div>
+                              </a>
                             </td>
                             <td>
-                              <form action="/single-game-stats"
-                                    method="post">
-                                <button type="submit"
-                                        name="game_id"
-                                        value="<%= positionStats.posAllGamesStats.games[i]._id %>"
-                                        class="my-btn-link">
-                                  <div class="media align-items-center">
-                                    <div class="media-body">
-                                      <% if ( positionStats.posAllGamesStats.scores[i][3] > 0){ %>
-                                      <span class="name mb-0 text-sm">
-                                        <%= positionStats.posAllGamesStats.scores[i][3] %> </span>
-                                      <% } else { %>
-                                      <span class="name mb-0 text-sm">
-                                        &nbsp; </span>
-                                      <% } %>
-                                    </div>
+                              <a href="/game/<%= positionStats.posAllGamesStats.games[i]._id %>">
+                                <div class="media align-items-center">
+                                  <div class="media-body">
+                                    <% if ( positionStats.posAllGamesStats.scores[i][3] > 0){ %>
+                                    <span class="name mb-0 text-sm">
+                                      <%= positionStats.posAllGamesStats.scores[i][3] %> </span>
+                                    <% } else { %>
+                                    <span class="name mb-0 text-sm">
+                                      &nbsp; </span>
+                                    <% } %>
                                   </div>
-                                </button>
-                              </form>
+                                </div>
+                              </a>
                             </td>
                           </tr>
                           <% } %>
@@ -595,34 +545,22 @@
         $('#general-player' + j + '-table-body').append(
           '<tr id="cell_hover" class="all_cells_hover">  \
             <td> \
-              <form action="/single-game-stats" \
-                    method="post"> \
-                <button type="submit" \
-                        name="game_id" \
-                        value="'+ posStats.games[i]._id +'" \
-                        class="my-btn-link"> \
+              <a href="/game/' + posStats.games[i]._id + '"> \
                   <div class="media align-items-center" > \
                     <div class="media-body" > \
                       <span class="name mb-0 text-sm">' + tempName + '</span> \
                     </div> \
                   </div> \
-                </button> \
-              </form> \
+              </a> \
             </td> \
             <td > \
-              <form action="/single-game-stats" \
-                    method="post"> \
-                <button type="submit" \
-                        name="game_id" \
-                        value="'+ posStats.games[i]._id +'" \
-                        class="my-btn-link"> \
+              <a href="/game/' + posStats.games[i]._id + '"> \
                   <div class="media align-items-center" > \
                     <div class="media-body"> \
                       <span class="name mb-0 text-sm">' + tempScore + '</span> \
                     </div> \
                   </div> \
-                </button> \
-              </form> \
+                </a> \
             </td> \
           </tr>'
         );

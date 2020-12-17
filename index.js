@@ -21,10 +21,6 @@ app.use(cors());
 //Include public file for css
 app.use(express.static(__dirname + '/public'));
 
-
-var gameID;
-
-
 app.get("/scrabble-statistics", (req, res, next) => {
   const winnersArray = scrabble_lib.findAllWinners(scrabbledb);
   const differenceArray = scrabble_lib.findAllDifferences(scrabbledb);
@@ -58,33 +54,22 @@ app.get("/", (req, res, next) => {
   res.render("home");
 });
 
-app.get("/single-game-stats", (req, res, next) => {
+app.get("/game/?:game_id", (req, res, next) => {
+  const gameID = req.params.game_id;
   const currentGame = scrabble_lib.findSpecificGame(scrabbledb, gameID);
-  // score: score, //TODO new implementation 
-  // maximumGameScore: maximumGameScore, //TODO new implementation
-  // findTopMovePerPlayer: findTopMovePerPlayer, //TODO new implementation
-  // findMedianPerPlayer: findMedianPerPlayer, //TODO new implementation
-  /* Function that needs: Position per game, Total score for game, Top single move
-                          Median points per move, Worst Move */
 
   /* Check if game exists */
   if(currentGame != null){
-    const findGameStats= scrabble_lib.findGameStats(currentGame);
+    const gameStats= scrabble_lib.findGameStats(currentGame);
     res.render("partials/single-game-stats", {
-      currentGame: currentGame
+      currentGame: currentGame,
+      gameStats: gameStats
     });
   }
   else{
     /* Game doesn't exist */
     res.render("error_page");
   } 
-});
-
-app.post("/single-game-stats", (req, res, next) => {
-  console.log(req.body);
-  gameID = req.body.game_id;
-  console.log(gameID);
-  res.redirect("/single-game-stats");
 });
 
 app.get("/error-page", (req, res, next) => {
@@ -94,7 +79,7 @@ app.get("/error-page", (req, res, next) => {
 app.get("/:id", (req, res, next) => {
 
   /* Find user */ 
-  const userID = (req.params.id);
+  const userID = req.params.id;
   const findPlayersNameFromID = scrabble_lib.findPlayersNameFromID(userdb, userID);
   
   /* Check if user exists */

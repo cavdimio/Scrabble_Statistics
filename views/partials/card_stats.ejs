@@ -11,7 +11,7 @@
             <div>
               <% if ( currentGame.players[i].name != null){ %>
               <span class="h2 font-weight-bold mb-0"><%= currentGame.players[i].name %> </span>
-              <!-- <span class="h2 font-weight-bold mb-0 float-right">  score[0] </span> -->
+              <span class="h2 font-weight-bold mb-0 float-right"><%=  gameStats.position[i] %> </span>
               <% } %>
             </div>
             <% } %>
@@ -36,7 +36,7 @@
             <div>
               <% if ( currentGame.players[i].name != null){ %>
               <span class="h2 font-weight-bold mb-0"><%= currentGame.players[i].name %></span>
-              <!-- <span class="h2 font-weight-bold mb-0 float-right">  maximumGameScore[0] </span> -->
+              <span class="h2 font-weight-bold mb-0 float-right"> <%=  gameStats.score[i] %> </span> 
               <% } %>
             </div>
             <% } %>
@@ -57,12 +57,12 @@
       <div class="card-body">
         <div class="row">
           <div class="col">
-            <h5 class="card-title text-uppercase text-muted mb-0">Top Single Move</h5>
+            <h5 class="card-title text-uppercase text-muted mb-0">Top Move</h5>
             <% for (var i=0; i<currentGame.players.length; i++){ %>
             <div>
               <% if ( currentGame.players[i].name != null){ %>
               <span class="h2 font-weight-bold mb-0"><%= currentGame.players[i].name %></span>
-              <!-- <span class="h2 font-weight-bold mb-0 float-right"> findTopMovePerPlayer[0] </span> -->
+              <span class="h2 font-weight-bold mb-0 float-right"> <%=  gameStats.topSingleMove[i] %> </span> 
               <% } %>
             </div>
             <% } %>
@@ -87,7 +87,7 @@
             <div>
               <% if ( currentGame.players[i].name != null){ %>
               <span class="h2 font-weight-bold mb-0"><%= currentGame.players[i].name %></span>
-              <!-- <span class="h2 font-weight-bold mb-0 float-right"> findMedianPerPlayer[0] </span> -->
+              <span class="h2 font-weight-bold mb-0 float-right"> <%=  gameStats.medianPerMove[i] %> </span> 
               <% } %>
             </div>
             <% } %>
@@ -112,7 +112,7 @@
             <div>
               <% if ( currentGame.players[i].name != null){ %>
               <span class="h2 font-weight-bold mb-0"><%= currentGame.players[i].name %></span>
-              <!-- <span class="h2 font-weight-bold mb-0 float-right"> findMedianPerMovePerPlayer[0] </span> -->
+              <span class="h2 font-weight-bold mb-0 float-right"> <%=  gameStats.worstSingleMove[i] %> </span> 
               <% } %>
             </div>
             <% } %>

@@ -584,6 +584,7 @@ module.exports = {
 
   /*----- End of Player profile's functions ------*/
 
+  /* Returns specific game from database */
   findSpecificGame: function (gameTable, index) {
     var resultGame = null;
     gameTable.forEach(game => {
@@ -594,39 +595,117 @@ module.exports = {
     return resultGame;
   },
 
+  /* Returns the position of players including Tie */
   findPositionSingleGame: function (scoreTable) {
-    //In case of tie, players are returned both as top position 
-    scoreTable = [200, 300, 200, 200];
-    var scoreTableTemp = scoreTable.sort(function (a, b) {
-      return b - a
-    });
-    //console.log(scoreTableTemp);
-    var tempPosition = [0, 0, 0, 0];
+    var positionSorted = [0, 0, 0, 0];
+    var position = [0, 0, 0, 0];
     var currentPosition = 1;
 
-    for (var i = 0; i < scoreTableTemp.length; i++) {
-      
-      if (i === scoreTableTemp.length - 1) {
-        tempPosition[i] = currentPosition;
+    //1. Create a sorted copy of the initial table
+    var scoreTableSorted = [...scoreTable];
+    scoreTableSorted.sort(function (a, b) {
+      return b - a
+    });
+
+    //2. Found the sorted positions of players. In case of tie, players are returned both as top position 
+    for (var i = 0; i < scoreTableSorted.length; i++) {
+      if (i === scoreTableSorted.length - 1) {
+        positionSorted[i] = currentPosition;
         break;
       } else {
-        if (scoreTableTemp[i] > scoreTableTemp[i + 1]) {
-          tempPosition[i] = currentPosition;
+        if (scoreTableSorted[i] > scoreTableSorted[i + 1]) {
+          positionSorted[i] = currentPosition;
           currentPosition++;
-        } else if (scoreTableTemp[i] === scoreTableTemp[i + 1]) {
+        } else if (scoreTableSorted[i] === scoreTableSorted[i + 1]) {
           //Tie 
-          tempPosition[i] = currentPosition;
-          tempPosition[i + 1] = currentPosition;
+          positionSorted[i] = currentPosition;
+          positionSorted[i + 1] = currentPosition;
         } else {}
       }
 
     }
-    //TODO return to unsorted 
 
+    //3. From sorted positions, create the unsorted position table. It is unsorted like the argument inserted.
+    // example [500, 100, 200, 200] --> [1, 3, 2, 2]
+    for (var j = 0; j < scoreTable.length; j++) {
+      for (var i = 0; i < scoreTableSorted.length; i++) {
+        if (scoreTableSorted[i] === scoreTable[j]) {
+          position[j] = positionSorted[i];
+          break;
+        }
+      }
+    }
 
     return position;
   },
 
+  /* Returns the top move of each player for single game */
+  findTopMoveSingleGame: function (game) {
+    var topMove = [-100, -100, -100, -100];
+    var currentPlayer = 0;
+
+    /* For each player find top move */
+    game.players.forEach(player => {
+      if (player.name != null) { //Calculate only if player exists 
+        player.scores.forEach(score => {
+          if (topMove[currentPlayer] < score) {
+            topMove[currentPlayer] = score;
+          }
+        });
+      }
+      /* Proceed to the next player  */
+      currentPlayer++;
+    });
+
+    return topMove;
+  },
+
+  /* Returns the worst move of each player for single game */
+  findWorstMoveSingleGame: function (game) {
+    var worstMove = [1000, 1000, 1000, 1000];
+    var currentPlayer = 0;
+
+    /* For each player find top move */
+    game.players.forEach(player => {
+      if (player.name != null) { //Calculate only if player exists 
+        player.scores.forEach(score => {
+          if (score >= 0 && score < worstMove[currentPlayer]) {
+            worstMove[currentPlayer] = score;
+          }
+        });
+      }
+      /* Proceed to the next player */
+      currentPlayer++;
+    });
+
+    return worstMove;
+  },
+
+  /* Returns the median per move of each player for single game */
+  findMedianPerMoveSingleGame: function (game) {
+    var medianPerMove = [0, 0, 0, 0];
+    var currentPlayer = 0;
+
+    /* For each player find median point per move */
+    game.players.forEach(player => {
+      if (player.name != null) { //Calculate only if player exists
+        player.scores.forEach(score => {
+          medianPerMove[currentPlayer] += score / player.scores.length;
+        });
+      }
+      /* Proceed to the next player */
+      currentPlayer++;
+    });
+
+    medianPerMove[0] = medianPerMove[0].toFixed(2);
+    medianPerMove[1] = medianPerMove[1].toFixed(2);
+    medianPerMove[2] = medianPerMove[2].toFixed(2);
+    medianPerMove[3] = medianPerMove[3].toFixed(2);
+
+    return medianPerMove;
+  },
+
+  /* Returns players stats for single game */
   findGameStats: function (game) {
     /* Function that needs: Position per game, Total score for game, Top single move
                           Median points per move, Worst Move */
@@ -634,15 +713,27 @@ module.exports = {
       position: [],
       score: [],
       topSingleMove: [],
-      medianPerMove: [],
-      WorstMove: [],
+      worstSingleMove: [],
+      medianPerMove: []
     }
 
     /* Find Score for each player */
     gameStats.score = this.findScoresSingleGame(game);
 
-    /*Find Position for each player */
-    //gameStats.position = this.findPositionSingleGame(gameStats.score);
+    /* Find Position for each player */
+    gameStats.position = this.findPositionSingleGame(gameStats.score);
 
+    /* Find top move for each player */
+    gameStats.topSingleMove = this.findTopMoveSingleGame(game);
+
+    /* Find worst move for each player */
+    gameStats.worstSingleMove = this.findWorstMoveSingleGame(game);
+
+    /* Find median points per move for each player */
+    gameStats.medianPerMove = this.findMedianPerMoveSingleGame(game);
+
+    return gameStats;
   }
+
+
 }
