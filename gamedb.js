@@ -12,12 +12,12 @@ module.exports =
           scores: [22, 18, 10, 10, 10, 36, 11, 23, 51, 6, 6, 26, 3, 6, 5, 2, -3, 12]
         },
         {
-          _id: "12xxae6b01eeasdsqw78c1207essq",
+          _id: "gert1qwe6qfg167s4316gs21",
           name: "Thanos",
           scores: [23, 48, 69, 38, 49, 101, 11, 23, 11, 6, 6, -5, 3, 6, 5, 2, 1, 6]
         },
         {
-          _id: "12456ae6b01eeasdsqw78c1207ggrt",
+          _id: "pw451q23yqfg167s4316anm3",
           name: "Afroditi",
           scores: [52, 58, 50, 50, 50, 56, 11, 23, 51, 6, 6, 26, 3, 6, 5, 2, 12, 0]
         }
