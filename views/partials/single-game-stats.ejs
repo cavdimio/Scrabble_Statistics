@@ -87,8 +87,7 @@
           <div class="card-header bg-transparent">
             <div class="row align-items-center">
               <div class="col">
-                <h6 class="text-light text-uppercase ls-1 mb-1">Overview</h6>
-                <h5 class="h3 text-white mb-0">Points per Round</h5>
+                <h5 class="h3 text-white mb-0">Game progress</h5>
               </div>
             </div>
           </div>
@@ -106,20 +105,9 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
 
-<script> 
-
-  //TODO implementation for up to 4 players 
-
+<script> //TODO vertical cursor during mouse-over 
+  /* Get game */
   var currentGame = <%-JSON.stringify(currentGame) %> ;
-  console.log(currentGame);
-  
-  /* Get stats of first player */
-  // var player1Name = "<%= currentGame.players[0].name %>";
-  // var player1Scores = "<%= currentGame.players[0].scores %>".split(',').map(Number);
-  // /* Get stats of second player */
-  // var player2Name = "<%= currentGame.players[1].name %>";
-  // var player2Scores = "<%= currentGame.players[1].scores %>".split(',').map(Number);
-
 
   /* Get number of rounds in a table */
   var length = parseInt("<%= currentGame.players[0].scores.length %>");
@@ -128,16 +116,20 @@
     rounds.push(i);
   }
 
-  var colors = ["#3e95cd", "#5e72e4",  "#77e673" , "#e6c473"]; 
-  var datasets = []; 
+  /* Create the sum scores */
+  var sumScoresPerRound = <%-JSON.stringify(sumScoresPerRound) %> ;
 
-  for(var i=0; i<4; i++){
-    if( currentGame.players[i].name != null){
+  /* Set colors */
+  var colors = ["#3e95cd", "#5e72e4", "#77e673", "#e6c473"];
+  var datasets = [];
+
+  for (var i = 0; i < 4; i++) {
+    if (currentGame.players[i].name != null) {
       datasets.push({
-          label: currentGame.players[i].name,
-          borderColor: colors[i],
-          fill: false,
-          data: currentGame.players[i].scores
+        label: currentGame.players[i].name,
+        borderColor: colors[i],
+        fill: false,
+        data: sumScoresPerRound[i]
       });
     }
   }
@@ -165,6 +157,13 @@
       },
       scales: {
         xAxes: [{
+          scaleLabel: {
+            display: true,
+            labelString: "Rounds",
+            fontFamily: "'Roboto', sans-serif",
+            fontSize: 14,
+            fontColor: "#FFFFFF"
+          },
           ticks: {
             fontSize: 14,
             fontFamily: "'Roboto', sans-serif",
@@ -176,6 +175,13 @@
           }
         }],
         yAxes: [{
+          scaleLabel: { //TODO LABEL breaks in zoom-in, zoom-out
+            display: true,
+            labelString: "Points",
+            fontFamily: "'Roboto', sans-serif",
+            fontSize: 14,
+            fontColor: "#FFFFFF"
+          },
           ticks: {
             fontSize: 14,
             fontFamily: "'Roboto', sans-serif",

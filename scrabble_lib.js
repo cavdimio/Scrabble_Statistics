@@ -722,8 +722,7 @@ module.exports = {
 
   /* Returns players stats for single game */
   findGameStats: function (game) {
-    /* Function that needs: Position per game, Total score for game, Top single move
-                          Median points per move, Worst Move */
+
     var gameStats = {
       position: [],
       score: [],
@@ -746,9 +745,32 @@ module.exports = {
 
     /* Find median points per move for each player */
     gameStats.medianPerMove = this.findMedianPerMoveSingleGame(game);
-
+  
     return gameStats;
+  },
+
+  findSumScoresPerRoundSingleGame: function (game) {
+
+    var sumScores = [];
+    
+    game.players.forEach(player => {
+      if(player.name != null){
+        var tempScore = [];
+        /* First values are the same */
+        tempScore.push(player.scores[0]);
+        for(var i=1; i<player.scores.length; i++){
+          /* Sum rest of the values */
+          var tempValue = tempScore[i-1] + player.scores[i];
+          tempScore.push(tempValue);
+        }
+        sumScores.push(tempScore);
+      }
+      
+    });
+
+    return sumScores;
   }
+
   /*-------------------------------------------------------*/
   /*-------------------------------------------------------*/
   /*----- specific game from database ------*/

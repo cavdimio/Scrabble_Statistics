@@ -38,9 +38,12 @@ app.get("/game/:game_id", (req, res, next) => {
   /* Check if game exists */
   if (currentGame != null) {
     const gameStats = scrabble_lib.findGameStats(currentGame);
+    const sumScoresPerRound = scrabble_lib.findSumScoresPerRoundSingleGame(currentGame);
+
     res.render("partials/single-game-stats", {
       currentGame: currentGame,
-      gameStats: gameStats
+      gameStats: gameStats,
+      sumScoresPerRound: sumScoresPerRound
     });
   } else {
     /* Game doesn't exist */
