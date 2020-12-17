@@ -168,15 +168,15 @@
                   </div>
                 </th>
                 <td class="budget"
-                    onclick="populateTable(opponents[i])">
+                    onclick="populateTable('UserID:' + '<%= opponents[i]._id %>')"> 
                   <%= opponents[i].victories %>
                 </td>
                 <td class="budget"
-                    onclick="populateTable(opponents[i])">
+                    onclick="populateTable('UserID:' + '<%= opponents[i]._id %>')"> 
                   <%= opponents[i].losses %>
                 </td>
                 <td class="budget"
-                    onclick="populateTable(opponents[i])">
+                    onclick="populateTable('UserID:' + '<%= opponents[i]._id %>')">  
                   <%= opponents[i].ties %>
                 </td>
               </tr>
