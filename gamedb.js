@@ -2,6 +2,7 @@ module.exports =
   gameTable = [{
       _id: "55348611a56c10449ab80a4f",
       players: [{
+        //TO Christos12 
           _id: "euxp1q23yqfg167s4316g4sq",
           name: "Konstantina",
           scores: [12, 9, 8, 10, 14, 7, 28, 5, 6, 9, 5, 2, 1, 1, 9, 1, 1, 12]
@@ -22,8 +23,9 @@ module.exports =
           scores: [52, 58, 50, 50, 50, 56, 11, 23, 51, 6, 6, 26, 3, 6, 5, 2, 12, 0]
         }
       ]
-    },
+    },  //inserted 
     {
+      //TO Christos12 
       _id: "55348611a56c10449ab8wlr6",
       players: [{
           _id: "euxp1q23yqfg167s4316g4sq",
@@ -46,8 +48,9 @@ module.exports =
           scores: null
         }
       ]
-    },
+    }, //inserted 
     {
+      //TO Christos12
       _id: "55348611a56c10449ab81e5y",
       players: [{
           _id: "euxp1q23yqfg167s4316g4sq",
@@ -70,8 +73,9 @@ module.exports =
           scores: null
         }
       ]
-    },
+    },  
     {
+      //TO Christos12 
       _id: "55348611a56c10449ab81w4t",
       players: [{
           _id: "euxp1q23yqfg167s4316g4sq",
@@ -96,6 +100,7 @@ module.exports =
       ]
     },
     {
+      //TO Christos12 
       _id: "55348611a56c10449ab8wft4",
       players: [{
           _id: "euxp1q23yqfg167s4316g4sq",
@@ -120,6 +125,7 @@ module.exports =
       ]
     },
     {
+      //TO Christos12 
       _id: "55348611a56c10449ab8345f",
       players: [{
           _id: "euxp1q23yqfg167s4316g4sq",
@@ -144,6 +150,7 @@ module.exports =
       ]
     },
     {
+      //TO Christos12 
       _id: "55348611a56c10449ab8gf67",
       players: [{
           _id: "euxp1q23yqfg167s4316g4sq",
@@ -168,6 +175,7 @@ module.exports =
       ]
     },
     {
+      //TO Christos12 
       _id: "55348611a56c10449ab864dr",
       players: [{
           _id: "euxp1q23yqfg167s4316g4sq",
@@ -192,6 +200,7 @@ module.exports =
       ]
     },
     {
+      //TO Christos12 
       _id: "55348611a56c10449ab823eb",
       players: [{
           _id: "euxp1q23yqfg167s4316g4sq",
@@ -216,6 +225,7 @@ module.exports =
       ]
     },
     {
+      //TO Christos12 
       _id: "55348611a56c10449ab8ki87",
       players: [{
           _id: "euxp1q23yqfg167s4316g4sq",
@@ -240,6 +250,7 @@ module.exports =
       ]
     },
     {
+      //TO Christos12 
       _id: "55348611a56c10449ab8mn3a",
       players: [{
           _id: "euxp1q23yqfg167s4316g4sq",
@@ -264,6 +275,7 @@ module.exports =
       ]
     },
     {
+      //TO Christos12 
       _id: "55348611a56c10449ab81get",
       players: [{
           _id: "euxp1q23yqfg167s4316g4sq",
@@ -288,6 +300,7 @@ module.exports =
       ]
     },
     {
+      //TO Christos12 
       _id: "55348611a56c10449ab8d63a",
       players: [{
           _id: "euxp1q23yqfg167s4316g4sq",
@@ -312,6 +325,7 @@ module.exports =
       ]
     },
     {
+      //TO Konstantina12 
       _id: "55348611a56c10449ab8as1h",
       players: [{
           _id: "euxp1q23yqfg167s4316g4sq",
@@ -336,6 +350,7 @@ module.exports =
       ]
     },
     {
+      //TO Konstantina12 
       _id: "55348611a56c10449ab8my48",
       players: [{
           _id: "euxp1q23yqfg167s4316g4sq",
@@ -360,6 +375,7 @@ module.exports =
       ]
     },
     {
+      //TO Konstantina12 
       _id: "55348611a56c10449ab8sj47",
       players: [{
           _id: "euxp1q23yqfg167s4316g4sq",
@@ -384,6 +400,7 @@ module.exports =
       ]
     },
     {
+      //TO Konstantina12 
       _id: "55348611a56c10449ab8orqw",
       players: [{
           _id: "euxp1q23yqfg167s4316g4sq",
@@ -408,6 +425,7 @@ module.exports =
       ]
     },
     {
+      //TO Konstantina12 
       _id: "55348611a56c10449ab8cw73",
       players: [{
           _id: "euxp1q23yqfg167s4316g4sq",
@@ -432,6 +450,7 @@ module.exports =
       ]
     },
     {
+      //TO Konstantina12 
       _id: "55348611a56c10449ab8sg35",
       players: [{
           _id: "euxp1q23yqfg167s4316g4sq",
@@ -456,6 +475,7 @@ module.exports =
       ]
     },
     {
+      //TO Konstantina12 
       _id: "55348611a56c10449ab8kro7",
       players: [{
           _id: "euxp1q23yqfg167s4316g4sq",
@@ -480,6 +500,7 @@ module.exports =
       ]
     },
     {
+      //TO Konstantina12 
       _id: "55348611a56c10449ab8axe5",
       players: [{
           _id: "euxp1q23yqfg167s4316g4sq",
@@ -504,6 +525,7 @@ module.exports =
       ]
     },
     {
+      //TO Konstantina12 
       _id: "55348611a56c10449ab8hdy5",
       players: [{
           _id: "euxp1q23yqfg167s4316g4sq",
@@ -528,6 +550,7 @@ module.exports =
       ]
     },
     {
+      //TO Konstantina12 
       _id: "55348611a56c10449ab8aq79",
       players: [{
           _id: "euxp1q23yqfg167s4316g4sq",
@@ -552,6 +575,7 @@ module.exports =
       ]
     },
     {
+      //TO Konstantina12 
       _id: "55348611a56c10449ab8gw36",
       players: [{
           _id: "euxp1q23yqfg167s4316g4sq",
@@ -576,6 +600,7 @@ module.exports =
       ]
     },
     {
+      //TO Konstantina12 
       _id: "55348611a56c10449ab8gwu7",
       players: [{
           _id: "euxp1q23yqfg167s4316g4sq",
@@ -600,6 +625,7 @@ module.exports =
       ]
     },
     {
+      //TO Konstantina12 
       _id: "55348611a56c10449ab8yi3e",
       players: [{
           _id: "euxp1q23yqfg167s4316g4sq",
@@ -624,6 +650,7 @@ module.exports =
       ]
     },
     {
+      //TO Konstantina12 
       _id: "55348611a56c10449ab8a26h",
       players: [{
           _id: "euxp1q23yqfg167s4316g4sq",
