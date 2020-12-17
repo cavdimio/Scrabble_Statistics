@@ -7,7 +7,7 @@ var $ = require('jquery');
 const _ = require("lodash");
 
 /* Dummy Databases */
-const userdb = require("./userdb") 
+const userdb = require("./userdb")
 const scrabbledb = require("./gamedb");
 const scrabble_lib = require("./scrabble_lib");
 
@@ -20,6 +20,9 @@ app.use(cors());
 
 //Include public file for css
 app.use(express.static(__dirname + '/public'));
+
+//var gameID;
+
 
 app.get("/scrabble-statistics", (req, res, next) => {
   const winnersArray = scrabble_lib.findAllWinners(scrabbledb);
@@ -54,22 +57,26 @@ app.get("/", (req, res, next) => {
   res.render("home");
 });
 
-app.get("/game/?:game_id", (req, res, next) => {
+app.post("/game/:gameId", (req, res, next) => {
+  const gameID = req.body.game_id;
+  res.redirect("/game/" + gameID);
+});
+
+app.get("/game/:game_id", (req, res, next) => {
   const gameID = req.params.game_id;
   const currentGame = scrabble_lib.findSpecificGame(scrabbledb, gameID);
 
   /* Check if game exists */
-  if(currentGame != null){
-    const gameStats= scrabble_lib.findGameStats(currentGame);
+  if (currentGame != null) {
+    const gameStats = scrabble_lib.findGameStats(currentGame);
     res.render("partials/single-game-stats", {
       currentGame: currentGame,
       gameStats: gameStats
     });
-  }
-  else{
+  } else {
     /* Game doesn't exist */
     res.render("error_page");
-  } 
+  }
 });
 
 app.get("/error-page", (req, res, next) => {
@@ -78,21 +85,20 @@ app.get("/error-page", (req, res, next) => {
 
 app.get("/:id", (req, res, next) => {
 
-  /* Find user */ 
+  /* Find user */
   const userID = req.params.id;
   const findPlayersNameFromID = scrabble_lib.findPlayersNameFromID(userdb, userID);
-  
+
   /* Check if user exists */
-  if(findPlayersNameFromID != null){
-    const findPlayersGameStats= scrabble_lib.findPlayersGameStats(scrabbledb, userID);
+  if (findPlayersNameFromID != null) {
+    const findPlayersGameStats = scrabble_lib.findPlayersGameStats(scrabbledb, userID);
 
     res.render("my_profile_page", {
       name: findPlayersNameFromID,
       positionStats: findPlayersGameStats.positionStats,
       opponents: findPlayersGameStats.opponents,
     });
-  }
-  else{
+  } else {
     /* User doesn't exist */
     res.render("error_page");
   }
