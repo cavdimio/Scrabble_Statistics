@@ -1,10 +1,11 @@
 module.exports =
     Users = [{
             _id: "5fae6b01eeab478c1207e2bf", //TODO unique username, email
-            username: "cavdimio", 
+            username: "cavdimio",
             password: "1234",
             name: "Christos",
             friends: ["euxp1q23yqfg167s4316g4sq", "gert1qwe6qfg167s4316gs21", "pw451q23yqfg167s4316anm3"],
+            dummyNames: ["MyDog", "MyGradma"],
             insertedGames: [{
                     _id: "55348611a56c10449ab80a4f",
                     scores: [22, 18, 10, 10, 10, 36, 11, 23, 51, 6, 6, 26, 3, 6, 5, 2, -3, 12],
@@ -22,7 +23,7 @@ module.exports =
                             _id: "pw451q23yqfg167s4316anm3",
                             name: "Afroditi",
                             scores: [52, 58, 50, 50, 50, 56, 11, 23, 51, 6, 6, 26, 3, 6, 5, 2, 12, 0]
-                        }
+                        },
                     ]
                 },
                 {
@@ -31,7 +32,17 @@ module.exports =
                     opponents: [{
                         _id: "euxp1q23yqfg167s4316g4sq",
                         name: "Konstantina",
-                        scores: [14, 9, 11, 18, 7, 10, 11, 14, 13, 6, 3, 12, 16, 5, 4, 4, 5, 30, 16, 4, -4]
+                        scores: [8, 10, 9, 15, 12, 15, 26, 34, 14, 9, 14, 26, 15, 7, 21, 12, 28, 7, 15, 6, 2]
+                    },
+                    {
+                        _id: 0,
+                        name: "MyDog",
+                        scores: [8, 10, 9, 15, 12, 15, 26, 34, 14, 9, 14, 26, 15, 7, 21, 12, 28, 7, 15, 6, 2]
+                    },
+                    {
+                        _id: 0,
+                        name: "MyGradma",
+                        scores: [8, 10, 9, 15, 12, 15, 26, 34, 14, 9, 14, 26, 15, 7, 21, 12, 28, 7, 15, 6, 2]
                     }]
                 },
                 {
@@ -125,7 +136,6 @@ module.exports =
                     }]
                 },
                 {
-                    //TO Christos12 
                     _id: "55348611a56c10449ab8d63a",
                     scores: [28, 32, 7, 20, 19, 20, 16, 10, 10, 20, 7, 21, 21, 21, 21, 17],
                     opponents: [{
@@ -142,6 +152,7 @@ module.exports =
             password: "3456",
             name: "Konstantina",
             friends: ["5fae6b01eeab478c1207e2bf", "gert1qwe6qfg167s4316gs21", "pw451q23yqfg167s4316anm3"],
+            dummyNames: ["Dad", "Mom"],
             insertedGames: [{
                     _id: "55348611a56c10449ab8as1h",
                     scores: [23, 26, 45, 11, 5, 8, 12, 6, 7, 10, 12, 11, 12, 8, 3, 9, 8, 5, 0, 0, -10],
@@ -158,6 +169,11 @@ module.exports =
                         _id: "5fae6b01eeab478c1207e2bf",
                         name: "Christos",
                         scores: [16, 27, 16, 15, 85, 33, 16, 11, 27, 13, 14, 15, 12, 27, 5, 5, 3, 2]
+                    }, 
+                    {
+                        _id: 0,
+                        name: "Dad",
+                        scores: [16, 26, 16, 15, 85, 33, 16, 11, 27, 13, 14, 15, 12, 27, 5, 5, 3, 2]
                     }]
                 },
                 {
@@ -188,7 +204,6 @@ module.exports =
                     }]
                 },
                 {
-                    //TO Konstantina12 
                     _id: "55348611a56c10449ab8sg35",
                     scores: [28, 29, 56, 18, 26, 16, 14, 14, 6, 12, 9, 3, 6, 10, 6, 6, 4],
                     opponents: [{
@@ -222,15 +237,6 @@ module.exports =
                         _id: "5fae6b01eeab478c1207e2bf",
                         name: "Christos",
                         scores: [12, 19, 36, 12, 9, 4, 6, 90, 18, 29, 16, 18, 18, 12, 15, 5, 0, 0, -3]
-                    }]
-                },
-                {
-                    _id: "55348611a56c10449ab8aq79",
-                    scores: [74, 7, 28, 10, 16, 12, 17, 3, 2, 2, 5, 3, 28, 9, 4, 12, 2, 8, 5, 6, 0, 0, 0, -8],
-                    opponents: [{
-                        _id: "5fae6b01eeab478c1207e2bf",
-                        name: "Christos",
-                        scores: [64, 28, 16, 14, 39, 14, 15, 8, 13, 16, 2, 6, 8, 12, 10, 10, 5, 7, 16, 8, 12, 8, 6, 8]
                     }]
                 },
                 {
@@ -286,6 +292,7 @@ module.exports =
             password: "7890",
             name: "Thanos",
             friends: ["euxp1q23yqfg167s4316g4sq", "5fae6b01eeab478c1207e2bf"],
+            dummyNames: [],
             insertedGames: [],
         },
         {
@@ -294,6 +301,7 @@ module.exports =
             password: "1357",
             name: "Afroditi",
             friends: ["euxp1q23yqfg167s4316g4sq", "5fae6b01eeab478c1207e2bf"],
+            dummyNames: [],
             insertedGames: [],
         }
     ]

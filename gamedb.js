@@ -1,5 +1,6 @@
 module.exports =
-  gameTable = [{
+  gameTable = [  //27
+    {
       _id: "55348611a56c10449ab80a4f",
       players: [{
         //TO Christos12 
@@ -23,7 +24,7 @@ module.exports =
           scores: [52, 58, 50, 50, 50, 56, 11, 23, 51, 6, 6, 26, 3, 6, 5, 2, 12, 0]
         }
       ]
-    },  //inserted 
+    },  //inserted  //1
     {
       //TO Christos12 
       _id: "55348611a56c10449ab8wlr6",
@@ -48,7 +49,7 @@ module.exports =
           scores: null
         }
       ]
-    }, //inserted 
+    }, //inserted  //1
     {
       //TO Christos12
       _id: "55348611a56c10449ab81e5y",
@@ -73,7 +74,7 @@ module.exports =
           scores: null
         }
       ]
-    },  //inserted  
+    },  //inserted  //1 
     {
       //TO Christos12 
       _id: "55348611a56c10449ab81w4t",
@@ -98,7 +99,7 @@ module.exports =
           scores: null
         }
       ]
-    }, //inserted 
+    }, //inserted  //1
     {
       //TO Christos12 
       _id: "55348611a56c10449ab8wft4",
@@ -123,7 +124,7 @@ module.exports =
           scores: null
         }
       ]
-    }, //inserted 
+    }, //inserted  //1
     {
       //TO Christos12 
       _id: "55348611a56c10449ab8345f",
@@ -148,7 +149,7 @@ module.exports =
           scores: null
         }
       ]
-    }, //inserted 
+    }, //inserted  //1
     {
       //TO Christos12 
       _id: "55348611a56c10449ab8gf67",
@@ -173,7 +174,7 @@ module.exports =
           scores: null
         }
       ]
-    }, //inserted 
+    }, //inserted  //1
     {
       //TO Christos12 
       _id: "55348611a56c10449ab864dr",

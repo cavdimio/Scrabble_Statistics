@@ -57,7 +57,7 @@
                 </th>
                 <td class="budget"
                     onclick="populateTable('victories')">
-                  <%= positionStats.pos1stats.games.length %>
+                  <%= positionStats.pos1stats.length %>
                 </td>
               </tr>
               <tr id="cell_hover">
@@ -71,7 +71,7 @@
                 </th>
                 <td class="budget"
                     onclick="populateTable('2ndPosition')">
-                  <%= positionStats.pos2stats.games.length %>
+                  <%= positionStats.pos2stats.length %>
                 </td>
               </tr>
               <tr id="cell_hover">
@@ -85,7 +85,7 @@
                 </th>
                 <td class="budget"
                     onclick="populateTable('3rdPosition')">
-                  <%= positionStats.pos3stats.games.length %>
+                  <%= positionStats.pos3stats.length %>
                 </td>
               </tr>
               <tr id="cell_hover">
@@ -99,7 +99,7 @@
                 </th>
                 <td class="budget"
                     onclick="populateTable('4thPosition')">
-                  <%= positionStats.pos4stats.games.length %>
+                  <%= positionStats.pos4stats.length %>
                 </td>
               </tr>
               <tr id="cell_hover">
@@ -113,7 +113,7 @@
                 </th>
                 <td class="budget"
                     onclick="populateTable('allLoses')">
-                  <%= positionStats.posAllLosesStats.games.length %>
+                  <%= positionStats.posAllLosesStats.length %>
                 </td>
               </tr>
               <tr id="cell_hover">
@@ -127,7 +127,7 @@
                 </th>
                 <td class="budget"
                     onclick="populateTable('allGames')">
-                  <%= positionStats.posAllGamesStats.games.length %>
+                  <%= positionStats.posAllGamesStats.length %>
                 </td>
               </tr>
             </tbody>
@@ -232,37 +232,37 @@
                         </thead>
                         <tbody class="list"
                                id="general-player0-table-body">
-                          <% for (var i=0; i<positionStats.posAllGamesStats.games.length; i++){ %>
+                          <% for (var i=0; i<positionStats.posAllGamesStats.length; i++){ %>
                           <tr id="cell_hover"
                               class="all_cells_hover">
                             <td>
-                              <form action="/game/<%= positionStats.posAllGamesStats.games[i]._id %>"
+                              <form action="/game/<%= positionStats.posAllGamesStats[i]._id %>"
                                     method="post">
                                 <button type="submit"
                                         name="game_id"
-                                        value="<%= positionStats.posAllGamesStats.games[i]._id %>"
+                                        value="<%= positionStats.posAllGamesStats[i]._id %>"
                                         class="my-btn-link">
                                   <div class="media align-items-center">
 
                                     <div class="media-body">
                                       <span class="name mb-0 text-sm">
-                                        <%= positionStats.posAllGamesStats.games[i].players[0].name %></span>
+                                        <%= positionStats.posAllGamesStats[i].playersNames[0] %></span>
                                     </div>
                                   </div>
                                 </button>
                               </form>
                             </td>
                             <td>
-                              <form action="/game/<%= positionStats.posAllGamesStats.games[i]._id %>"
+                              <form action="/game/<%= positionStats.posAllGamesStats[i]._id %>"
                                     method="post">
                                 <button type="submit"
                                         name="game_id"
-                                        value="<%= positionStats.posAllGamesStats.games[i]._id %>"
+                                        value="<%= positionStats.posAllGamesStats[i]._id %>"
                                         class="my-btn-link">
                                   <div class="media align-items-center">
                                     <div class="media-body">
                                       <span class="name mb-0 text-sm">
-                                        <%= positionStats.posAllGamesStats.scores[i][0] %>
+                                        <%= positionStats.posAllGamesStats[i].scores[0] %>
                                       </span>
                                     </div>
                                   </div>
@@ -288,36 +288,36 @@
                         </thead>
                         <tbody class="list"
                                id="general-player1-table-body">
-                          <% for (var i=0; i<positionStats.posAllGamesStats.games.length; i++){ %>
+                          <% for (var i=0; i<positionStats.posAllGamesStats.length; i++){ %>
                           <tr id="cell_hover"
                               class="all_cells_hover">
                             <td>
-                              <form action="/game/<%= positionStats.posAllGamesStats.games[i]._id %>"
+                              <form action="/game/<%= positionStats.posAllGamesStats[i]._id %>"
                                     method="post">
                                 <button type="submit"
                                         name="game_id"
-                                        value="<%= positionStats.posAllGamesStats.games[i]._id %>"
+                                        value="<%= positionStats.posAllGamesStats[i]._id %>"
                                         class="my-btn-link">
                                   <div class="media align-items-center">
                                     <div class="media-body">
                                       <span class="name mb-0 text-sm">
-                                        <%= positionStats.posAllGamesStats.games[i].players[1].name %></span>
+                                        <%= positionStats.posAllGamesStats[i].playersNames[1] %></span>
                                     </div>
                                   </div>
                                 </button>
                               </form>
                             </td>
                             <td>
-                              <form action="/game/<%= positionStats.posAllGamesStats.games[i]._id %>"
+                              <form action="/game/<%= positionStats.posAllGamesStats[i]._id %>"
                                     method="post">
                                 <button type="submit"
                                         name="game_id"
-                                        value="<%= positionStats.posAllGamesStats.games[i]._id %>"
+                                        value="<%= positionStats.posAllGamesStats[i]._id %>"
                                         class="my-btn-link">
                                   <div class="media align-items-center">
                                     <div class="media-body">
                                       <span class="name mb-0 text-sm">
-                                        <%= positionStats.posAllGamesStats.scores[i][1] %>
+                                        <%= positionStats.posAllGamesStats[i].scores[1] %>
                                       </span>
                                     </div>
                                   </div>
@@ -343,21 +343,21 @@
                         </thead>
                         <tbody class="list"
                                id="general-player2-table-body">
-                          <% for (var i=0; i<positionStats.posAllGamesStats.games.length; i++){ %>
+                          <% for (var i=0; i<positionStats.posAllGamesStats.length; i++){ %>
                           <tr id="cell_hover"
                               class="all_cells_hover">
                             <td>
-                              <form action="/game/<%= positionStats.posAllGamesStats.games[i]._id %>"
+                              <form action="/game/<%= positionStats.posAllGamesStats[i]._id %>"
                                     method="post">
                                 <button type="submit"
                                         name="game_id"
-                                        value="<%= positionStats.posAllGamesStats.games[i]._id %>"
+                                        value="<%= positionStats.posAllGamesStats[i]._id %>"
                                         class="my-btn-link">
                                   <div class="media align-items-center">
                                     <div class="media-body">
-                                      <% if ( positionStats.posAllGamesStats.games[i].players[2].name != null){ %>
+                                      <% if ( positionStats.posAllGamesStats[i].playersNames[2] != null){ %>
                                       <span class="name mb-0 text-sm">
-                                        <%= positionStats.posAllGamesStats.games[i].players[2].name %> </span>
+                                        <%= positionStats.posAllGamesStats[i].playersNames[2] %> </span>
                                       <% } else { %>
                                       <span class="name mb-0 text-sm">
                                         &nbsp; </span>
@@ -368,17 +368,17 @@
                               </form>
                             </td>
                             <td>
-                              <form action="/game/<%= positionStats.posAllGamesStats.games[i]._id %>"
+                              <form action="/game/<%= positionStats.posAllGamesStats[i]._id %>"
                                     method="post">
                                 <button type="submit"
                                         name="game_id"
-                                        value="<%= positionStats.posAllGamesStats.games[i]._id %>"
+                                        value="<%= positionStats.posAllGamesStats[i]._id %>"
                                         class="my-btn-link">
                                   <div class="media align-items-center">
                                     <div class="media-body">
-                                      <% if ( positionStats.posAllGamesStats.scores[i][2] > 0){ %>
+                                      <% if ( positionStats.posAllGamesStats[i].scores[2] > 0){ %>
                                       <span class="name mb-0 text-sm">
-                                        <%= positionStats.posAllGamesStats.scores[i][2] %> </span>
+                                        <%= positionStats.posAllGamesStats[i].scores[2] %> </span>
                                       <% } else { %>
                                       <span class="name mb-0 text-sm">
                                         &nbsp; </span>
@@ -407,21 +407,21 @@
                         </thead>
                         <tbody class="list"
                                id="general-player3-table-body">
-                          <% for (var i=0; i<positionStats.posAllGamesStats.games.length; i++){ %>
+                          <% for (var i=0; i<positionStats.posAllGamesStats.length; i++){ %>
                           <tr id="cell_hover"
                               class="all_cells_hover">
                             <td>
-                              <form action="/game/<%= positionStats.posAllGamesStats.games[i]._id %>"
+                              <form action="/game/<%= positionStats.posAllGamesStats[i]._id %>"
                                     method="post">
                                 <button type="submit"
                                         name="game_id"
-                                        value="<%= positionStats.posAllGamesStats.games[i]._id %>"
+                                        value="<%= positionStats.posAllGamesStats[i]._id %>"
                                         class="my-btn-link">
                                   <div class="media align-items-center">
                                     <div class="media-body">
-                                      <% if ( positionStats.posAllGamesStats.games[i].players[3].name != null){ %>
+                                      <% if ( positionStats.posAllGamesStats[i].playersNames[3] != null){ %>
                                       <span class="name mb-0 text-sm">
-                                        <%= positionStats.posAllGamesStats.games[i].players[3].name %> </span>
+                                        <%= positionStats.posAllGamesStats[i].playersNames[3] %> </span>
                                       <% } else { %>
                                       <span class="name mb-0 text-sm">
                                         &nbsp; </span>
@@ -432,17 +432,17 @@
                               </form>
                             </td>
                             <td>
-                              <form action="/game/<%= positionStats.posAllGamesStats.games[i]._id %>"
+                              <form action="/game/<%= positionStats.posAllGamesStats[i]._id %>"
                                     method="post">
                                 <button type="submit"
                                         name="game_id"
-                                        value="<%= positionStats.posAllGamesStats.games[i]._id %>"
+                                        value="<%= positionStats.posAllGamesStats[i]._id %>"
                                         class="my-btn-link">
                                   <div class="media align-items-center">
                                     <div class="media-body">
-                                      <% if ( positionStats.posAllGamesStats.scores[i][3] > 0){ %>
+                                      <% if ( positionStats.posAllGamesStats[i].scores[3] > 0){ %>
                                       <span class="name mb-0 text-sm">
-                                        <%= positionStats.posAllGamesStats.scores[i][3] %> </span>
+                                        <%= positionStats.posAllGamesStats[i].scores[3] %> </span>
                                       <% } else { %>
                                       <span class="name mb-0 text-sm">
                                         &nbsp; </span>
@@ -470,12 +470,12 @@
                           </tr>
                         </thead>
                         <tbody class="list">
-                           <% for (var i=0; i<positionStats.posAllGamesStats.games.length; i++){ %>
+                           <% for (var i=0; i<positionStats.posAllGamesStats.length; i++){ %>
                           <tr>
                             <td>
                               <div class="media align-items-center">
                                 <div class="media-body">
-                                  <span class="name mb-0 text-sm"> <%= positionStats.posAllGamesStats.games[i].players[3].name %></span>
+                                  <span class="name mb-0 text-sm"> <%= positionStats.posAllGamesStats[i].playersNames[3] %></span>
                                 </div>
                               </div>
                             </td>

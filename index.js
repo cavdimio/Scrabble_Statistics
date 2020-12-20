@@ -59,14 +59,14 @@ app.get("/:id", (req, res, next) => {
 
   /* Find user */
   const userID = req.params.id;
-  const findPlayersNameFromID = scrabble_lib.findPlayersNameFromID(userdb, userID);
+  const player = scrabble_lib.findPlayerFromID(userdb, userID);
 
   /* Check if user exists */
-  if (findPlayersNameFromID != null) {
-    const findPlayersGameStats = scrabble_lib.findPlayersGameStats(scrabbledb, userID);
+  if (player != null) {
+    const findPlayersGameStats = scrabble_lib.findPlayersGameStats(userdb, player);
 
     res.render("my_profile_page", {
-      name: findPlayersNameFromID,
+      name: player.name,
       positionStats: findPlayersGameStats.positionStats,
       opponents: findPlayersGameStats.opponents,
     });
