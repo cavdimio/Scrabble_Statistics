@@ -2,211 +2,6 @@ const e = require("express");
 
 module.exports = {
 
-  findPlayersNames: function (gameTable, index) {
-    var resultArray = [, ];
-    resultArray[0] = gameTable[index].players[0].name;
-    resultArray[1] = gameTable[index].players[1].name;
-    return resultArray;
-  },
-
-  findTop5SingleGame: function (player) {
-    var topplays = player.scores.sort((a, b) => b - a).slice(0, 5);
-    return topplays;
-  },
-
-  findTopScoreSingleGame: function (game) {
-
-    var topScorer = {
-      name: "",
-      topScore: 0
-    }
-
-    var p1Top = this.findTop5SingleGame(game.players[0]);
-    var p2Top = this.findTop5SingleGame(game.players[1]);
-
-    if (p1Top[0] > p2Top[0]) {
-      topScorer = {
-        name: game.players[0].name,
-        topScore: p1Top[0]
-      };
-    } else if (p2Top[0] > p1Top[0]) {
-      topScorer = {
-        name: game.players[1].name,
-        topScore: p2Top[0]
-      };
-    } else {
-      if (p1Top[1] > p2Top[1]) {
-        topScorer = {
-          name: game.players[0].name,
-          topScore: p1Top[1]
-        };
-      } else if (p2Top[1] > p1Top[1]) {
-        topScorer = {
-          name: game.players[1].name,
-          topScore: p2op[1]
-        };
-      }
-    }
-
-    return topScorer;
-  },
-
-
-
-  findWinner: function (game) {
-    const score1 = game.players[0].scores.reduce(this.findTotalScoreSingleGameEachPlayer);
-    const score2 = game.players[1].scores.reduce(this.findTotalScoreSingleGameEachPlayer);
-
-    if (score1 > score2) {
-      return game.players[0].name;
-    } else if (score2 > score1) {
-      return game.players[1].name;
-    } else
-      return "It's a tie!";
-  },
-
-  findLoser: function (game) {
-    const score1 = game.players[0].scores.reduce(this.findTotalScoreSingleGameEachPlayer);
-    const score2 = game.players[1].scores.reduce(this.findTotalScoreSingleGameEachPlayer);
-
-    if (score1 > score2) {
-      return game.players[1].name;
-    } else if (score2 > score1) {
-      return game.players[0].name;
-    } else
-      return "It's a tie!";
-  },
-
-  findAllWinners: function (gameTable) {
-    var resultArray = [];
-    gameTable.forEach(element => {
-      resultArray.push(this.findWinner(element));
-    });
-    return resultArray;
-  },
-
-  countAllWinners: function (gameTable) {
-    var resultArray = [0, 0];
-    gameTable.forEach(element => {
-      if (this.findWinner(element) === element.players[0].name) {
-        resultArray[0]++;
-      } else if (this.findWinner(element) === element.players[1].name) {
-        resultArray[1]++;
-      } else {}
-    });
-    return resultArray;
-  },
-
-  countMaximumGameScoreForEachPlayer: function (gameTable) {
-    var resultArray = [-1, -1];
-    gameTable.forEach(element => {
-      const scoreOfPlayer1CurrentGame = element.players[0].scores.reduce(this.findTotalScoreSingleGameEachPlayer);
-      const scoreOfPlayer2CurrentGame = element.players[1].scores.reduce(this.findTotalScoreSingleGameEachPlayer);
-
-      if (resultArray[0] < scoreOfPlayer1CurrentGame) {
-        resultArray[0] = scoreOfPlayer1CurrentGame;
-      } else if (resultArray[1] < scoreOfPlayer2CurrentGame) {
-        resultArray[1] = scoreOfPlayer2CurrentGame;
-      } else {}
-    });
-    return resultArray;
-  },
-
-  findAllWinnerScores: function (gameTable) {
-
-    var resultArray = [];
-    gameTable.forEach(element => {
-      var score1 = element.players[0].scores.reduce(this.findTotalScoreSingleGameEachPlayer);
-      var score2 = element.players[1].scores.reduce(this.findTotalScoreSingleGameEachPlayer);
-
-      if (score1 > score2) {
-        resultArray.push(score1);
-      } else {
-        resultArray.push(score2);
-      }
-    });
-    return resultArray;
-  },
-
-  findAllLoserScores: function (gameTable) {
-    var resultArray = [];
-    gameTable.forEach(element => {
-      var score1 = element.players[0].scores.reduce(this.findTotalScoreSingleGameEachPlayer);
-      var score2 = element.players[1].scores.reduce(this.findTotalScoreSingleGameEachPlayer);
-
-      if (score1 > score2) {
-        resultArray.push(score2);
-      } else {
-        resultArray.push(score1);
-      }
-    });
-    return resultArray;
-  },
-
-  findAllLosers: function (gameTable) {
-    var resultArray = [];
-    gameTable.forEach(element => {
-      resultArray.push(this.findLoser(element));
-    });
-    return resultArray;
-  },
-
-  findAllDifferences: function (gameTable) {
-    var differenceArray = [];
-    gameTable.forEach(element => {
-      const score1 = element.players[0].scores.reduce(this.findTotalScoreSingleGameEachPlayer);
-      const score2 = element.players[1].scores.reduce(this.findTotalScoreSingleGameEachPlayer);
-      differenceArray.push(Math.abs(score1 - score2));
-    });
-    return differenceArray;
-  },
-
-  findTopMovePerPlayer: function (gameTable) {
-    var resultArray = [-1, -1];
-
-    gameTable.forEach(element => {
-      element.players[0].scores.forEach(el => {
-        if (resultArray[0] < el) {
-          resultArray[0] = el;
-        }
-      });
-      element.players[1].scores.forEach(el => {
-        if (resultArray[1] < el) {
-          resultArray[1] = el;
-        }
-      });
-    });
-    return resultArray;
-  },
-
-  findMedianPerPlayer: function (gameTable) {
-    var resultArray = [0, 0];
-    var temp1 = 0;
-    var temp2 = 0;
-    gameTable.forEach(element => {
-      temp1 += element.players[0].scores.reduce(this.findTotalScoreSingleGameEachPlayer) / gameTable.length;
-      temp2 += element.players[1].scores.reduce(this.findTotalScoreSingleGameEachPlayer) / gameTable.length;
-    });
-    resultArray[0] = temp1.toFixed(2);
-    resultArray[1] = temp2.toFixed(2);
-    return resultArray;
-  },
-
-  findMedianPerMovePerPlayer: function (gameTable) {
-    var resultArray = [0, 0];
-    var temp1 = 0;
-    var temp2 = 0;
-    gameTable.forEach(element => {
-      element.players[0].scores.forEach((el, index) => {
-        temp1 += (el / (element.players[0].scores.length * gameTable.length));
-        temp2 += (element.players[1].scores[index] / (element.players[0].scores.length * gameTable.length));
-      });
-    });
-
-    resultArray[0] = temp1.toFixed(2);
-    resultArray[1] = temp2.toFixed(2);
-    return resultArray;
-  },
   /*-------------------------------------------------------*/
   /*-------------------------------------------------------*/
   /*--------- Player profile's functions ------------------*/
@@ -236,141 +31,25 @@ module.exports = {
     return total + num;
   },
 
-  findSortedScoreBoard: function (game) {
-
-    /* Returned information: array of elements { _id: id of player, score: total score of player}*/
-    var scoreboard = [];
-
-    game.players.forEach(element => {
-      var score = 0;
-      var _id = null;
-      if (element.scores != null) {
-        score = element.scores.reduce(this.findTotalScoreSingleGameEachPlayer);
-        _id = element._id;
-      }
-
-      scoreboard.push({
-        _id,
-        score
-      });
-    });
-    //Sort players depend on score (bigger first)
-    scoreboard.sort(this.compare);
-
-    return scoreboard;
-  },
-
-  calculateDiffs: function (playersPosition, scoreboard) {
-    var diff = [null, null, null];
-
-    switch (playersPosition) {
-
-      case 0:
-        /* Player is in 1st position*/
-        /* Calculate difference with 2nd player : Definitely exists since at least 2 players */
-        diff[0] = scoreboard[0].score - scoreboard[1].score;
-        /* Check if 3rd player exists */
-        if (scoreboard[2]._id != null) {
-          /* Calculate difference with 3rd player*/
-          diff[1] = scoreboard[0].score - scoreboard[2].score;
-        }
-        /* Check if 4th player exists*/
-        if (scoreboard[3]._id != null) {
-          /* Calculate difference with 4th player */
-          diff[2] = scoreboard[0].score - scoreboard[3].score;
-        }
-        break;
-      case 1:
-        /* Player is in 2st position*/
-        /* Calculate difference with 1st player; Definitely exists since at least 2 players; Difference always positive */
-        diff[0] = scoreboard[0].score - scoreboard[1].score;
-        if (scoreboard[2]._id != null) {
-          diff[1] = scoreboard[1].score - scoreboard[2].score;
-        }
-        if (scoreboard[3]._id != null) {
-          diff[2] = scoreboard[1].score - scoreboard[3].score;
-        }
-        break;
-      case 2:
-        /* Player is in 3rd position*/
-        /* Calculate difference with 1st & 2nd player; Previous players definitely exist; Difference always positive */
-        diff[0] = scoreboard[0].score - scoreboard[2].score;
-        diff[1] = scoreboard[1].score - scoreboard[2].score;
-        if (scoreboard[3]._id != null) {
-          diff[2] = scoreboard[2].score - scoreboard[3].score;
-        }
-        break;
-      case 3:
-        /* Player is in 4th position*/
-        /* Calculate difference with all players; Previous players definitely exist; Difference always positive */
-        diff[0] = scoreboard[0].score - scoreboard[3].score;
-        diff[1] = scoreboard[1].score - scoreboard[3].score;
-        diff[2] = scoreboard[2].score - scoreboard[3].score;
-        break;
-      default:
-        break;
-    }
-    return diff;
-  },
-
-  IsNewOpponent: function (opponents, currentID) {
-    var IsNewOpponent = true;
-
-    opponents.forEach(el => {
-      if (currentID === el._id) {
-        IsNewOpponent = false;
-      }
-    });
-
-    return IsNewOpponent;
-  },
-
   calculateStatsVsOpponent: function (posAllGamesStats, playersOpponents, gameOpponents) {
 
     for (var i = 1; i < posAllGamesStats.positions.length; i++) {
-        playersOpponents.forEach(playersOpponent => {
-          if ((gameOpponents[i-1]._id != 0 && gameOpponents[i-1]._id === playersOpponent._id) //Real players
-            ||
-            (gameOpponents[i-1]._id === 0 && gameOpponents[i-1].name === playersOpponent.name)) //Dummy names
-          {
-            if (posAllGamesStats.positions[0] - posAllGamesStats.positions[i] > 0) {
-              playersOpponent.losses++;
-            } else if (posAllGamesStats.positions[0] - posAllGamesStats.positions[i] === 0) {
-              playersOpponent.ties++;
-            } else {
-              playersOpponent.victories++;
-            }
-            playersOpponent.opponentsStats.push(posAllGamesStats);
+      playersOpponents.forEach(playersOpponent => {
+        if ((gameOpponents[i - 1]._id != 0 && gameOpponents[i - 1]._id === playersOpponent._id) //Real players
+          ||
+          (gameOpponents[i - 1]._id === 0 && gameOpponents[i - 1].name === playersOpponent.name)) //Dummy names
+        {
+          if (posAllGamesStats.positions[0] - posAllGamesStats.positions[i] > 0) {
+            playersOpponent.losses++;
+          } else if (posAllGamesStats.positions[0] - posAllGamesStats.positions[i] === 0) {
+            playersOpponent.ties++;
+          } else {
+            playersOpponent.victories++;
           }
-        });
+          playersOpponent.opponentsStats.push(posAllGamesStats);
+        }
+      });
     }
-  },
-
-  findScoresSingleGame: function (game) {
-    var scoreboard = [];
-
-    game.players.forEach(element => {
-      var score = 0;
-      if (element.scores != null) {
-        score = element.scores.reduce(this.findTotalScoreSingleGameEachPlayer);
-      }
-      scoreboard.push(score);
-    });
-
-    return scoreboard;
-  },
-
-  opponentAddGames: function (playerID, opponents, game) {
-    game.players.forEach(player => {
-      if (player._id != null && player._id != playerID) {
-        opponents.forEach(opponent => {
-          if (opponent._id === player._id) {
-            opponent.opponentsStats.games.push(game);
-            opponent.opponentsStats.scores.push(this.findScoresSingleGame(game));
-          }
-        })
-      }
-    });
   },
 
   findGamesStats: function (gamesTable) {
@@ -380,7 +59,7 @@ module.exports = {
     gamesTable.forEach(game => {
 
       var tempGame = {
-        ID: "",
+        _id: "",
         playersNames: [],
         scores: [],
         positions: [],
@@ -388,7 +67,7 @@ module.exports = {
       }
 
       //Store games IDs
-      tempGame.ID = game._id;
+      tempGame._id = game._id;
 
       //Store playersNames & calculate scores (always first players profile)
       tempGame.playersNames.push("You");
@@ -517,7 +196,7 @@ module.exports = {
     //5. Find Stats against each opponent
     games.forEach(game => {
       player.positionStats.posAllGamesStats.forEach(posAllGamesStats => {
-        if (game._id === posAllGamesStats.ID) {
+        if (game._id === posAllGamesStats._id) {
           this.calculateStatsVsOpponent(posAllGamesStats, player.opponents, game.opponents);
         }
       });
@@ -535,8 +214,6 @@ module.exports = {
   /*-------------------------------------------------------*/
 
 
-
-
   /*-------------------------------------------------------*/
   /*-------------------------------------------------------*/
   /*--------specific game from database ----------*/
@@ -544,14 +221,41 @@ module.exports = {
   /*-------------------------------------------------------*/
 
   /* Returns specific game from database */
-  findSpecificGame: function (gameTable, index) {
-    var resultGame = null;
-    gameTable.forEach(game => {
-      if (game._id === index) {
-        resultGame = game;
+  findSpecificGame: function (userdb, userID, gameID) {
+    var wantedGame = null;
+    var currentUser;
+
+    //1. Find the user 
+    for (let user of userdb) {
+      if (user._id === userID) {
+        currentUser = user;
+        break;
       }
-    });
-    return resultGame;
+    }
+
+    //2. Search in the inserted games 
+    for (let game of currentUser.insertedGames) {
+      if (game._id === gameID) {
+        wantedGame = game;
+        return wantedGame;
+      }
+    }
+    //3. Search in the inserted games of friends 
+    //For all friends 
+    for (let friendID of currentUser.friends) {
+      //Find friend in database 
+      for (let user of userdb) {
+        if (user._id === friendID) {
+          //Search in friends games
+          for (game of user.insertedGames) {
+            if (game._id === gameID) {
+              wantedGame = game;
+              return wantedGame;
+            }
+          }
+        }
+      }
+    }
   },
 
   /* Returns the position of players including Tie */
@@ -600,20 +304,29 @@ module.exports = {
 
   /* Returns the top move of each player for single game */
   findTopMoveSingleGame: function (game) {
-    var topMove = [-100, -100, -100, -100];
-    var currentPlayer = 0;
+    var topMove = [];
+    var tempTopMove = -1000;
+
+    /* Find topmove for current player */
+    game.scores.forEach(score => {
+      if (score > tempTopMove) {
+        tempTopMove = score;
+      }
+    });
+    /* Store players top move  */
+    topMove.push(tempTopMove);
 
     /* For each player find top move */
-    game.players.forEach(player => {
-      if (player.name != null) { //Calculate only if player exists 
-        player.scores.forEach(score => {
-          if (topMove[currentPlayer] < score) {
-            topMove[currentPlayer] = score;
-          }
-        });
-      }
-      /* Proceed to the next player  */
-      currentPlayer++;
+    game.opponents.forEach(opponent => {
+      /* Reset top temporary top move */
+      tempTopMove = -1000;
+      opponent.scores.forEach(score => {
+        if (score > tempTopMove) {
+          tempTopMove = score;
+        }
+      });
+      /* Store opponents top move */
+      topMove.push(tempTopMove);
     });
 
     return topMove;
@@ -621,20 +334,29 @@ module.exports = {
 
   /* Returns the worst move of each player for single game */
   findWorstMoveSingleGame: function (game) {
-    var worstMove = [1000, 1000, 1000, 1000];
-    var currentPlayer = 0;
+    var worstMove = [];
+    var tempWorstMove = 1000;
 
-    /* For each player find top move */
-    game.players.forEach(player => {
-      if (player.name != null) { //Calculate only if player exists 
-        player.scores.forEach(score => {
-          if (score >= 0 && score < worstMove[currentPlayer]) {
-            worstMove[currentPlayer] = score;
-          }
-        });
+    /* Find worst move for current player */
+    game.scores.forEach(score => {
+      if (score < tempWorstMove && score >= 0) {
+        tempWorstMove = score;
       }
-      /* Proceed to the next player */
-      currentPlayer++;
+    });
+    /* Store players worst move  */
+    worstMove.push(tempWorstMove);
+
+    /* For each player find worst move */
+    game.opponents.forEach(opponent => {
+      /* Reset worst temporary worst move */
+      tempWorstMove = 1000;
+      opponent.scores.forEach(score => {
+        if (score < tempWorstMove && score >= 0) {
+          tempWorstMove = score;
+        }
+      });
+      /* Store opponents worst move */
+      worstMove.push(tempWorstMove);
     });
 
     return worstMove;
@@ -642,24 +364,25 @@ module.exports = {
 
   /* Returns the median per move of each player for single game */
   findMedianPerMoveSingleGame: function (game) {
-    var medianPerMove = [0, 0, 0, 0];
-    var currentPlayer = 0;
+    var medianPerMove = [];
+    var tempMedianPerMove = 0;
+
+    /* Find median per move for current player */
+    game.scores.forEach(score => {
+      tempMedianPerMove += score / game.scores.length;
+    });
+    tempMedianPerMove = tempMedianPerMove.toFixed(2);
+    medianPerMove.push(tempMedianPerMove);
 
     /* For each player find median point per move */
-    game.players.forEach(player => {
-      if (player.name != null) { //Calculate only if player exists
-        player.scores.forEach(score => {
-          medianPerMove[currentPlayer] += score / player.scores.length;
-        });
-      }
-      /* Proceed to the next player */
-      currentPlayer++;
+    game.opponents.forEach(opponent => {
+      tempMedianPerMove = 0;
+      opponent.scores.forEach(score => {
+        tempMedianPerMove += score / opponent.scores.length;
+      });
+      tempMedianPerMove = tempMedianPerMove.toFixed(2);
+      medianPerMove.push(tempMedianPerMove);
     });
-
-    medianPerMove[0] = medianPerMove[0].toFixed(2);
-    medianPerMove[1] = medianPerMove[1].toFixed(2);
-    medianPerMove[2] = medianPerMove[2].toFixed(2);
-    medianPerMove[3] = medianPerMove[3].toFixed(2);
 
     return medianPerMove;
   },
@@ -668,15 +391,23 @@ module.exports = {
   findGameStats: function (game) {
 
     var gameStats = {
+      names: [],
       position: [],
       score: [],
       topSingleMove: [],
       worstSingleMove: [],
-      medianPerMove: []
+      medianPerMove: [],
+      scores: []
     }
 
+    /* Find names for each player */
+    gameStats.names = this.findNamesSingleGame(game);
+
+    /* Find scores for each player */ 
+    gameStats.scores = this.findScoresPerRoundSingleGame(game);
+
     /* Find Score for each player */
-    gameStats.score = this.findScoresSingleGame(game);
+    gameStats.score = this.findScoresTotalSingleGame(game);
 
     /* Find Position for each player */
     gameStats.position = this.findPositionSingleGame(gameStats.score);
@@ -696,25 +427,77 @@ module.exports = {
   findSumScoresPerRoundSingleGame: function (game) {
 
     var sumScores = [];
+    var tempScore = [];
 
-    game.players.forEach(player => {
-      if (player.name != null) {
-        var tempScore = [];
-        /* First values are the same */
-        tempScore.push(player.scores[0]);
-        for (var i = 1; i < player.scores.length; i++) {
-          /* Sum rest of the values */
-          var tempValue = tempScore[i - 1] + player.scores[i];
-          tempScore.push(tempValue);
-        }
-        sumScores.push(tempScore);
+    /* Find sum score per round for current player */
+    tempScore.push(game.scores[0]);
+    for (var i = 1; i < game.scores.length; i++) {
+      /* Sum rest of the values */
+      var tempValue = tempScore[i - 1] + game.scores[i];
+      tempScore.push(tempValue);
+    }
+    sumScores.push(tempScore);
+
+
+    game.opponents.forEach(opponent => {
+      tempScore = [];
+      /* First values are the same */
+      tempScore.push(opponent.scores[0]);
+      for (var i = 1; i < opponent.scores.length; i++) {
+        /* Sum rest of the values */
+        var tempValue = tempScore[i - 1] + opponent.scores[i];
+        tempScore.push(tempValue);
       }
-
+      sumScores.push(tempScore);
     });
 
     return sumScores;
-  }
+  },
 
+  findScoresTotalSingleGame: function (game) {
+    var scoreboard = [];
+
+    //Find score for current player 
+    scoreboard.push(game.scores.reduce(this.findTotalScoreSingleGameEachPlayer));
+
+    //Find score of opponents
+    game.opponents.forEach(opponent => {
+      var score = 0;
+      score = opponent.scores.reduce(this.findTotalScoreSingleGameEachPlayer);
+      scoreboard.push(score);
+    });
+
+    return scoreboard;
+  },
+
+  findNamesSingleGame: function (game) {
+    var names = []; 
+
+    /* Store players name as you */
+    names.push("You");
+
+    /* Store opponents names */
+    game.opponents.forEach(opponent => {
+      names.push(opponent.name);
+    });
+
+    return names;
+  }, 
+
+  /* Returns the score per round for each player for single game */
+  findScoresPerRoundSingleGame: function (game) {
+    var scores = []; 
+
+    /* Store players scores */
+    scores.push(game.scores);
+
+    /* Store opponents scores */
+    game.opponents.forEach(opponent => {
+      scores.push(opponent.scores);
+    });
+
+    return scores;
+  }
   /*-------------------------------------------------------*/
   /*-------------------------------------------------------*/
   /*----- specific game from database ------*/
