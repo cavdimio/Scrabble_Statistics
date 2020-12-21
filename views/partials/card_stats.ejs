@@ -7,18 +7,16 @@
         <div class="row">
           <div class="col">
             <h5 class="card-title text-uppercase text-muted mb-0">Position</h5>
-            <% for (var i=0; i<currentGame.players.length; i++){ %>
-            <div>
-              <% if ( currentGame.players[i].name != null){ %>
-              <span class="h2 font-weight-bold mb-0"><%= currentGame.players[i].name %> </span>
+            <% for (var i=0; i<gameStats.names.length; i++){ %>
+            <div>     
+              <span class="h2 font-weight-bold mb-0"><%= gameStats.names[i] %> </span>
               <span class="h2 font-weight-bold mb-0 float-right"><%=  gameStats.position[i] %> </span>
-              <% } %>
             </div>
             <% } %>
           </div>
           <div class="col-auto">
             <div class="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
-              <i class="ni ni-active-40"></i>
+              <i class="fas fa-star"></i>
             </div>
           </div>
         </div>
@@ -32,19 +30,16 @@
         <div class="row">
           <div class="col">
             <h5 class="card-title text-uppercase text-muted mb-0"> Score </h5>
-            <% for (var i=0; i<currentGame.players.length; i++){ %>
+            <% for (var i=0; i<gameStats.names.length; i++){ %>
             <div>
-              <% if ( currentGame.players[i].name != null){ %>
-              <span class="h2 font-weight-bold mb-0"><%= currentGame.players[i].name %></span>
+              <span class="h2 font-weight-bold mb-0"><%= gameStats.names[i] %></span>
               <span class="h2 font-weight-bold mb-0 float-right"> <%=  gameStats.score[i] %> </span> 
-              <% } %>
             </div>
             <% } %>
-
           </div>
           <div class="col-auto">
             <div class="icon icon-shape bg-gradient-orange text-white rounded-circle shadow">
-              <i class="ni ni-chart-pie-35"></i>
+              <i class="fas fa-chart-line"></i>
             </div>
           </div>
         </div>
@@ -58,18 +53,16 @@
         <div class="row">
           <div class="col">
             <h5 class="card-title text-uppercase text-muted mb-0">Top Move</h5>
-            <% for (var i=0; i<currentGame.players.length; i++){ %>
+            <% for (var i=0; i<gameStats.names.length; i++){ %>
             <div>
-              <% if ( currentGame.players[i].name != null){ %>
-              <span class="h2 font-weight-bold mb-0"><%= currentGame.players[i].name %></span>
+              <span class="h2 font-weight-bold mb-0"><%= gameStats.names[i] %></span>
               <span class="h2 font-weight-bold mb-0 float-right"> <%=  gameStats.topSingleMove[i] %> </span> 
-              <% } %>
             </div>
             <% } %>
           </div>
           <div class="col-auto">
             <div class="icon icon-shape bg-gradient-green text-white rounded-circle shadow">
-              <i class="ni ni-money-coins"></i>
+              <i class="far fa-grin-stars"></i>
             </div>
           </div>
         </div>
@@ -83,18 +76,16 @@
         <div class="row">
           <div class="col">
             <h5 class="card-title text-uppercase text-muted mb-0">Median Points per move</h5>
-            <% for (var i=0; i<currentGame.players.length; i++){ %>
+            <% for (var i=0; i<gameStats.names.length; i++){ %>
             <div>
-              <% if ( currentGame.players[i].name != null){ %>
-              <span class="h2 font-weight-bold mb-0"><%= currentGame.players[i].name %></span>
+              <span class="h2 font-weight-bold mb-0"><%= gameStats.names[i] %></span>
               <span class="h2 font-weight-bold mb-0 float-right"> <%=  gameStats.medianPerMove[i] %> </span> 
-              <% } %>
             </div>
             <% } %>
           </div>
           <div class="col-auto">
             <div class="icon icon-shape bg-gradient-info text-white rounded-circle shadow">
-              <i class="ni ni-chart-bar-32"></i>
+              <i class="fas fa-chart-pie"></i>
             </div>
           </div>
         </div>
@@ -108,18 +99,16 @@
         <div class="row">
           <div class="col">
             <h5 class="card-title text-uppercase text-muted mb-0">Worst move</h5>
-            <% for (var i=0; i<currentGame.players.length; i++){ %>
+            <% for (var i=0; i<gameStats.names.length; i++){ %>
             <div>
-              <% if ( currentGame.players[i].name != null){ %>
-              <span class="h2 font-weight-bold mb-0"><%= currentGame.players[i].name %></span>
+              <span class="h2 font-weight-bold mb-0"><%= gameStats.names[i] %></span>
               <span class="h2 font-weight-bold mb-0 float-right"> <%=  gameStats.worstSingleMove[i] %> </span> 
-              <% } %>
             </div>
             <% } %>
           </div>
           <div class="col-auto">
             <div class="icon icon-shape bg-gradient-purple text-white rounded-circle shadow">
-              <i class="ni ni-money-coins"></i>
+              <i class="fas fa-thumbs-down"></i>
             </div>
           </div>
         </div>

@@ -39,19 +39,17 @@
                   <th scope="col"
                       class="sort"
                       data-sort="name">Rounds</th>
-                  <% for (var i=0; i<currentGame.players.length; i++){ %>
+                  <% for (var i=0; i<gameStats.names.length; i++){ %>
                   <th scope="col"
                       class="sort"
                       data-sort="budget">
-                    <% if ( currentGame.players[i].name != null){ %>
-                    <%= currentGame.players[i].name %>
-                    <% } %>
+                    <%= gameStats.names[i] %>
                   </th>
                   <% } %>
                 </tr>
               </thead>
               <tbody class="list">
-                <% for (var i=0; i<currentGame.players[0].scores.length; i++){ %>
+                <% for (var i=0; i<gameStats.scores[0].length; i++){ %>
                 <tr>
                   <th scope="row">
                     <div id="player1name"
@@ -59,20 +57,9 @@
                       <span class="name mb-0 text-sm"><%= i+1 %></span>
                     </div>
                   </th>
+                  <% for (var j=0; j<gameStats.names.length; j++){ %>
                   <td class="budget sgs_players_name">
-                    <%= currentGame.players[0].scores[i] %>
-                  </td>
-                  <td class="budget sgs_players_name">
-                    <%= currentGame.players[1].scores[i] %>
-                  </td>
-                  <% if ( currentGame.players[2].scores != null){ %>
-                  <td class="budget sgs_players_name">
-                    <%= currentGame.players[2].scores[i] %>
-                  </td>
-                  <% } %>
-                  <% if ( currentGame.players[3].scores != null){ %>
-                  <td class="budget sgs_players_name">
-                    <%= currentGame.players[3].scores[i] %>
+                    <%= gameStats.scores[j][i] %>
                   </td>
                   <% } %>
                 </tr>
@@ -105,33 +92,32 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
 
-<script> //TODO vertical cursor during mouse-over 
+<script>
+  //TODO vertical cursor during mouse-over 
   /* Get game */
-  var currentGame = <%-JSON.stringify(currentGame) %> ;
+  var gameStats = <%-JSON.stringify(gameStats) %>;
 
   /* Get number of rounds in a table */
-  var length = parseInt("<%= currentGame.players[0].scores.length %>");
+  var length = parseInt("<%= gameStats.scores[0].length %>");
   var rounds = [];
   for (var i = 1; i <= length; i++) {
     rounds.push(i);
   }
 
   /* Create the sum scores */
-  var sumScoresPerRound = <%-JSON.stringify(sumScoresPerRound) %> ;
+  var sumScoresPerRound = <%-JSON.stringify(sumScoresPerRound) %>;
 
-  /* Set colors */
+  /* Set colors */ //TODO insert many colors just in case of multiple players etc 20 
   var colors = ["#3e95cd", "#5e72e4", "#77e673", "#e6c473"];
   var datasets = [];
 
-  for (var i = 0; i < 4; i++) {
-    if (currentGame.players[i].name != null) {
-      datasets.push({
-        label: currentGame.players[i].name,
-        borderColor: colors[i],
-        fill: false,
-        data: sumScoresPerRound[i]
-      });
-    }
+  for (var i = 0; i < gameStats.names.length; i++) {
+    datasets.push({
+      label: gameStats.names[i],
+      borderColor: colors[i],
+      fill: false,
+      data: sumScoresPerRound[i]
+    });
   }
 
   var ctx = document.getElementById('myChart');

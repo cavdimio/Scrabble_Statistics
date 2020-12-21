@@ -8,7 +8,6 @@ const _ = require("lodash");
 
 /* Dummy Databases */
 const userdb = require("./userdb")
-const scrabbledb = require("./gamedb");
 const scrabble_lib = require("./scrabble_lib");
 
 const app = express();
@@ -21,6 +20,7 @@ app.use(cors());
 //Include public file for css
 app.use(express.static(__dirname + '/public'));
 
+var userId;
 
 app.get("/", (req, res, next) => {
   res.render("home");
@@ -28,12 +28,13 @@ app.get("/", (req, res, next) => {
 
 app.post("/game/:gameId", (req, res, next) => {
   const gameID = req.body.game_id;
+  userId = req.body.userID;
   res.redirect("/game/" + gameID);
 });
 
 app.get("/game/:game_id", (req, res, next) => {
   const gameID = req.params.game_id;
-  const currentGame = scrabble_lib.findSpecificGame(scrabbledb, gameID);
+  const currentGame = scrabble_lib.findSpecificGame(userdb, userId, gameID);
 
   /* Check if game exists */
   if (currentGame != null) {
@@ -41,7 +42,6 @@ app.get("/game/:game_id", (req, res, next) => {
     const sumScoresPerRound = scrabble_lib.findSumScoresPerRoundSingleGame(currentGame);
 
     res.render("partials/single-game-stats", {
-      currentGame: currentGame,
       gameStats: gameStats,
       sumScoresPerRound: sumScoresPerRound
     });
@@ -66,6 +66,7 @@ app.get("/:id", (req, res, next) => {
     const findPlayersGameStats = scrabble_lib.findPlayersGameStats(userdb, player);
 
     res.render("my_profile_page", {
+      userID: userID,
       name: player.name,
       positionStats: findPlayersGameStats.positionStats,
       opponents: findPlayersGameStats.opponents,

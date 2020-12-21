@@ -160,7 +160,11 @@
               <% for (var i=0; i<opponents.length; i++){ %>
               <tr id="cell_hover">
                 <th scope="row"
+                    <% if ( opponents[i]._id != 0){ %>
                     onclick="populateTable('UserID:' + '<%= opponents[i]._id %>')">
+                  <% }else{ %>
+                  onclick="populateTable('UserName:' + '<%= opponents[i].name %>')">
+                  <% } %>
                   <div class="media align-items-center">
                     <div class="media-body">
                       <span class="name mb-0 text-sm"><%= opponents[i].name %> </span>
@@ -168,15 +172,27 @@
                   </div>
                 </th>
                 <td class="budget"
-                    onclick="populateTable('UserID:' + '<%= opponents[i]._id %>')"> 
+                    <% if ( opponents[i]._id != 0){ %>
+                    onclick="populateTable('UserID:' + '<%= opponents[i]._id %>')">
+                  <% }else{ %>
+                  onclick="populateTable('UserName:' + '<%= opponents[i].name %>')">
+                  <% } %>
                   <%= opponents[i].victories %>
                 </td>
                 <td class="budget"
-                    onclick="populateTable('UserID:' + '<%= opponents[i]._id %>')"> 
+                    <% if ( opponents[i]._id != 0){ %>
+                    onclick="populateTable('UserID:' + '<%= opponents[i]._id %>')">
+                  <% }else{ %>
+                  onclick="populateTable('UserName:' + '<%= opponents[i].name %>')">
+                  <% } %>
                   <%= opponents[i].losses %>
                 </td>
                 <td class="budget"
-                    onclick="populateTable('UserID:' + '<%= opponents[i]._id %>')">  
+                    <% if ( opponents[i]._id != 0){ %>
+                    onclick="populateTable('UserID:' + '<%= opponents[i]._id %>')">
+                  <% }else{ %>
+                  onclick="populateTable('UserName:' + '<%= opponents[i].name %>')">
+                  <% } %>
                   <%= opponents[i].ties %>
                 </td>
               </tr>
@@ -238,12 +254,12 @@
                             <td>
                               <form action="/game/<%= positionStats.posAllGamesStats[i]._id %>"
                                     method="post">
+                                <input type=hidden name="userID" value="<%= userID %>">
                                 <button type="submit"
                                         name="game_id"
                                         value="<%= positionStats.posAllGamesStats[i]._id %>"
                                         class="my-btn-link">
                                   <div class="media align-items-center">
-
                                     <div class="media-body">
                                       <span class="name mb-0 text-sm">
                                         <%= positionStats.posAllGamesStats[i].playersNames[0] %></span>
@@ -255,6 +271,7 @@
                             <td>
                               <form action="/game/<%= positionStats.posAllGamesStats[i]._id %>"
                                     method="post">
+                                    <input type=hidden name="userID" value="<%= userID %>">
                                 <button type="submit"
                                         name="game_id"
                                         value="<%= positionStats.posAllGamesStats[i]._id %>"
@@ -294,6 +311,7 @@
                             <td>
                               <form action="/game/<%= positionStats.posAllGamesStats[i]._id %>"
                                     method="post">
+                                    <input type=hidden name="userID" value="<%= userID %>">
                                 <button type="submit"
                                         name="game_id"
                                         value="<%= positionStats.posAllGamesStats[i]._id %>"
@@ -310,6 +328,7 @@
                             <td>
                               <form action="/game/<%= positionStats.posAllGamesStats[i]._id %>"
                                     method="post">
+                                    <input type=hidden name="userID" value="<%= userID %>">
                                 <button type="submit"
                                         name="game_id"
                                         value="<%= positionStats.posAllGamesStats[i]._id %>"
@@ -349,6 +368,7 @@
                             <td>
                               <form action="/game/<%= positionStats.posAllGamesStats[i]._id %>"
                                     method="post">
+                                    <input type=hidden name="userID" value="<%= userID %>">
                                 <button type="submit"
                                         name="game_id"
                                         value="<%= positionStats.posAllGamesStats[i]._id %>"
@@ -370,6 +390,7 @@
                             <td>
                               <form action="/game/<%= positionStats.posAllGamesStats[i]._id %>"
                                     method="post">
+                                    <input type=hidden name="userID" value="<%= userID %>">
                                 <button type="submit"
                                         name="game_id"
                                         value="<%= positionStats.posAllGamesStats[i]._id %>"
@@ -413,6 +434,7 @@
                             <td>
                               <form action="/game/<%= positionStats.posAllGamesStats[i]._id %>"
                                     method="post">
+                                    <input type=hidden name="userID" value="<%= userID %>">
                                 <button type="submit"
                                         name="game_id"
                                         value="<%= positionStats.posAllGamesStats[i]._id %>"
@@ -434,6 +456,7 @@
                             <td>
                               <form action="/game/<%= positionStats.posAllGamesStats[i]._id %>"
                                     method="post">
+                                    <input type=hidden name="userID" value="<%= userID %>">
                                 <button type="submit"
                                         name="game_id"
                                         value="<%= positionStats.posAllGamesStats[i]._id %>"
@@ -514,8 +537,7 @@
     var positionStats = <%-JSON.stringify(positionStats) %> ;
     var posStats;
 
-
-    //Check if category is a specific user id or a general category 
+    //Check if category is a specific user id or dummy name or a general category 
     if (category.includes("UserID:")) {
       //Specific user ID
 
@@ -531,41 +553,60 @@
 
           //Replace title 
           $("#general-table-title").text('Your matches against ' + opponent.name);
-          length = opponent.opponentsStats.games.length;
+          length = opponent.opponentsStats.length;
           posStats = opponent.opponentsStats;
         }
       });
+    } else if (category.includes("UserName:")) {
+      //Dummy user name 
+
+      //Bring all opponents 
+      var opponents = <%-JSON.stringify(opponents) %> ;
+
+      //Store current dummy opponent name 
+      var userName = category.replace("UserName:", "");
+
+      opponents.forEach(opponent => {
+        if (opponent._id === 0 && userName === opponent.name) {
+
+          //Replace title 
+          $("#general-table-title").text('Your matches against ' + opponent.name);
+          length = opponent.opponentsStats.length;
+          posStats = opponent.opponentsStats;
+        }
+      });
+
     } else {
       //General category
       switch (category) {
         case "victories":
           $("#general-table-title").text('Your Victories, <%= name %>');
-          length = positionStats.pos1stats.games.length;
+          length = positionStats.pos1stats.length;
           posStats = positionStats.pos1stats;
           break;
         case "2ndPosition":
           $("#general-table-title").text('Your 2nd positions, <%= name %>');
-          length = positionStats.pos2stats.games.length;
+          length = positionStats.pos2stats.length;
           posStats = positionStats.pos2stats;
           break;
         case "3rdPosition":
           $("#general-table-title").text('Your 3rd positions, <%= name %>');
-          length = positionStats.pos3stats.games.length;
+          length = positionStats.pos3stats.length;
           posStats = positionStats.pos3stats;
           break;
         case "4thPosition":
           $("#general-table-title").text('Your 4th positions, <%= name %>');
-          length = positionStats.pos4stats.games.length;
+          length = positionStats.pos4stats.length;
           posStats = positionStats.pos4stats;
           break;
         case "allLoses":
           $("#general-table-title").text('Your Defeats, <%= name %>');
-          length = positionStats.posAllLosesStats.games.length;
+          length = positionStats.posAllLosesStats.length;
           posStats = positionStats.posAllLosesStats;
           break;
         case "allGames":
           $("#general-table-title").text('Your Games, <%= name %>');
-          length = positionStats.posAllGamesStats.games.length;
+          length = positionStats.posAllGamesStats.length;
           posStats = positionStats.posAllGamesStats;
           break;
         default:
@@ -580,24 +621,25 @@
     $('#general-player3-table-body').empty();
 
     for (var i = 0; i < length; i++) {
-      for (var j = 0; j < 4; j++) {
-        var tempName = posStats.games[i].players[j].name;
-        if (posStats.games[i].players[j].name == null) {
+      for (var j = 0; j < posStats[i].playersNames.length; j++) {
+        var tempName = posStats[i].playersNames[j];
+        if (posStats[i].playersNames[j] == null) {
           tempName = "\xa0";
         }
-        var tempScore = posStats.scores[i][j];
-        if (posStats.scores[i][j] == 0) {
+        var tempScore = posStats[i].scores[j];
+        if (posStats[i].scores[j] == 0) {
           tempScore = "\xa0";
         }
         //Repopulate table with appropriate cells
         $('#general-player' + j + '-table-body').append(
           '<tr id="cell_hover" class="all_cells_hover">  \
             <td> \
-              <form action="/game/'+ posStats.games[i]._id +'" \
+              <form action="/game/' + posStats[i]._id + '" \
                     method="post"> \
+                <input type=hidden name="userID" value="<%= userID %>"> \
                 <button type="submit" \
                         name="game_id" \
-                        value="'+ posStats.games[i]._id +'" \
+                        value="' + posStats[i]._id + '" \
                         class="my-btn-link"> \
                   <div class="media align-items-center" > \
                     <div class="media-body" > \
@@ -608,11 +650,12 @@
               </form> \
             </td> \
             <td > \
-              <form action="/game/'+ posStats.games[i]._id +'" \
+              <form action="/game/' + posStats[i]._id + '" \
                     method="post"> \
+                <input type=hidden name="userID" value="<%= userID %>"> \
                 <button type="submit" \
                         name="game_id" \
-                        value="'+ posStats.games[i]._id +'" \
+                        value="' + posStats[i]._id + '" \
                         class="my-btn-link"> \
                   <div class="media align-items-center" > \
                     <div class="media-body"> \
@@ -653,8 +696,7 @@
       $('#parentDiv table tr:nth-child(' + childNum + ')').css("background-color", "inherit");
     }
   );
-  
+
   //TODO sorting the table of games 
   //TODO sorting the table of opponents 
-
 </script>
