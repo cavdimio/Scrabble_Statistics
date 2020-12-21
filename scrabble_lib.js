@@ -52,38 +52,50 @@ module.exports = {
     }
   },
 
-  findGamesStats: function (gamesTable) {
+  findDifferencesSingleGame: function(scoreTable) {
+    var differences = []; 
+    /* Difference of player with himself/herself is always 0 */
+    differences.push(0);
 
+    for(var i=1; i<scoreTable.length; i++){
+      differences.push(scoreTable[0] - scoreTable[i]);
+    }
+    
+    return differences;
+  },
+
+  findGamesStats: function (gamesTable) {
     var returnedGames = [];
 
     gamesTable.forEach(game => {
-
       var tempGame = {
         _id: "",
         playersNames: [],
         scores: [],
         positions: [],
-        //diff: [] //TODO Implementation of differences if needed
+        diff: []
       }
 
-      //Store games IDs
+      /* Store games IDs */
       tempGame._id = game._id;
 
-      //Store playersNames & calculate scores (always first players profile)
+      /* Store playersNames & calculate scores (always first players profile) */
       tempGame.playersNames.push("You");
       tempGame.scores.push(game.scores.reduce(this.findTotalScoreSingleGameEachPlayer));
 
-      //Store opponents names & scores
+      /* Store opponents names & scores */
       game.opponents.forEach(opponent => {
         tempGame.scores.push(opponent.scores.reduce(this.findTotalScoreSingleGameEachPlayer));
         tempGame.playersNames.push(opponent.name);
       })
 
-      //Calculate positions & store values
+      /* Calculate positions & store values */
       tempGame.positions = this.findPositionSingleGame(tempGame.scores);
 
-      returnedGames.push(tempGame);
+      /* Calculate differences & store values */ 
+      tempGame.diff = this.findDifferencesSingleGame(tempGame.scores);
 
+      returnedGames.push(tempGame);
     });
 
     return returnedGames;
