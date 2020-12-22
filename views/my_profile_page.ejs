@@ -541,22 +541,91 @@
                       </form> \
                     </td> \
             <td > \
-              Your Winner here \
+              <form action="/game/' + posStats[i]._id + '" \
+                            method="post"> \
+                        <input type=hidden \
+                               name="userID" \
+                               value="' + userID + '"> \
+                        <button type="submit" \
+                                name="game_id" \
+                                value="' + posStats[i]._id + '" \
+                                class="my-btn-link"> \
+                          <div class="media align-items-center"> \
+                            <div class="media-body"> \
+                              <span class="name mb-0 text-sm"> \
+                                <ul id="winnersFor' + i + 'game" style="list-style-type:none;text-align:left;padding-left:0; margin-bottom:0;"> \
+                                </ul> \
+                              </span> \
+                            </div> \
+                          </div> \
+                        </button> \
+                      </form> \
             </td> \
             <td > \
-              Your position here \
-            </td> \
-            <td > \
-              Your differences here \
+              <form action="/game/' + posStats[i]._id + '" \
+                            method="post"> \
+                        <input type=hidden \
+                               name="userID" \
+                               value="' + userID + '"> \
+                        <button type="submit" \
+                                name="game_id" \
+                                value="' + posStats[i]._id + '" \
+                                class="my-btn-link"> \
+                          <div class="media align-items-center"> \
+                            <div class="media-body"> \
+                              <span class="name mb-0 text-sm"> \
+                                ' + posStats[i].positions[0] + ' \
+                              </span> \
+                            </div> \
+                          </div> \
+                        </button> \
+                      </form> \
+               </td> \
+              <td > \
+                <form action="/game/' + posStats[i]._id + '" \
+                            method="post"> \
+                        <input type=hidden \
+                               name="userID" \
+                               value="' + userID + '"> \
+                        <button type="submit" \
+                                name="game_id" \
+                                value="' + posStats[i]._id + '" \
+                                class="my-btn-link"> \
+                          <div class="media align-items-center"> \
+                            <div class="media-body"> \
+                              <span class="name mb-0 text-sm"> \
+                                <ul id="differencesFor' + i + 'game" style="list-style-type:none;text-align:left;padding-left:0; margin-bottom:0;"> \
+                                </ul> \
+                              </span> \
+                            </div> \
+                          </div> \
+                        </button> \
+                      </form> \
             </td> \
             <td> \
-               Your result here \
+              <form action="/game/' + posStats[i]._id + '" \
+                            method="post"> \
+                        <input type=hidden \
+                               name="userID" \
+                               value="' + userID + '"> \
+                        <button type="submit" \
+                                name="game_id" \
+                                value="' + posStats[i]._id + '" \
+                                class="my-btn-link"> \
+                          <div class="media align-items-center"> \
+                            <div class="media-body"> \
+                              <span id="resultsFor' + i + 'game" class="name mb-0 text-sm"> \
+                              </span> \
+                            </div> \
+                          </div> \
+                        </button> \
+                      </form> \
             </td> \
           </tr>'
       );
     }
 
-    //Create ul list for opponents 
+    //Populate opponents cell 
     for (var i = 0; i < length; i++) {
       var opponentsSingleGame = [];
 
@@ -571,6 +640,71 @@
         items.push('<li>' + item.playerName + ' : ' + item.playerScore + '</li>');
       });
       $('#opponentsFor' + i + 'game').append(items.join(''));
+    }
+
+    //Populate winners cell
+    for (var i = 0; i < length; i++) {
+      var winnersSingleGame = [];
+      for (var j = 0; j < posStats[i].playersNames.length; j++) {
+        if (posStats[i].positions[j] === 1) {
+          winnersSingleGame.push({
+            "playerName": posStats[i].playersNames[j]
+          })
+        }
+      }
+      var items = [];
+      $.each(winnersSingleGame, function (i, item) {
+        items.push('<li>' + item.playerName + '</li>');
+      });
+      $('#winnersFor' + i + 'game').append(items.join(''));
+    }
+
+    //Populate differences cell
+    for (var i = 0; i < length; i++) {
+      var differencesSingleGame = [];
+      for (var j = 1; j < posStats[i].playersNames.length; j++) { //TODO 1 pt difference implementation
+        if (posStats[i].positions[0] - posStats[i].positions[j] > 0) {
+          differencesSingleGame.push({
+            "message": "Defeat against " + posStats[i].playersNames[j] + " with " + -1*posStats[i].diff[j] +  " pts"
+          })
+        }
+        else if (posStats[i].positions[0] - posStats[i].positions[j] === 0){
+          differencesSingleGame.push({
+            "message": "Tie against " + posStats[i].playersNames[j]
+          })
+        }
+        else {
+          differencesSingleGame.push({
+            "message": "Victory against " + posStats[i].playersNames[j] + " with " + posStats[i].diff[j] +  " pts"
+          })
+        }
+      }
+      var items = [];
+      $.each(differencesSingleGame, function (i, item) {
+        items.push('<li>' + item.message + '</li>');
+      });
+      $('#differencesFor' + i + 'game').append(items.join(''));
+    }
+
+    //Populate results cell
+    for (var i = 0; i < length; i++) {
+      var resultsSingleGame = [];
+
+      if (posStats[i].positions[0] === 1) {
+        resultsSingleGame.push({
+          "result": "Victory"
+        })
+      } else {
+        resultsSingleGame.push({
+          "result": "Defeat"
+        })
+      }
+
+      var items = [];
+      $.each(resultsSingleGame, function (i, item) {
+        items.push(item.result);
+      });
+      $('#resultsFor' + i + 'game').append(items.join(''));
     }
 
   }
