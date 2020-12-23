@@ -52,15 +52,15 @@ module.exports = {
     }
   },
 
-  findDifferencesSingleGame: function(scoreTable) {
-    var differences = []; 
+  findDifferencesSingleGame: function (scoreTable) {
+    var differences = [];
     /* Difference of player with himself/herself is always 0 */
     differences.push(0);
 
-    for(var i=1; i<scoreTable.length; i++){
+    for (var i = 1; i < scoreTable.length; i++) {
       differences.push(scoreTable[0] - scoreTable[i]);
     }
-    
+
     return differences;
   },
 
@@ -92,7 +92,7 @@ module.exports = {
       /* Calculate positions & store values */
       tempGame.positions = this.findPositionSingleGame(tempGame.scores);
 
-      /* Calculate differences & store values */ 
+      /* Calculate differences & store values */
       tempGame.diff = this.findDifferencesSingleGame(tempGame.scores);
 
       returnedGames.push(tempGame);
@@ -101,7 +101,21 @@ module.exports = {
     return returnedGames;
   },
 
-  findPlayersGameStats: function (userdb, currentPlayer) {
+  findFriends(userdb, currentPlayer) {
+    var friends = [];
+
+    currentPlayer.friends.forEach(friend => {
+      userdb.forEach(user => {
+        if (user._id === friend) {
+          friends.push(user);
+        }
+      });
+    });
+
+    return friends;
+  },
+
+  findPlayersGameStats: function (currentPlayer, friends) {
 
     //Returned Struct
     var player = {
@@ -121,29 +135,25 @@ module.exports = {
     var games = [...currentPlayer.insertedGames];
 
     /* 1.b Add games of current player from friends games */
-    currentPlayer.friends.forEach(friend => {
-      userdb.forEach(user => {
-        if (user._id === friend) {
-          user.insertedGames.forEach(insertedGame => {
-            for (var i = 0; i < insertedGame.opponents.length; i++) {
-              if (insertedGame.opponents[i]._id === currentPlayer._id) {
-                var insertGame = {
-                  _id: insertedGame._id,
-                  scores: insertedGame.opponents[i].scores,
-                  opponents: [...insertedGame.opponents]
-                }
-                /* Replace player with opponent */
-                insertGame.opponents.splice(i, 1, {
-                  _id: user._id,
-                  name: user.name,
-                  scores: insertedGame.scores
-                });
-                games.push(insertGame);
-              }
+    friends.forEach(friend => {
+      friend.insertedGames.forEach(insertedGame => {
+        for (var i = 0; i < insertedGame.opponents.length; i++) {
+          if (insertedGame.opponents[i]._id == currentPlayer._id) {
+            var insertGame = {
+              _id: insertedGame._id,
+              scores: insertedGame.opponents[i].scores,
+              opponents: [...insertedGame.opponents]
             }
-          });
+            /* Replace player with opponent */
+            insertGame.opponents.splice(i, 1, {
+              _id: friend._id,
+              name: friend.name,
+              scores: insertedGame.scores
+            });
+            games.push(insertGame);
+          }
         }
-      })
+      });
     });
 
     //2. Store all games stats 
@@ -176,22 +186,18 @@ module.exports = {
     //4. Find all opponents (only friends appear & Dummy_names)
 
     //4.a Add all friends
-    currentPlayer.friends.forEach(friend => {
-      userdb.forEach(user => {
-        if (user._id === friend) {
-          var newOpponent = {
-            _id: user._id,
-            name: user.name,
-            victories: 0,
-            losses: 0,
-            ties: 0,
-            opponentsStats: []
-          }
-          player.opponents.push(newOpponent);
-        }
-      });
+    friends.forEach(friend => {
+      var newOpponent = {
+        _id: friend._id,
+        name: friend.name,
+        victories: 0,
+        losses: 0,
+        ties: 0,
+        opponentsStats: []
+      }
+      player.opponents.push(newOpponent);
     });
-
+   
     //4.b Add all dummy_names
     currentPlayer.dummyNames.forEach(dummyName => {
       var newOpponent = {
@@ -415,7 +421,7 @@ module.exports = {
     /* Find names for each player */
     gameStats.names = this.findNamesSingleGame(game);
 
-    /* Find scores for each player */ 
+    /* Find scores for each player */
     gameStats.scores = this.findScoresPerRoundSingleGame(game);
 
     /* Find Score for each player */
@@ -483,7 +489,7 @@ module.exports = {
   },
 
   findNamesSingleGame: function (game) {
-    var names = []; 
+    var names = [];
 
     /* Store players name as you */
     names.push("You");
@@ -494,11 +500,11 @@ module.exports = {
     });
 
     return names;
-  }, 
+  },
 
   /* Returns the score per round for each player for single game */
   findScoresPerRoundSingleGame: function (game) {
-    var scores = []; 
+    var scores = [];
 
     /* Store players scores */
     scores.push(game.scores);
