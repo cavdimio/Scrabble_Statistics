@@ -1,7 +1,7 @@
-var userIDChristos = "5fe30cbb3e8e92284cfd2857"; //Done in database
-var userIDKonstantina = "5fe330b2fa539316fcc9bff0"; //Done in database 
-var userIDAfroditi = "5fe32d96cbe619249400b66b";  //DONE in database 
-var userIDThanos = "5fe3314d3e6a431e181b2165"; //Done in database 
+var userIDChristos = "5fe706f450a0c923cc4248e5"; //Done in database
+var userIDKonstantina = "5fe7084f5171b2305079020b"; //Done in database 
+var userIDAfroditi = "5fe70a1576a1e33098738284";  //DONE in database 
+var userIDThanos = "5fe7094d9cd9d42ae8bcd959"; //Done in database 
 
 module.exports =
 
