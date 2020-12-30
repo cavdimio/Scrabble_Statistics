@@ -164,7 +164,7 @@ module.exports = {
       switch (gameStats.positions[0]) {
         case 1: //Wins 
           player.positionStats.pos1stats.push(gameStats);
-          player.opponents.pos
+          //player.opponents.pos
           break;
         case 2: //Second Positions & All losses 
           player.positionStats.pos2stats.push(gameStats);
@@ -211,7 +211,7 @@ module.exports = {
       player.opponents.push(newOpponent);
     });
 
-    //5. Find Stats against each opponent
+    //5. Find Stats against each opponent //TODO Bug with opponents table 
     games.forEach(game => {
       player.positionStats.posAllGamesStats.forEach(posAllGamesStats => {
         if (game._id === posAllGamesStats._id) {
