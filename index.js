@@ -36,26 +36,77 @@ app.get("/", (req, res, next) => {
   res.render("home");
 });
 
-app.get("/log-in", (req, res, next) => {
-  res.render("login_page");
-});
+app.route("/register")
+.get((req, res, next) => {
+  res.render("register_page");
+})
+.post((req, res, next) => {
+  /* Create user */
+  const newUser = new User({
+    username: req.body.username,
+    password: req.body.password,
+    name: req.body.name,
+    friends: [],
+    dummyNames: [], 
+    insertedGames: [],
+  });
 
-app.post("/register", (req, res, next) => {
-  //TODO Create user 
-  //TODO Encode password & email 
-  //TODO Bring id back using the user name   
+  /* Save new user to the database */
+  newUser.save(function(err){
+    if(err) {
+      console.log(err);
+      res.render("error_page"); //TODO more explainatory error message 
+    } 
+    else {
+      /* Find new user by username //TODO Change by email */
+      User.findOne( { username: req.body.username }, (err, foundUser) => {
+        if(err) {
+          console.log(err);
+          res.render("error_page"); //TODO more explainatory error message 
+        }
+        else {
+          /* Go to new users page */
+          res.redirect("/"+ foundUser._id);
+        }  
+      }); 
+    }
+  });
   
+  //TODO Encode password & email 
+     
   //TODO Remember me functionality? 
-
-  //TODO Go to my-new-profile page 
-  res.render("register_page");
+  //TODO 3rd party authentication?
 });
 
-app.get("/register", (req, res, next) => {
-  res.render("register_page");
-});
-
-app.post("/log-in", (req, res, next) => {
+app.route("/log-in")
+.get((req, res, next) => {
+  res.render("login_page");
+})
+.post((req, res, next) => {
+  const username = req.body.username; 
+  const password = req.body.password;
+  
+  User.findOne({username : username}, (err, foundUser) => {
+    if(err) {
+      /* Error happened during com */
+      res.render("error_page"); //TODO more explainatory error message 
+    } else {
+      if (foundUser) {
+        if (foundUser.password === password) {
+          /* Go to new users page */
+          res.redirect("/"+ foundUser._id);
+        }
+        else {
+          /* Username exists but password is wrong */
+          res.render("error_page"); //TODO more explainatory error message redirect to log-in?
+        }
+      }
+      else{
+        /* Username doesn't exist */
+        res.render("error_page"); //TODO more explainatory error message redirect to log-in?
+      }
+    }
+  })
   //TODO Find user authentication 
   //TODO Kwdikopoiisi 
   //TODO Sindesi
@@ -63,13 +114,12 @@ app.post("/log-in", (req, res, next) => {
   //TODO Remember me functionality? 
 
   //TODO Go to my-new-profile page 
-  res.render("login_page");
+  
 });
 
 app.get("/create-new-game", (req, res, next) => {
   res.render("create_new_game_page");
 });
-
 
 app.get("/:id", (req, res, next) => {
 
@@ -105,6 +155,7 @@ app.get("/:id", (req, res, next) => {
   });
 });
 
+//TODO bellow to become chained route handlers
 app.post("/game/:gameId", (req, res, next) => {
   const gameID = req.body.game_id;
   userId = req.body.userID;
