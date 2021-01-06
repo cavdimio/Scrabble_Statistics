@@ -98,11 +98,11 @@
                 </div>
             </div>
         </div>
-        <!-- Footer -->
-        <%- include('partials/footer'); -%>
     </div>
 </div>
-
+<!-- Footer -->
+<%- include('partials/footer'); -%>
+<%- include('partials/end_file'); -%>
 
 <script>
     function showPlayersFields() {
@@ -118,17 +118,17 @@
                     <div class="col-lg-3"> \
                         <div class="form-group"> \
                             <label class="form-control-label" \
-                                     for="input-email">Choose Opponent ' + (i + 1) + ' from friends</label> \
+                                     for="opponent' + i + '-checkbox">Choose Opponent ' + (i + 1) + ' from friends</label> \
                                 <input type="checkbox" \
-                                         id="input-email">\
+                                         id="opponent' + i + '-checkbox">\
                         </div> \
                     </div> \
                     <div class="col-lg-6"> \
                         <div class="form-group"> \
                             <label class="form-control-label" \
-                                for="input-username">Opponent ' + (i + 1) + '</label> \
+                                for="opponent' + i + '-name">Opponent ' + (i + 1) + '</label> \
                                     <input type="text" \
-                                             id="input-username" \
+                                             id="opponent' + i + '-name" \
                                           class="form-control" \
                                     placeholder="Name" > \
                         </div> \
@@ -191,4 +191,4 @@
     }
 </script>
 
-<%- include('partials/end_file'); -%>
+

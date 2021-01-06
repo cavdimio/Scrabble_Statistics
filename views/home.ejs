@@ -1,35 +1,34 @@
 <%- include('partials/header'); -%>
 
-<!-- Main content -->
-<div class="main-content"
-     id="panel">
-  <!-- Topnav -->
-  <%- include('partials/topnav'); -%>
-  <!-- Header -->
-  <div class="header pb-6 d-flex align-items-center home-page-bg-img">
-    <!-- Mask -->
-    <span class="mask bg-gradient-default opacity-6"></span>
-    <!-- Header container -->
-    <div class="container-fluid d-flex align-items-center">
-      <div class="row">
-        <div class="col-lg-7 col-md-10 col-sm-10">
-          <h1 class="display-2 text-white home-title">Store your memories here!</h1>
-          <p class="home-subtitle">This is a page where you can store your scrabble scores</p>
-          <p class="home-subtitle">Click below to see examples of users profiles</p>
-          <!-- <a href="/error-page"
+
+<!-- Topnav -->
+<%- include('partials/topnav'); -%>
+<!-- Header -->
+<div class="header pb-6  d-flex align-items-center home-page-bg-img">
+  <!-- Mask -->
+  <span class="mask bg-gradient-default opacity-6"></span>
+  <!-- Header container -->
+  <div class="container-fluid d-flex align-items-center">
+    <div class="row">
+      <div class="col-lg-12 col-md-10 col-sm-10">
+        <h1 class="display-2 text-white">Store your memories here!</h1>
+        <p class="home-subtitle">This is a page where you can store your scrabble scores</p>
+        <p class="home-subtitle">Click below to see examples of users profiles</p>
+        <!-- <a href="/error-page"
              class="btn btn-neutral rounded-pill home-btn-start-game">Start a new game!</a> -->
-             <a href="/5fe7084f5171b2305079020b"
-             class="btn btn-neutral rounded-pill home-btn-start-game">Go to Konstantina's profile</a>
-          <a href="/5fe706f450a0c923cc4248e5"
-             class="btn btn-neutral rounded-pill home-btn-start-game">Go to Christos' profile</a>
-        </div>
+        <a href="/5fe7084f5171b2305079020b"
+           class="btn btn-neutral rounded-pill home-btn-start-game">Go to Konstantina's profile</a>
+        <a href="/5fe706f450a0c923cc4248e5"
+           class="btn btn-neutral rounded-pill home-btn-start-game">Go to Christos' profile</a>
       </div>
     </div>
   </div>
-  <!-- Page content -->
-  <div class="container-fluid " style="background-color: #c9c9c9;">
-    <div class="row justify-content-center">
-  <!--    <div class="col-lg-7 col-md-7">
+</div>
+<!-- Page content -->
+<div class="container-fluid "
+     style="background-color: #c9c9c9;">
+  <div class="row justify-content-center">
+    <!--    <div class="col-lg-7 col-md-7">
         <div class="card bg-secondary border-0 mb-0 mt--8">
           <div class="card-header bg-transparent pb-5">
             <div class="text-muted text-center mt-2 mb-3"><small>Sign in with</small></div>
@@ -157,7 +156,7 @@
           </div>
         </div>
       </div> -->
-      <!-- <div class="col-xl-8 order-xl-1">
+    <!-- <div class="col-xl-8 order-xl-1">
         <div class="card">
           <div class="card-header">
             <div class="row align-items-center">
@@ -289,10 +288,10 @@
           </div>
         </div>
       </div>  -->
-    </div>
-    <!-- Footer -->
-    <%- include('partials/footer'); -%>
-  </div> 
+  </div>
 </div>
+
+<!-- Footer -->
+<%- include('partials/footer'); -%>
 
 <%- include('partials/end_file'); -%>

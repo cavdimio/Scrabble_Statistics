@@ -10,7 +10,7 @@
     <div class="header pb-6 d-flex align-items-center"
          style="min-height: 500px; background-size: cover; background-position: center top;">
         <div class="col-lg-12 col-md-12 col-sm-12">
-            <h1 class="display-2 text-black home-title">This is the test page!</h1>
+            <h1 class="display-2 text-black">This is the test page!</h1>
         </div>
     </div>
     <!-- Page content -->
@@ -20,10 +20,11 @@
              style="width:900px;height:600px;background-color: #525f7f;">
             <canvas id="myChart"></canvas>
         </div>
-        <!-- Footer -->
-        <%- include('footer'); -%>
     </div>
 </div>
+<!-- Footer -->
+<%- include('footer'); -%>
+<%- include('end_file'); -%>
 
 <!-- Test script here -->
 
@@ -96,4 +97,3 @@
     });
 </script>
 
-<%- include('end_file'); -%>

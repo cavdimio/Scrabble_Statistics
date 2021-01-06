@@ -12,8 +12,6 @@
   cursor: pointer;
 } 
 
-
-
 .card .table td, .card .table th {
   padding: 0;
 }
@@ -26,10 +24,7 @@ th a, td a {
   padding-left: 1.5rem !important; 
 }
 
-.nav-link:hover{
-  text-decoration: none;
-  color: inherit;
-}
+
 
 .table thead th{
   font-size: 0.9rem;
@@ -40,17 +35,19 @@ th a, td a {
   text-align: center;
 }
 
+/* Deprecated with table.ejs */
 .player1-bg{
  background-color:#dde0f3;
 }
-
+/* Deprecated with table.ejs */
 .player-text-sm{
   font-size: 0.95rem;
 }
-
+/* Deprecated with table.ejs */
 .player2-bg{
   background-color: #b9bdd6;
 }
+
 
 .sgs_players_name{
   margin: 0.2rem;
@@ -62,13 +59,9 @@ th a, td a {
   cursor: none;
 }
 
-.home-title, .home-subtitle{
-  width: 50rem;
-}
-
 .home-subtitle{
   font-size: 15px;
-  color: #fff;
+  color: white;
 }
 
 .home-btn-start-game{
@@ -91,9 +84,31 @@ th a, td a {
   padding-right: 3rem;
 }
 
+/*-------- Navbar section start -----------*/
+ .navbar{
+  padding-top: 0;
+  padding-bottom: 0;
+  background-color: #5e72e4;
+}
+
+.navbar > a{
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.nav-item > .nav-link{
+  padding: 1rem;
+} 
+
 .nav-link.font-weight-bold:hover{
   background-color:  #a4addf;
 }
+
+.nav-item:hover{
+  text-decoration: none;
+  color: inherit;
+}
+/*-------- Navbar section end -----------*/
 
 .my-btn-link{
   border:none;
@@ -122,3 +137,56 @@ th a, td a {
   background-position: center top;
 }
 
+/*-------- Footer section start -----------*/
+
+.global {
+  position: relative;
+  width: 100%;
+  z-index: 1;
+  overflow: hidden;
+  padding-left: 100px;
+  padding-right: 100px;
+}
+#globalFooter {
+  padding-top: 35px;
+  padding-bottom: 35px;
+  background-color: #5e72e4;
+  color: #fff;
+  font-family: Open Sans, sans-serif;
+  font-weight: bold;
+}
+#globalFooter .col {
+  width: 50%;
+}
+#globalFooter p {
+  font-size: 14px;
+  line-height: 1.86;
+  font-family: Open Sans, sans-serif;
+  font-weight: bold;
+}
+#globalFooter .vline-div {
+  padding: 0 10px;
+}
+#globalFooter a {
+  color: #fff;
+}
+#globalFooter a:after {
+  background-color: #fff;
+}
+#globalFooter .social-links {
+  text-align: right;
+}
+#globalFooter .social-links li {
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 14px;
+}
+#globalFooter .social-links li ~ li {
+  margin-left: 22px;
+}
+#globalFooter .legal {
+  opacity: .4;
+  margin-top: 30px;
+}
+
+/*-------- Footer section end -----------*/
