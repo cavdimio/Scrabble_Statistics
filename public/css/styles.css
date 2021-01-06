@@ -1,136 +1,145 @@
-.table th, .table td{
+.table th,
+.table td {
   padding: 0.5rem;
   font-size: 1rem;
 }
 
- tr:hover {   
-   cursor: default;
- }  
+tr:hover {
+  cursor: default;
+}
 
- tr#cell_hover:hover {
-  background: rgba(185, 200, 219, 0.863);  
+tr#cell_hover:hover {
+  background: rgba(185, 200, 219, 0.863);
   cursor: pointer;
-} 
+}
 
-.card .table td, .card .table th {
+.card .table td,
+.card .table th {
   padding: 0;
 }
 
-th a, td a { 
+th a,
+td a {
   display: block;
   padding-top: 0.5rem !important;
   padding-bottom: 0.5rem !important;
   padding-right: 1.5rem !important;
-  padding-left: 1.5rem !important; 
+  padding-left: 1.5rem !important;
 }
 
 
 
-.table thead th{
+.table thead th {
   font-size: 0.9rem;
   text-align: center;
 }
 
-.table tbody td{
+.table tbody td {
   text-align: center;
 }
 
 /* Deprecated with table.ejs */
-.player1-bg{
- background-color:#dde0f3;
+.player1-bg {
+  background-color: #dde0f3;
 }
+
 /* Deprecated with table.ejs */
-.player-text-sm{
+.player-text-sm {
   font-size: 0.95rem;
 }
+
 /* Deprecated with table.ejs */
-.player2-bg{
+.player2-bg {
   background-color: #b9bdd6;
 }
 
 
-.sgs_players_name{
+.sgs_players_name {
   margin: 0.2rem;
   text-align: center;
 }
 
-.sgs_players_name tr:hover, .sgs_players_name td:hover {
-  background: inherit; 
+.sgs_players_name tr:hover,
+.sgs_players_name td:hover {
+  background: inherit;
   cursor: none;
 }
 
-.home-subtitle{
+.home-subtitle {
   font-size: 15px;
   color: white;
 }
 
-.home-btn-start-game{
+.home-btn-start-game {
   padding: 1rem;
 }
 
-.home-btn-start-game:hover{
+.home-btn-start-game:hover {
   background-color: #5e72e4;
   border-color: #5e72e4;
   color: white;
 }
 
-.table thead th.left-header{
+.table thead th.left-header {
   text-align: left;
   padding-left: 1.5rem;
 }
 
-.table thead th.padding-header{
+.table thead th.padding-header {
   padding-left: 1.5rem;
   padding-right: 3rem;
 }
 
 /*-------- Navbar section start -----------*/
- .navbar{
+.navbar {
   padding-top: 0;
   padding-bottom: 0;
   background-color: #5e72e4;
 }
 
-.navbar > a{
+.navbar>a {
   padding-top: 1rem;
   padding-bottom: 1rem;
 }
 
-.nav-item > .nav-link{
+.nav-item>.nav-link {
   padding: 1rem;
-} 
-
-.nav-link.font-weight-bold:hover{
-  background-color:  #a4addf;
 }
 
-.nav-item:hover{
+.nav-link.font-weight-bold:hover {
+  background-color: #a4addf;
+}
+
+.nav-item:hover {
   text-decoration: none;
   color: inherit;
 }
+
 /*-------- Navbar section end -----------*/
 
-.my-btn-link{
-  border:none;
+.my-btn-link {
+  border: none;
   background-color: inherit;
-  color: inherit; 
-  width:100%;
-  height:100%;
+  color: inherit;
+  width: 100%;
+  height: 100%;
   padding: 0.3rem;
 }
 
-.my-btn-link:active, .my-btn-link:focus{
-  outline : none;
+.my-btn-link:active,
+.my-btn-link:focus {
+  outline: none;
 }
 
-.home-page-bg-img, .error-page-bg-img{
+.home-page-bg-img,
+.error-page-bg-img {
   min-height: 500px;
   background-image: url(../assets/mick-haupt-MHeyjronqzw-unsplash.jpg);
   background-size: 100%;
   background-position: center top;
 }
 
-.scrabble-stats-page-bg-img{
+.scrabble-stats-page-bg-img {
   min-height: 500px;
   background-image: url(../assets/hannah-rodrigo-mf_3yZnC6ug-unsplash.jpg);
   background-size: 100%;
@@ -139,17 +148,33 @@ th a, td a {
 
 /*-------- Footer section start -----------*/
 
+
+
 .global {
   position: relative;
   width: 100%;
   z-index: 1;
   overflow: hidden;
-  padding-left: 100px;
-  padding-right: 100px;
+}
+
+@media all and (max-width: 767px) {
+  .global {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+    padding-top: 1.1875rem;
+    padding-bottom: 1.1875rem;
+  }
+}
+
+@media (min-width:1025px) { 
+  .global {
+    padding-left: 6.25rem;
+    padding-right: 6.25rem;
+    padding-top: 2.1875rem;
+    padding-bottom: 2.1875rem;
+  }
 }
 #globalFooter {
-  padding-top: 35px;
-  padding-bottom: 35px;
   background-color: #5e72e4;
   color: #fff;
   font-family: Open Sans, sans-serif;
@@ -159,34 +184,41 @@ th a, td a {
   width: 50%;
 }
 #globalFooter p {
-  font-size: 14px;
+  font-size: 0.875rem;
   line-height: 1.86;
   font-family: Open Sans, sans-serif;
   font-weight: bold;
 }
+
 #globalFooter .vline-div {
-  padding: 0 10px;
+  padding: 0 0.625rem;
 }
+
 #globalFooter a {
   color: #fff;
 }
+
 #globalFooter a:after {
   background-color: #fff;
 }
+
 #globalFooter .social-links {
   text-align: right;
 }
+
 #globalFooter .social-links li {
   display: inline-block;
   vertical-align: middle;
-  font-size: 14px;
+  font-size: 0.875rem;
 }
-#globalFooter .social-links li ~ li {
-  margin-left: 22px;
+
+#globalFooter .social-links li~li {
+  margin-left: 1.375rem;
 }
+
 #globalFooter .legal {
   opacity: .4;
-  margin-top: 30px;
+  margin-top: 1.875rem;
 }
 
 /*-------- Footer section end -----------*/

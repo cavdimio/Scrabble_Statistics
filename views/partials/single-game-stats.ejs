@@ -14,12 +14,20 @@
       <div class="header-body">
         <div class="row align-items-center py-4">
           <div class="col-lg-6 col-7">
-            <h6 class="h2 text-white d-inline-block mb-0">
+            <h6 class="h1 text-white d-inline-block mb-0">
               Your game statistics!</h6>
           </div>
         </div>
-        <!-- Card stats -->
-        <%- include('card_stats'); -%>
+        <div class="row">
+          <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12">
+            <p class="h3 text-white d-inline-block">Choose your game statistics</p>
+          </div>
+          <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12">
+            <!-- Card stats -->
+            <%- include('card_stats'); -%>
+          </div>
+        </div>
+
       </div>
     </div>
 
@@ -36,29 +44,23 @@
             <table class="table align-items-center table-dark table-flush">
               <thead class="thead-dark">
                 <tr>
-                  <th scope="col"
-                      class="sort"
-                      data-sort="name">Rounds</th>
+                  <th>Rounds</th>
                   <% for (var i=0; i<gameStats.names.length; i++){ %>
-                  <th scope="col"
-                      class="sort"
-                      data-sort="budget">
-                    <%= gameStats.names[i] %>
-                  </th>
+                  <th><%= gameStats.names[i] %></th>
                   <% } %>
                 </tr>
               </thead>
-              <tbody class="list">
+              <tbody>
                 <% for (var i=0; i<gameStats.scores[0].length; i++){ %>
                 <tr>
                   <th scope="row">
                     <div id="player1name"
-                         class="budget sgs_players_name">
-                      <span class="name mb-0 text-sm"><%= i+1 %></span>
+                         class="sgs_players_name">
+                      <span class="name"><%= i+1 %></span>
                     </div>
                   </th>
                   <% for (var j=0; j<gameStats.names.length; j++){ %>
-                  <td class="budget sgs_players_name">
+                  <td class="sgs_players_name">
                     <%= gameStats.scores[j][i] %>
                   </td>
                   <% } %>
@@ -69,7 +71,7 @@
           </div>
         </div>
       </div>
-      <div class="col-xl-7">
+      <div class="col-xl-7 col-lg-7 col-md-7 col-sm-12">
         <div class="card bg-default">
           <div class="card-header bg-transparent">
             <div class="row align-items-center">
@@ -97,7 +99,7 @@
 <script>
   //TODO vertical cursor during mouse-over 
   /* Get game */
-  var gameStats = <%-JSON.stringify(gameStats) %>;
+  var gameStats = <%-JSON.stringify(gameStats) %> ;
 
   /* Get number of rounds in a table */
   var length = parseInt("<%= gameStats.scores[0].length %>");
@@ -183,6 +185,23 @@
       }
     }
   });
+
+
+  var resizeId;
+  
+  $(window).resize(function () {
+    clearTimeout(resizeId);
+    resizeId = setTimeout(afterResizing, 100);
+  });
+
+  function afterResizing() {
+    var canvasheight = document.getElementById("myChart").height;
+    if (canvasheight <= 250) {
+      window.chart1.options.legend.display = false;
+    } else {
+      window.chart1.options.legend.display = true;
+    }
+    window.chart1.update();
+  }
+
 </script>
-
-
