@@ -35,9 +35,9 @@ module.exports = {
 
     for (var i = 1; i < posAllGamesStats.positions.length; i++) {
       playersOpponents.forEach(playersOpponent => {
-        if ((gameOpponents[i - 1]._id != 0 && gameOpponents[i - 1]._id === playersOpponent._id) //Real players
+        if ((gameOpponents[i - 1]._id != '0' && gameOpponents[i - 1]._id === playersOpponent._id) //Real players
           ||
-          (gameOpponents[i - 1]._id === 0 && gameOpponents[i - 1].name === playersOpponent.name)) //Dummy names
+          (gameOpponents[i - 1]._id === '0' && gameOpponents[i - 1].name === playersOpponent.name)) //Dummy names
         {
           if (posAllGamesStats.positions[0] - posAllGamesStats.positions[i] > 0) {
             playersOpponent.losses++;
@@ -146,9 +146,9 @@ module.exports = {
             }
             /* Replace player with opponent */
             insertGame.opponents.splice(i, 1, {
-              _id: friend._id,
+              _id: friend._id.toString(),
               name: friend.name,
-              scores: insertedGame.scores
+              scores: [...insertedGame.scores]
             });
             games.push(insertGame);
           }
@@ -188,7 +188,7 @@ module.exports = {
     //4.a Add all friends
     friends.forEach(friend => {
       var newOpponent = {
-        _id: friend._id,
+        _id: friend._id.toString(),
         name: friend.name,
         victories: 0,
         losses: 0,
@@ -201,7 +201,7 @@ module.exports = {
     //4.b Add all dummy_names
     currentPlayer.dummyNames.forEach(dummyName => {
       var newOpponent = {
-        _id: 0,
+        _id: '0',
         name: dummyName,
         victories: 0,
         losses: 0,
@@ -211,7 +211,7 @@ module.exports = {
       player.opponents.push(newOpponent);
     });
 
-    //5. Find Stats against each opponent //TODO Bug with opponents table 
+    //5. Find Stats against each opponent  
     games.forEach(game => {
       player.positionStats.posAllGamesStats.forEach(posAllGamesStats => {
         if (game._id === posAllGamesStats._id) {

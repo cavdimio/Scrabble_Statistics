@@ -440,7 +440,7 @@
       var userName = category.replace("UserName:", "");
 
       opponents.forEach(opponent => {
-        if (opponent._id === 0 && userName === opponent.name) {
+        if (opponent._id === '0' && userName === opponent.name) {
 
           //Replace title 
           $("#general-table-title").text('Your matches against ' + opponent.name);
