@@ -1,44 +1,17 @@
-require("dotenv").config();
-const express = require("express");
-const bodyParser = require("body-parser");
-const ejs = require("ejs");
-const cors = require("cors");
-const Chart = require("chart.js");
-var $ = require("jquery");
-const _ = require("lodash");
-const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
-const saltRounds = process.env.SALT_ROUNDS;
-
-const scrabble_lib = require("./scrabble_lib");
-
-mongoose.connect("mongodb+srv://" + process.env.MONGODB_USERNAME + ":" + process.env.MONGODB_PASSWORD + "@cluster0.db5ah.mongodb.net/" + process.env.MONGODB_COLLECTION_NAME + "?retryWrites=true&w=majority", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useCreateIndex: true,
-  useFindAndModify: false
-});
-
-const User = require("./backend/models/user");
-
-const app = express();
-app.set("view engine", "ejs");
-app.use(bodyParser.urlencoded({
-  extended: false
-}));
-app.use(cors());
-
-//Include public file for css
-app.use(express.static(__dirname + "/public"));
+const router = require('express').Router();
+const passport = require('passport');
+const connection = require('../config/database');
+const scrabble_lib = require("../lib/scrabble_lib");
+const User = connection.models.User;
 
 var userId;
 
-app.route("/")
+router.route("/")
   .get((req, res, next) => {
     res.render("home");
   });
 
-app.route("/register")
+router.route("/register")
   .get((req, res, next) => {
     res.render("register_page");
   })
@@ -51,35 +24,59 @@ app.route("/register")
     //     console.log(err);
     //   } else {
     /* Create user */
-    const newUser = new User({
-      username: req.body.username,
-      password: req.body.password, //hash, //TODO Insert hash when bcrypt is installed
-      name: req.body.name,
-      friends: [],
-      dummyNames: [],
-      insertedGames: [],
-    });
+    // const newUser = new User({
+    //   username: req.body.username,
+    //   password: req.body.password, //hash, //TODO Insert hash when bcrypt is installed
+    //   name: req.body.name,
+    //   friends: [],
+    //   dummyNames: [],
+    //   insertedGames: [],
+    // });
 
-    /* Save new user to the database */
-    newUser.save(function (err) {
+    User.register({
+      username: req.body.username
+    }, req.body.password, function (err, user) {
       if (err) {
         console.log(err);
-        res.render("error_page"); //TODO more explainatory error message 
+        res.redirect("/register_page");
       } else {
-        /* Find new user by username //TODO Change by email */ //TODO capitalize or small letters must become irrelevant 
-        User.findOne({
-          username: req.body.username
-        }, (err, foundUser) => {
-          if (err) {
-            console.log(err);
-            res.render("error_page"); //TODO more explainatory error message 
-          } else {
-            /* Go to new users page */
-            res.redirect("/" + foundUser._id);
-          }
+        passport.authenticate("local")(req, res, function () {
+          /* Find new user by username //TODO Change by email */ //TODO capitalize or small letters must become irrelevant 
+          User.findOne({
+            username: req.body.username
+          }, (err, foundUser) => {
+            if (err) {
+              console.log(err);
+              res.render("error_page"); //TODO more explainatory error message 
+            } else {
+              /* Go to new users page */
+              res.redirect("/" + foundUser._id);
+            }
+          });
         });
       }
     });
+
+    /* Save new user to the database */
+    // newUser.save(function (err) {
+    //   if (err) {
+    //     console.log(err);
+    //     res.render("error_page"); //TODO more explainatory error message 
+    //   } else {
+    //     /* Find new user by username //TODO Change by email */ //TODO capitalize or small letters must become irrelevant 
+    //     User.findOne({
+    //       username: req.body.username
+    //     }, (err, foundUser) => {
+    //       if (err) {
+    //         console.log(err);
+    //         res.render("error_page"); //TODO more explainatory error message 
+    //       } else {
+    //         /* Go to new users page */
+    //         res.redirect("/" + foundUser._id);
+    //       }
+    //     });
+    //   }
+    // });
     //}
     //});
     //------End converting of all users------------------------------------------------------------
@@ -88,7 +85,7 @@ app.route("/register")
     //TODO 3rd party authentication?
   });
 
-app.route("/log-in")
+router.route("/log-in")
   .get((req, res, next) => {
     res.render("login_page");
   })
@@ -133,22 +130,20 @@ app.route("/log-in")
 
     //TODO Remember me functionality? 
 
-    //TODO Go to my-new-profile page 
-
   });
 
-app.route("/log-out")
+router.route("/log-out")
   .get((req, res, next) => {
     //TODO Delete cookies & sessions here 
     res.redirect("/");
   });
 
-app.route("/create-new-game")
+router.route("/create-new-game")
   .get((req, res, next) => {
     res.render("create_new_game_page");
   });
 
-app.route("/:id")
+router.route("/:id")
   .get((req, res, next) => {
 
     /* Find user */
@@ -183,7 +178,7 @@ app.route("/:id")
     });
   });
 
-app.route("/game/:gameId")
+router.route("/game/:gameId")
   .get((req, res, next) => {
 
     const gameID = req.params.gameId;
@@ -247,16 +242,14 @@ app.route("/game/:gameId")
     res.redirect("/game/" + gameID);
   });
 
-app.route("/error-page")
+router.route("/error-page")
   .get((req, res, next) => {
     res.render("error_page");
   });
 
-app.route("/test")
+router.route("/test")
   .get((req, res, next) => {
     res.render("partials/test");
   });
 
-app.listen(process.env.PORT || 3000, function () {
-  console.log(`Server is running at port`);
-});
+module.exports = router;
