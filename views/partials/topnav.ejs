@@ -52,7 +52,7 @@
          aria-haspopup="true"
          aria-expanded="false">
         <div class="media align-items-center">
-          <i class="fas fa-bell"></i>
+          <i class="fas fa-bell"></i> <!-- TODO implement notification system -->
         </div>
       </a>
     </li>
@@ -74,6 +74,7 @@
           </div>
         </div>
       </a>
+      <% if (loggedIn){ %>
       <div class="dropdown-menu  dropdown-menu-right ">
         <div class="dropdown-header noti-title">
           <h6 class="text-overflow m-0">Welcome!</h6>
@@ -86,7 +87,7 @@
         <a href="/5fe706f450a0c923cc4248e5/friends"
            class="dropdown-item">
           <i class="fas fa-user-friends"></i>
-          <span>My friends</span>
+          <span>My friends</span>  <!-- TODO implement friends system -->
         </a>
         <!-- <a href="#!" class="dropdown-item">
           <i class="ni ni-calendar-grid-58"></i>
@@ -103,6 +104,23 @@
           <span>Logout</span>
         </a>
       </div>
+      <% }else{ %>
+        <div class="dropdown-menu  dropdown-menu-right ">
+          <div class="dropdown-header noti-title">
+            <h6 class="text-overflow m-0">Welcome!</h6>
+          </div>
+          <a href="/log-in"
+             class="dropdown-item">
+             <i class="fas fa-sign-in-alt"></i>
+            <span>Login</span>
+          </a>
+          <a href="/register"
+             class="dropdown-item">
+             <i class="fas fa-share-square"></i>
+            <span>Register</span>
+          </a>
+        </div>
+      <% } %>
     </li>
   </ul>
 </nav>
