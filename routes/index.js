@@ -1,85 +1,92 @@
 const router = require('express').Router();
 const passport = require('passport');
 const connection = require('../config/database');
-const scrabble_lib = require("../lib/scrabble_lib");
+const bcrypt = require("bcrypt");
+const statisticsCalculations = require("../lib/statisticsCalculations");
 const User = connection.models.User;
 
-var userId;
 
+/**
+ * -------------- GENERAL SETUP ----------------
+ */
+require('dotenv').config();
+
+
+/**
+ * -------------- ROUTES ----------------
+ */
 router.route("/")
   .get((req, res, next) => {
-    res.render("home");
+    if (req.user) {
+      res.render("home", {
+        loggedIn: true,
+        name: req.user.name
+      });
+    } else {
+      res.render("home", {
+        loggedIn: false,
+        name: undefined
+      });
+    }
   });
 
 router.route("/register")
   .get((req, res, next) => {
-    res.render("register_page");
+    if (req.user) {
+      res.render("register_page", { //TODO logic of register in case it is already logged in
+        loggedIn: true,
+        name: req.user.name
+      });
+    } else {
+      res.render("register_page", {
+        loggedIn: false,
+      });
+    }
   })
   .post((req, res, next) => {
 
+    const saltRounds = parseInt(process.env.SALT_ROUNDS); //TODO Replace with environmental variable 
     /* Password encryption */
-    //TODO convert all users in order to use bcrypt -------------------------
-    // bcrypt.hash(req.body.password, saltRounds, function (err, hash) {
-    //   if (err) {
-    //     console.log(err);
-    //   } else {
-    /* Create user */
-    // const newUser = new User({
-    //   username: req.body.username,
-    //   password: req.body.password, //hash, //TODO Insert hash when bcrypt is installed
-    //   name: req.body.name,
-    //   friends: [],
-    //   dummyNames: [],
-    //   insertedGames: [],
-    // });
-
-    User.register({
-      username: req.body.username
-    }, req.body.password, function (err, user) {
+    //TODO convert all users in order to use bcrypt 
+    bcrypt.hash(req.body.password, saltRounds, function (err, hash) {
       if (err) {
         console.log(err);
-        res.redirect("/register_page");
+        res.redirect("error-page");
       } else {
-        passport.authenticate("local")(req, res, function () {
-          /* Find new user by username //TODO Change by email */ //TODO capitalize or small letters must become irrelevant 
-          User.findOne({
-            username: req.body.username
-          }, (err, foundUser) => {
-            if (err) {
-              console.log(err);
-              res.render("error_page"); //TODO more explainatory error message 
-            } else {
-              /* Go to new users page */
-              res.redirect("/" + foundUser._id);
-            }
-          });
+        /* Create user */
+        const newUser = new User({
+          username: req.body.username,
+          name: req.body.name,
+          hash: hash,
+          friends: [],
+          dummyNames: [],
+          insertedGames: [],
+        });
+
+        /* Save new user to the database */
+        newUser.save(function (err) {
+          if (err) {
+            console.log(err);
+            res.redirect("error-page"); //TODO more explainatory error message 
+          } else {
+            /* Find new user by username //TODO Change by email */ //TODO Use Lodash: capitalize or small letters must become irrelevant 
+            User.findOne({
+              username: req.body.username
+            }, (err, foundUser) => {
+              if (err) {
+                console.log(err);
+                res.redirect("error-page"); //TODO more explainatory error message 
+              } else {
+                /* Go to profile page */
+                passport.authenticate('local')(req, res, function () {
+                  res.redirect('/profile');
+                });
+              }
+            });
+          }
         });
       }
     });
-
-    /* Save new user to the database */
-    // newUser.save(function (err) {
-    //   if (err) {
-    //     console.log(err);
-    //     res.render("error_page"); //TODO more explainatory error message 
-    //   } else {
-    //     /* Find new user by username //TODO Change by email */ //TODO capitalize or small letters must become irrelevant 
-    //     User.findOne({
-    //       username: req.body.username
-    //     }, (err, foundUser) => {
-    //       if (err) {
-    //         console.log(err);
-    //         res.render("error_page"); //TODO more explainatory error message 
-    //       } else {
-    //         /* Go to new users page */
-    //         res.redirect("/" + foundUser._id);
-    //       }
-    //     });
-    //   }
-    // });
-    //}
-    //});
-    //------End converting of all users------------------------------------------------------------
 
     //TODO Remember me functionality? 
     //TODO 3rd party authentication?
@@ -87,95 +94,69 @@ router.route("/register")
 
 router.route("/log-in")
   .get((req, res, next) => {
-    res.render("login_page");
+    if (req.user) {
+      res.render("login_page", { //TODO logic of log-in in case it is already logged in
+        loggedIn: true,
+        name: req.user.name
+      });
+    } else {
+      res.render("login_page", {
+        loggedIn: false,
+      });
+    }
   })
-  .post((req, res, next) => {
-    const username = req.body.username;
-    const password = req.body.password;
-
-    User.findOne({
-      username: username
-    }, (err, foundUser) => {
-      if (err) {
-        /* Error happened during com */
-        res.render("error_page"); //TODO more explainatory error message 
-      } else {
-        if (foundUser) {
-          //TODO convert all users in order to use bcrypt --------------------
-          // bcrypt.compare(password, foundUser.password, (err, result) => {
-          //   if (result === true) {
-          //     res.redirect("/" + foundUser._id);
-          //   } else {
-          //     /* Username exists but password is wrong */
-          //     res.render("error_page"); //TODO more explainatory error message redirect to log-in?
-          //   }
-          // });
-          //---------------------------End of Bcrypt ---------------------------
-
-          //--------OLD implementation without Bcrypt --------------------------
-          if (foundUser.password === password) {
-            /* Go to new users page */
-            res.redirect("/" + foundUser._id);
-          } else {
-            /* Username exists but password is wrong */
-            res.render("error_page"); //TODO more explainatory error message redirect to log-in?
-          }
-          //-------End of old implementation without Bcrypt --------------------
-        } else {
-          /* Username doesn't exist */
-          res.render("error_page"); //TODO more explainatory error message redirect to log-in?
-        }
-      }
-    })
-
-    //TODO Remember me functionality? 
-
-  });
+  .post(passport.authenticate("local", {
+    failureRedirect: "/error-page",
+    successRedirect: "/profile"
+  }));
 
 router.route("/log-out")
   .get((req, res, next) => {
-    //TODO Delete cookies & sessions here 
+    req.logout();
     res.redirect("/");
   });
 
 router.route("/create-new-game")
   .get((req, res, next) => {
-    res.render("create_new_game_page");
+    if (req.user) {
+      res.render("create_new_game_page", {
+        loggedIn: true,
+        name: req.user.name
+      });
+    } else {
+      res.render("create_new_game_page", {
+        loggedIn: false,
+      });
+    }
   });
 
-router.route("/:id")
+router.route("/profile")
   .get((req, res, next) => {
-
-    /* Find user */
-    const userID = req.params.id;
-
-    User.findById(userID, (error, player) => {
-      if (error) {
-        /* User doesn"t exist */
-        res.render("error_page"); //TODO Perhaps more specific title about the error page 
-      } else {
-        /* Find friends */
-        User.find()
-          .where("_id")
-          .in(player.friends)
-          .exec(function (err, friends) {
-            if (err) {
-              /* No friends found, return blank table*/
-              friends = [];
-            } else {
-              /* Friends found, no need for action: friends table used directly in findPlayersGameStats */
-            }
-            const findPlayersGameStats = scrabble_lib.findPlayersGameStats(player, friends);
-
-            res.render("my_profile_page", {
-              userID: userID,
-              name: player.name,
-              positionStats: findPlayersGameStats.positionStats,
-              opponents: findPlayersGameStats.opponents,
-            });
+    if (req.user) {
+      /* Find friends */
+      User.find()
+        .where("_id")
+        .in(req.user.friends)
+        .exec(function (err, friends) {
+          if (err) {
+            /* No friends found, return blank table*/
+            friends = [];
+          } else {
+            /* Friends found, no need for action: friends table used directly in findPlayersGameStats */
+          }
+          const findPlayersGameStats = statisticsCalculations.findPlayersGameStats(req.user, friends);
+          //console.log(req.user.name);
+          res.render("my_profile_page", {
+            loggedIn: true,
+            userID: req.user._id,
+            name: req.user.name,
+            positionStats: findPlayersGameStats.positionStats,
+            opponents: findPlayersGameStats.opponents,
           });
-      }
-    });
+        });
+    } else {
+      res.redirect("error-page");
+    }
   });
 
 router.route("/game/:gameId")
@@ -183,10 +164,10 @@ router.route("/game/:gameId")
 
     const gameID = req.params.gameId;
 
-    User.findById(userId, (error, player) => {
+    User.findById(req.user._id, (error, player) => {
       if (error) {
         /* User wasn't found, return error page */
-        res.render("error_page"); //TODO Perhaps more specific title about the error page 
+        res.redirect("error-page"); //TODO Perhaps more specific title about the error page 
       } else {
 
         /* First search for the game in users games */
@@ -194,10 +175,12 @@ router.route("/game/:gameId")
           if (String(insertedGame._id) === gameID) {
             /* Game found in users games */
             const currentGame = insertedGame;
-            const gameStats = scrabble_lib.findGameStats(currentGame);
-            const sumScoresPerRound = scrabble_lib.findSumScoresPerRoundSingleGame(currentGame);
+            const gameStats = statisticsCalculations.findGameStats(currentGame);
+            const sumScoresPerRound = statisticsCalculations.findSumScoresPerRoundSingleGame(currentGame);
             /* Go to game page */
             res.render("partials/single-game-stats", {
+              loggedIn: true,
+              userID: req.user._id,
               gameStats: gameStats,
               sumScoresPerRound: sumScoresPerRound
             });
@@ -212,7 +195,7 @@ router.route("/game/:gameId")
           .exec(function (err, friends) {
             if (err) {
               /* No friends found, so game doesn't exist */
-              res.render("error_page"); //TODO Perhaps more specific title about the error page 
+              res.redirect("error-page"); //TODO Perhaps more specific title about the error page 
             } else {
 
               /* Friends found, search for the game in friends inserted games*/
@@ -221,8 +204,8 @@ router.route("/game/:gameId")
                   if (String(insertedGame._id) === gameID) {
                     /* Game found in friends games */
                     const currentGame = insertedGame;
-                    const gameStats = scrabble_lib.findGameStats(currentGame);
-                    const sumScoresPerRound = scrabble_lib.findSumScoresPerRoundSingleGame(currentGame);
+                    const gameStats = statisticsCalculations.findGameStats(currentGame);
+                    const sumScoresPerRound = statisticsCalculations.findSumScoresPerRoundSingleGame(currentGame);
                     /* Go to game page */
                     res.render("partials/single-game-stats", {
                       gameStats: gameStats,
@@ -238,18 +221,36 @@ router.route("/game/:gameId")
   })
   .post((req, res, next) => {
     const gameID = req.body.game_id;
-    userId = req.body.userID;
+    userId = req.user._id;
     res.redirect("/game/" + gameID);
   });
 
 router.route("/error-page")
   .get((req, res, next) => {
-    res.render("error_page");
+    if (req.user) {
+      res.render("error_page", {
+        loggedIn: true,
+        name: req.user.name
+      });
+    } else {
+      res.render("error_page", {
+        loggedIn: false,
+      });
+    }
   });
 
 router.route("/test")
   .get((req, res, next) => {
-    res.render("partials/test");
+    if (req.user) {
+      res.render("partials/test", {
+        loggedIn: true,
+        name: req.user.name
+      });
+    } else {
+      res.render("partials/test", {
+        loggedIn: false,
+      });
+    }
   });
 
 module.exports = router;

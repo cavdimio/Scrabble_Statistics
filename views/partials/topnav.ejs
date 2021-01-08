@@ -42,16 +42,9 @@
            href="/create-new-game">Create a new game!<span class="sr-only">(current)</span></a>
       </li>
     </ul>
-    <!-- <ul class="navbar-nav ml-auto">
-      <li class="nav-item active">
-        <a class="nav-link font-weight-bold"
-           href="/5fe706f450a0c923cc4248e5">My Profile<span class="sr-only">(current)</span></a>
-      </li>
-    </ul> -->
-
   </div>
   <ul class="navbar-nav align-items-center  ml-auto ml-md-0 ">
-    <li class="nav-item dropdown">
+    <li>  <!--TODO mobile view is not correct; bell must appear next to profile icon -->
       <a class="nav-link pr-0"
          href="#"
          role="button"
@@ -61,36 +54,41 @@
         <div class="media align-items-center">
           <i class="fas fa-bell"></i>
         </div>
+      </a>
     </li>
-    <a class="nav-link pr-0"
-       href="#"
-       role="button"
-       data-toggle="dropdown"
-       aria-haspopup="true"
-       aria-expanded="false">
-      <div class="media align-items-center">
-        <i class="fas fa-user-circle fa-2x"></i>
-        <div class="media-body  ml-2  d-none d-lg-block">
-          <span class="mb-0 text-sm  font-weight-bold">Username</span>
-          <!--TODO after register the name should appear here  -->
+    <li>
+      <a class="nav-link pr-0"
+         href="#"
+         role="button"
+         data-toggle="dropdown"
+         aria-haspopup="true"
+         aria-expanded="false">
+        <div class="media align-items-center">
+          <i class="fas fa-user-circle fa-2x"></i>
+          <div class="media-body  ml-2  d-none d-lg-block">
+            <% if (loggedIn){ %>
+            <span class="mb-0 text-sm  font-weight-bold"><%= name %></span>
+            <% }else{ %>
+            <span class="mb-0 text-sm  font-weight-bold">Username</span>
+            <% } %>
+          </div>
         </div>
-      </div>
-    </a>
-    <div class="dropdown-menu  dropdown-menu-right ">
-      <div class="dropdown-header noti-title">
-        <h6 class="text-overflow m-0">Welcome!</h6>
-      </div>
-      <a href="/5fe706f450a0c923cc4248e5"
-         class="dropdown-item">
-        <i class="fas fa-user-alt"></i>
-        <span>My profile</span>
       </a>
-      <a href="/5fe706f450a0c923cc4248e5/friends"
-         class="dropdown-item">
-        <i class="fas fa-user-friends"></i>
-        <span>My friends</span>
-      </a>
-      <!-- <a href="#!" class="dropdown-item">
+      <div class="dropdown-menu  dropdown-menu-right ">
+        <div class="dropdown-header noti-title">
+          <h6 class="text-overflow m-0">Welcome!</h6>
+        </div>
+        <a href="/profile"
+           class="dropdown-item">
+          <i class="fas fa-user-alt"></i>
+          <span>My profile</span>
+        </a>
+        <a href="/5fe706f450a0c923cc4248e5/friends"
+           class="dropdown-item">
+          <i class="fas fa-user-friends"></i>
+          <span>My friends</span>
+        </a>
+        <!-- <a href="#!" class="dropdown-item">
           <i class="ni ni-calendar-grid-58"></i>
           <span>Activity</span>
         </a>
@@ -98,13 +96,13 @@
           <i class="ni ni-support-16"></i>
           <span>Support</span>
         </a> -->
-      <div class="dropdown-divider"></div>
-      <a href="/log-out"
-         class="dropdown-item">
-        <i class="fas fa-sign-out-alt"></i>
-        <span>Logout</span>
-      </a>
-    </div>
+        <div class="dropdown-divider"></div>
+        <a href="/log-out"
+           class="dropdown-item">
+          <i class="fas fa-sign-out-alt"></i>
+          <span>Logout</span>
+        </a>
+      </div>
     </li>
   </ul>
 </nav>

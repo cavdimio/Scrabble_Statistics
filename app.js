@@ -4,15 +4,13 @@ const session = require("express-session");
 var $ = require("jquery");
 const cors = require("cors");
 const passport = require("passport");
-const bcrypt = require("bcrypt");
 const connection = require("./config/database");
-//const MongoStore = require('connect-mongo')(session);
+const MongoStore = require('connect-mongo')(session);
 var routes = require('./routes');
 
 /**
  * -------------- GENERAL SETUP ----------------
  */
-
 require('dotenv').config();
 
 // Create the Express application
@@ -33,12 +31,26 @@ app.use(cors());
 /**
  * -------------- SESSION SETUP ----------------
  */
-//TODO Session Setup
+const sessionStore = new MongoStore({ mongooseConnection: connection, collection: 'sessions' });
+
+app.use(session({
+    secret: process.env.PASSPORT_SECRET,
+    resave: false,
+    saveUninitialized: true,
+    store: sessionStore,
+    cookie: {
+        maxAge: 1000 * 60 * 60 * 24 // Equals 1 day (1 day * 24 hr/1 day * 60 min/1 hr * 60 sec/1 min * 1000 ms / 1 sec)
+    }
+}));
 
 /**
  * -------------- PASSPORT AUTHENTICATION ----------------
  */
-//TODO Session Passport 
+// Need to require the entire Passport config module so app.js knows about it
+require('./config/passport');
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 /**
  * -------------- ROUTES ----------------
