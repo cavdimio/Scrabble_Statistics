@@ -166,7 +166,7 @@ td a {
   }
 }
 
-@media (min-width:1025px) { 
+@media (min-width:1025px) {
   .global {
     padding-left: 6.25rem;
     padding-right: 6.25rem;
@@ -174,15 +174,18 @@ td a {
     padding-bottom: 2.1875rem;
   }
 }
+
 #globalFooter {
   background-color: #5e72e4;
   color: #fff;
   font-family: Open Sans, sans-serif;
   font-weight: bold;
 }
+
 #globalFooter .col {
   width: 50%;
 }
+
 #globalFooter p {
   font-size: 0.875rem;
   line-height: 1.86;

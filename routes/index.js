@@ -128,6 +128,13 @@ router.route("/create-new-game")
         loggedIn: false,
       });
     }
+  })
+  .post((req, res, next) => {
+    console.log("I am here");
+    //Find user
+    //Add game 
+    //Go to profile page 
+    
   });
 
 router.route("/profile")
