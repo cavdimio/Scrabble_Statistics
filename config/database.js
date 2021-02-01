@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const userSchema = require("../models/users");
 
 require("dotenv").config();
 
@@ -11,23 +12,6 @@ const connection = mongoose.createConnection(mongoDB, {
     useFindAndModify: false
 });
 
-const userSchema = new mongoose.Schema({
-    username: {
-        type: String /*, /* required: true, unique: true  */
-    },
-    hash: String,
-    name: String,
-    friends: [String],
-    dummyNames: [String],
-    insertedGames: [new mongoose.Schema({
-        scores: [Number],
-        opponents: [{
-            _id: String,
-            name: String,
-            scores: [Number]
-        }]
-    })]
-});
 
 const User = connection.model("User", userSchema);
 

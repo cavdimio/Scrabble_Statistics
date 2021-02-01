@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");  
-//TODO insert into the program --> problem with createConnection in database.js
+const gameSchema = require("./game"); 
 
 const userSchema = new mongoose.Schema({
     username: { type: String /*, /* required: true, unique: true  */ },
@@ -7,14 +7,7 @@ const userSchema = new mongoose.Schema({
     name:  String,
     friends: [String],
     dummyNames: [String],
-    insertedGames: [new mongoose.Schema({
-      scores: [Number],
-      opponents: [{
-        _id: String,
-        name: String,
-        scores: [Number]
-      }]
-    })]
+    insertedGames: [ gameSchema ]
   });
 
-  module.exports = mongoose.model("User", userSchema);
+  module.exports = userSchema;

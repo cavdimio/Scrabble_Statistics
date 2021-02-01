@@ -4,7 +4,11 @@ const connection = require('../config/database');
 const bcrypt = require("bcrypt");
 const statisticsCalculations = require("../lib/statisticsCalculations");
 const User = connection.models.User;
-
+const mongoose = require('mongoose');
+const gameSchema = require("../models/game");
+const {
+  user
+} = require('../config/database');
 
 /**
  * -------------- GENERAL SETUP ----------------
@@ -17,35 +21,34 @@ require('dotenv').config();
  */
 router.route("/")
   .get((req, res, next) => {
-    if (req.user) {
+    if (req.isAuthenticated()) {
       res.render("home", {
-        loggedIn: true,
+        loggedIn: req.isAuthenticated(),
         name: req.user.name
       });
     } else {
       res.render("home", {
-        loggedIn: false,
-        name: undefined
+        loggedIn: req.isAuthenticated(),
       });
     }
   });
 
 router.route("/register")
   .get((req, res, next) => {
-    if (req.user) {
+    if (req.isAuthenticated()) {
       res.render("register_page", { //TODO logic of register in case it is already logged in
-        loggedIn: true,
+        loggedIn: req.isAuthenticated(),
         name: req.user.name
       });
     } else {
       res.render("register_page", {
-        loggedIn: false,
+        loggedIn: req.isAuthenticated(),
       });
     }
   })
   .post((req, res, next) => {
 
-    const saltRounds = parseInt(process.env.SALT_ROUNDS); //TODO Replace with environmental variable 
+    const saltRounds = parseInt(process.env.SALT_ROUNDS);
     /* Password encryption */
     //TODO convert all users in order to use bcrypt 
     bcrypt.hash(req.body.password, saltRounds, function (err, hash) {
@@ -94,14 +97,14 @@ router.route("/register")
 
 router.route("/log-in")
   .get((req, res, next) => {
-    if (req.user) {
+    if (req.isAuthenticated()) {
       res.render("login_page", { //TODO logic of log-in in case it is already logged in
-        loggedIn: true,
+        loggedIn: req.isAuthenticated(),
         name: req.user.name
       });
     } else {
       res.render("login_page", {
-        loggedIn: false,
+        loggedIn: req.isAuthenticated(),
       });
     }
   })
@@ -118,28 +121,83 @@ router.route("/log-out")
 
 router.route("/create-new-game")
   .get((req, res, next) => {
-    if (req.user) {
+    if (req.isAuthenticated()) {
       res.render("create_new_game_page", {
-        loggedIn: true,
+        loggedIn: req.isAuthenticated(),
         name: req.user.name
       });
     } else {
       res.render("create_new_game_page", {
-        loggedIn: false,
+        loggedIn: req.isAuthenticated(),
       });
     }
   })
   .post((req, res, next) => {
-    console.log("I am here");
-    //Find user
-    //Add game 
-    //Go to profile page 
+
+    /* Create game */
+    const Game = mongoose.model("Game", gameSchema); //TODO perhaps model should be extracted in models file
+    const newInsertedGame = new Game({
+      scores: [],
+      opponents: []
+    });
+
+    /* Save number of opponents & number of rounds */
+    var opponentsNumber = parseInt(req.body.OpponentsNum);
+    var roundsNumber = parseInt(req.body.RoundsNum);
+    var tempScores = [];
+
+    /* Save players scores */
+    for (var i = 0; i < roundsNumber; i++) {
+      tempScores.push(parseInt(req.body.playersScoresRound[i]));
+    }
+    newInsertedGame.scores = tempScores;
+
+    /* Save opponents & their scores */
+    var tempOpponents = [];
+    for (var i = 0; i < opponentsNumber; i++) {
+      var tempOpponent = {
+        _id: 0,
+        name: "",
+        scores: []
+      }
+
+      /* If opponent is one, req returns just a string whereas if more opponents the req returns an array of strings */
+      if (opponentsNumber === 1) {
+        tempOpponent.name = req.body.OpponentName;
+      } else {
+        tempOpponent.name = req.body.OpponentName[i];
+      }
+
+      /* Req returns scores of opponents mixed (per row), so necessary adjustment is below */
+      for (j = i; j < req.body.OpponentsScores.length; j += opponentsNumber) {
+        tempOpponent.scores.push(parseInt(req.body.OpponentsScores[j]));
+      }
+      /* Save the opponent */
+      tempOpponents.push(tempOpponent);
+
+      //Save the dummy name  //TODO Check if dummy name already exists //TODO Correct here when friends system is implemented
+      req.user.dummyNames.push(tempOpponent.name);
+    }
+    newInsertedGame.opponents = tempOpponents;
     
+    /* Save the inserted game */ 
+    req.user.insertedGames.push(newInsertedGame);
+    req.user.save(function (err) {
+      if (err) {
+        console.log(err);
+        /* Error during saving */
+        res.redirect("error-page"); //TODO more explainatory error message 
+      } else {
+        /* Go to profile page */
+        res.redirect("profile");
+      }
+    });
+
   });
 
 router.route("/profile")
   .get((req, res, next) => {
-    if (req.user) {
+    if (req.isAuthenticated()) {
       /* Find friends */
       User.find()
         .where("_id")
@@ -152,9 +210,8 @@ router.route("/profile")
             /* Friends found, no need for action: friends table used directly in findPlayersGameStats */
           }
           const findPlayersGameStats = statisticsCalculations.findPlayersGameStats(req.user, friends);
-          //console.log(req.user.name);
           res.render("my_profile_page", {
-            loggedIn: true,
+            loggedIn: req.isAuthenticated(),
             userID: req.user._id,
             name: req.user.name,
             positionStats: findPlayersGameStats.positionStats,
@@ -186,8 +243,9 @@ router.route("/game/:gameId")
             const sumScoresPerRound = statisticsCalculations.findSumScoresPerRoundSingleGame(currentGame);
             /* Go to game page */
             res.render("partials/single-game-stats", {
-              loggedIn: true,
+              loggedIn: req.isAuthenticated(),
               userID: req.user._id,
+              name: req.user.name,
               gameStats: gameStats,
               sumScoresPerRound: sumScoresPerRound
             });
@@ -215,6 +273,9 @@ router.route("/game/:gameId")
                     const sumScoresPerRound = statisticsCalculations.findSumScoresPerRoundSingleGame(currentGame);
                     /* Go to game page */
                     res.render("partials/single-game-stats", {
+                      loggedIn: req.isAuthenticated(),
+                      userID: req.user._id,
+                      name: req.user.name,
                       gameStats: gameStats,
                       sumScoresPerRound: sumScoresPerRound
                     });
@@ -234,28 +295,28 @@ router.route("/game/:gameId")
 
 router.route("/error-page")
   .get((req, res, next) => {
-    if (req.user) {
+    if (req.isAuthenticated()) {
       res.render("error_page", {
-        loggedIn: true,
+        loggedIn: req.isAuthenticated(),
         name: req.user.name
       });
     } else {
       res.render("error_page", {
-        loggedIn: false,
+        loggedIn: req.isAuthenticated(),
       });
     }
   });
 
 router.route("/test")
   .get((req, res, next) => {
-    if (req.user) {
+    if (req.isAuthenticated()) {
       res.render("partials/test", {
-        loggedIn: true,
+        loggedIn: req.isAuthenticated(),
         name: req.user.name
       });
     } else {
       res.render("partials/test", {
-        loggedIn: false,
+        loggedIn: req.isAuthenticated(),
       });
     }
   });

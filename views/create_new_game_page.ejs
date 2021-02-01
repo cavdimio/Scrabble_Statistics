@@ -32,7 +32,9 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <form role="form" action="/create-new-game" method="post">
+                        <form role="form"
+                              action="/create-new-game"
+                              method="post">
                             <h6 class="heading-small text-muted mb-4">Opponents</h6>
                             <div class="pl-lg-4">
                                 <div class="row">
@@ -42,6 +44,7 @@
                                                    for="OpponentsNum">Choose number of opponents</label>
                                             <input type="number"
                                                    id="OpponentsNum"
+                                                   name="OpponentsNum"
                                                    min="1"
                                                    max="3"
                                                    class="form-control"
@@ -69,6 +72,7 @@
                                                    for="RoundsNum">Choose number of rounds</label>
                                             <input type="number"
                                                    id="RoundsNum"
+                                                   name="RoundsNum"
                                                    min="1"
                                                    max="150"
                                                    class="form-control"
@@ -120,7 +124,9 @@
                             <label class="form-control-label" \
                                      for="Opponent' + i + 'IsReal">Choose Opponent ' + (i + 1) + ' from friends</label> \
                                 <input type="checkbox" \
-                                         id="Opponent' + i + 'IsReal">\
+                                         id="Opponent' + i + 'IsReal" \
+                                         name ="Opponent' + i + 'IsReal" \
+                                         value="true " >\
                         </div> \
                     </div> \
                     <div class="col-lg-6"> \
@@ -128,7 +134,7 @@
                             <label class="form-control-label" \
                                 for="Opponent' + i + 'Name">Opponent ' + (i + 1) + '</label> \
                                     <input type="text" \
-                                             id="Opponent' + i + 'Name" \
+                                             name = OpponentName \
                                           class="form-control" \
                                     placeholder="Name" > \
                         </div> \
@@ -146,7 +152,7 @@
         /* Delete previous values */
         $('#namesArea').empty();
         $('#roundsArea').empty();
-        
+
         /* Add "your scores" field */
         $('#namesArea').append(
             '<div class="table-responsive"> \
@@ -160,10 +166,11 @@
                 <tbody class="list" id="roundRows"> \
                 </tbody> \
              </table> \
-            </div> ' 
-            );
+            </div> '
+        );
 
         /* Add opponents names fields */
+
         for (var i = 0; i < numOfOpponents; i++) {
             $('#nameCells').append(
                 '<th scope="col" class="sort" data-sort="name" > Opponent ' + (i + 1) + ' </th>'
@@ -173,11 +180,12 @@
         /* Create rows (firstly the round number and players input ) */
         for (var i = 1; i <= numOfRounds; i++) {
             $('#roundRows').append(
-                '<tr id="roundrow'+ i +'"> \
+                '<tr id="roundrow' + i + '"> \
                    <th scope="col" class="sort" data-sort="name" > ' + i + ' </th> \
                    <td> <input type="number" type = "number" \
                                             class = "form-control" \
                                                id = "playersScoresRound ' + i + ' " \
+                                             name = playersScoresRound \
                                       placeholder = "Your score on round ' + i + '" \
                                             value = "0"/> </td> \
                 <\tr>'
@@ -185,16 +193,15 @@
         }
 
         /* Create rows (Secondly the opponents inputs ) */
-        for (var i=0; i <= numOfRounds; i++) {
-            for (var j=0; j< numOfOpponents; j++){
-                $('#roundrow'+ i).append( '<td> <input type ="number" \
+        for (var i = 0; i <= numOfRounds; i++) {
+            for (var j = 0; j < numOfOpponents; j++) {
+                $('#roundrow' + i).append('<td> <input type ="number" \
                                                       class = "form-control" \
                                                          id = "Opponent ' + j + ' ScoresRound ' + i + ' " \
-                                                placeholder = "Your score on round ' + i + '" \
+                                                       name = OpponentsScores \
+                                                placeholder = "Opponents ' + j + ' score on round ' + i + '" \
                                                       value = "0"/> </td> ');
-            }   
-        } 
+            }
+        }
     }
 </script>
-
-
