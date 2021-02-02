@@ -5,7 +5,7 @@ const bcrypt = require("bcrypt");
 const statisticsCalculations = require("../lib/statisticsCalculations");
 const User = connection.models.User;
 const mongoose = require('mongoose');
-const gameSchema = require("../models/game");
+const gameSchema = require("../models/gameSchema");
 const {
   user
 } = require('../config/database');
@@ -179,8 +179,8 @@ router.route("/create-new-game")
       req.user.dummyNames.push(tempOpponent.name);
     }
     newInsertedGame.opponents = tempOpponents;
-    
-    /* Save the inserted game */ 
+
+    /* Save the inserted game */
     req.user.insertedGames.push(newInsertedGame);
     req.user.save(function (err) {
       if (err) {
@@ -302,7 +302,7 @@ router.route("/error-page")
       });
     } else {
       res.render("error_page", {
-        loggedIn: req.isAuthenticated(),
+        loggedIn: req.isAuthenticated()
       });
     }
   });
@@ -316,9 +316,24 @@ router.route("/test")
       });
     } else {
       res.render("partials/test", {
-        loggedIn: req.isAuthenticated(),
+        loggedIn: req.isAuthenticated()
       });
     }
   });
+
+router.route("/friends")
+  .get((req, res, next) => {
+    if (req.isAuthenticated()) {
+      res.render("friends", {
+        loggedIn: req.isAuthenticated(),
+        name: req.user.name
+      });
+    } else {
+      res.render("error_page", {
+        loggedIn: req.isAuthenticated()
+      });
+    }
+  });
+
 
 module.exports = router;

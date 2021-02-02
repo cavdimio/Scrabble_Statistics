@@ -90,6 +90,18 @@ td a {
   padding-right: 3rem;
 }
 
+/*-------- Friends section start -----------*/
+#friends-table tr td {
+  padding-top: 10px; 
+  padding-bottom:10px
+}
+
+#friends-table tr td.text-center {
+  padding-top: 15px; 
+  padding-bottom: 15px;
+} 
+/*-------- Friends section end -----------*/
+
 /*-------- Navbar section start -----------*/
 .navbar {
   padding-top: 0;

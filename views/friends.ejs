@@ -1,0 +1,257 @@
+<%- include('partials/header'); -%>
+
+<!-- Main content -->
+<div class="main-content"
+     id="panel">
+    <!-- Topnav -->
+    <%- include('partials/topnav'); -%>
+    <!-- Header -->
+    <div class="header bg-primary pb-6">
+        <div class="container-fluid">
+            <div class="header-body">
+                <div class="row align-items-center py-4">
+                    <div class="col-lg-6 col-7">
+                        <h6 class="h2 text-white d-inline-block mb-0">Manage your contacts here!</h6>
+                        <form class="navbar-search navbar-search-light form-inline mr-sm-3"
+                              id="navbar-search-main">
+                            <div class="form-group mb-0">
+                                <div class="input-group input-group-alternative input-group-merge">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-search"></i></span>
+                                    </div>
+                                    <input class="form-control"
+                                           placeholder="Search for new friends"
+                                           type="text">
+                                </div>
+                            </div>
+                            <button type="button"
+                                    class="close"
+                                    data-action="search-close"
+                                    data-target="#navbar-search-main"
+                                    aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Page content -->
+    <div class="container-fluid mt--6">
+        <div class="row mt--5">
+            <div class="col-md-10 ml-auto mr-auto">
+                <div class="card card-upgrade">
+                    <div class="card-body">
+                        <div class="table-responsive table-upgrade">
+                            <table id="friends-table"
+                                   class="table">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">Category</th>
+                                        <th class="text-center">List</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="text-center">Friends</td>
+                                        <td class="text-center">100</td>
+                                        <td><a href=""
+                                               class="btn btn-sm btn-primary"
+                                               data-toggle="modal"
+                                               data-target=".friends-list-manage">Manage Friends</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">Pending incoming Requests</td>
+                                        <td class="text-center">4</td>
+                                        <td><a href=""
+                                               class="btn btn-sm btn-primary"
+                                               data-toggle="modal"
+                                               data-target=".incoming-req-list-manage">Manage Incoming Req</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">Pending outgoing Requests</td>
+                                        <td class="text-center">4</td>
+                                        <td><a href=""
+                                               class="btn btn-sm btn-primary"
+                                               data-toggle="modal"
+                                               data-target=".outgoing-req-list-manage">Manage Outgoing Req</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">Blocked</td>
+                                        <td class="text-center">6</td>
+                                        <td><a href=""
+                                               class="btn btn-sm btn-primary"
+                                               data-toggle="modal"
+                                               data-target=".blocked-list-manage">Manage Blocked</a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal for friends list -->
+    <div class="modal fade friends-list-manage"
+         tabindex="-1"
+         role="dialog"
+         aria-labelledby="myLargeModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="card border-primary mb-3">
+                    <h5 class="card-header"> Manage Friends </h5>
+                    <div class="card-body text-primary container">
+                        <div class="row">
+                            <div class="col-lg-9 col-md-9 col-sm-9">
+                                <span class="card-text">FriendName1</span>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                <a href="#"
+                                   class="btn btn-sm btn-primary">Delete</a>
+                                <a href="#"
+                                   class="btn btn-sm btn-primary">Block</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body text-primary container">
+                        <div class="row">
+                            <div class="col-lg-9 col-md-9 col-sm-9">
+                                <span class="card-text">FriendName2</span>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                <a href="#"
+                                   class="btn btn-sm btn-primary">Delete</a>
+                                <a href="#"
+                                   class="btn btn-sm btn-primary">Block</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal for incoming requests list -->
+    <div class="modal fade incoming-req-list-manage"
+         tabindex="-1"
+         role="dialog"
+         aria-labelledby="myLargeModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="card border-primary mb-3">
+                    <h5 class="card-header"> Manage Incoming Requests </h5>
+                    <div class="card-body text-primary container">
+                        <div class="row">
+                            <div class="col-lg-8 col-md-8 col-sm-8">
+                                <span class="card-text">IncomingRequest1</span>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <a href="#"
+                                   class="btn btn-sm btn-primary">Accept</a>
+                                <a href="#"
+                                   class="btn btn-sm btn-primary">Reject</a>
+                                <a href="#"
+                                   class="btn btn-sm btn-primary">Block</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body text-primary container">
+                        <div class="row">
+                            <div class="col-lg-8 col-md-8 col-sm-8">
+                                <span class="card-text">IncomingRequest1</span>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <a href="#"
+                                   class="btn btn-sm btn-primary">Accept</a>
+                                <a href="#"
+                                   class="btn btn-sm btn-primary">Reject</a>
+                                <a href="#"
+                                   class="btn btn-sm btn-primary">Block</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal for outgoing list -->
+    <div class="modal fade outgoing-req-list-manage"
+         tabindex="-1"
+         role="dialog"
+         aria-labelledby="myLargeModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="card border-primary mb-3">
+                    <h5 class="card-header"> Manage Outgoing Requests </h5>
+                    <div class="card-body text-primary container">
+                        <div class="row">
+                            <div class="col-lg-10 col-md-10 col-sm-10">
+                                <span class="card-text">Outgoing request1 </span>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-2">
+                                <a href="#"
+                                   class="btn btn-sm btn-primary">Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body text-primary container">
+                        <div class="row">
+                            <div class="col-lg-10 col-md-10 col-sm-10">
+                                <span class="card-text">Outgoing request2 </span>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-2">
+                                <a href="#"
+                                   class="btn btn-sm btn-primary">Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal for blocked list -->
+    <div class="modal fade blocked-list-manage"
+         tabindex="-1"
+         role="dialog"
+         aria-labelledby="myLargeModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="card border-primary mb-3">
+                    <h5 class="card-header"> Manage Blocked contacts </h5>
+                    <div class="card-body text-primary container">
+                        <div class="row">
+                            <div class="col-lg-10 col-md-10 col-sm-10">
+                                <span class="card-text">Blocked1 </span>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-2">
+                                <a href="#"
+                                   class="btn btn-sm btn-primary">Unblock</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body text-primary container">
+                        <div class="row">
+                            <div class="col-lg-10 col-md-10 col-sm-10">
+                                <span class="card-text">Blocked2 </span>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-2">
+                                <a href="#"
+                                   class="btn btn-sm btn-primary">Unblock</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Footer -->
+<%- include('partials/footer'); -%>
+
+<%- include('partials/end_file'); -%>
