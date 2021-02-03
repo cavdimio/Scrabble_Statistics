@@ -348,28 +348,6 @@ router.route("/find")
         res.redirect("error-page");
       }
     }
-
-    // //Search user by username 
-    // User.findOne({
-    //   username: req.body.username
-    // }, (err, foundUser) => {
-    //   if (err) {
-    //     /* Error during search */
-    //     console.log(err);
-    //     res.redirect("error-page"); //TODO more explainatory error message 
-    //   } else {
-    //     if (foundUser === null) {
-    //       /* Searched User doesn't exist */
-    //       res.redirect("error-page"); // TODO Better handling 
-    //     } else {
-    //       /* Searched User found */
-    //       //Add the _id directly to friends //TODO request system to be implemented 
-    //       Addfriend(); 
-    //     }
-
-    //   }
-    // });
-    //if yes return to friends and perhaps with modal running
   });
 
 async function Addfriend(){
