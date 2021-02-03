@@ -13,7 +13,9 @@
                     <div class="col-lg-6 col-7">
                         <h6 class="h2 text-white d-inline-block mb-0">Manage your contacts here!</h6>
                         <form class="navbar-search navbar-search-light form-inline mr-sm-3"
-                              id="navbar-search-main">
+                              id="navbar-search-main"
+                              action="/find"
+                              method="post">
                             <div class="form-group mb-0">
                                 <div class="input-group input-group-alternative input-group-merge">
                                     <div class="input-group-prepend">
@@ -21,10 +23,11 @@
                                     </div>
                                     <input class="form-control"
                                            placeholder="Search for new friends"
+                                           name="username"
                                            type="text">
                                 </div>
                             </div>
-                            <button type="button"
+                            <button type="submit"
                                     class="close"
                                     data-action="search-close"
                                     data-target="#navbar-search-main"

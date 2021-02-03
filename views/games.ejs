@@ -1,0 +1,696 @@
+<%- include('partials/header'); -%>
+
+<!-- Main content -->
+<div class="main-content"
+     id="panel">
+  <!-- Topnav -->
+  <%- include('partials/topnav'); -%>
+  <!-- Header -->
+  <div class="header pb-6 d-flex align-items-center"
+       style="min-height: 500px; background-image: url(../assets/hannah-rodrigo-mf_3yZnC6ug-unsplash.jpg); background-size: cover; background-position: center top;">
+    <!-- Mask -->
+    <span class="mask bg-gradient-default opacity-5"></span>
+    <!-- Header container -->
+    <div class="container-fluid d-flex align-items-center">
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+          <h1 class="display-2 text-white">Hello <%= name %></h1>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Page content -->
+  <div class="container-fluid mt--6">
+    <div class="row">
+      <div class="col-xl-3">
+        <!-- Card header -->
+        <div class="card-header border-0">
+          <h3 class="mb-0">Your statistics, <%= name %></h3>
+        </div>
+        <!-- Light table -->
+        <div class="table-responsive">
+          <table class="table align-items-center table-flush">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col"
+                    class="sort"
+                    data-sort="name">Category</th>
+                <th scope="col"
+                    class="sort"
+                    data-sort="budget">Statistic</th>
+              </tr>
+            </thead>
+            <tbody class="list">
+              <tr id="cell_hover">
+                <th scope="row"
+                    onclick="populateTable('victories')">
+                  <div class="media align-items-center">
+                    <div class="media-body">
+                      <span class="name mb-0 text-sm">Victories</span>
+                    </div>
+                  </div>
+                </th>
+                <td class="budget"
+                    onclick="populateTable('victories')">
+                  <%= positionStats.pos1stats.length %>
+                </td>
+              </tr>
+              <tr id="cell_hover">
+                <th scope="row"
+                    onclick="populateTable('2ndPosition')">
+                  <div class="media align-items-center">
+                    <div class="media-body">
+                      <span class="name mb-0 text-sm">2nd Positions</span>
+                    </div>
+                  </div>
+                </th>
+                <td class="budget"
+                    onclick="populateTable('2ndPosition')">
+                  <%= positionStats.pos2stats.length %>
+                </td>
+              </tr>
+              <tr id="cell_hover">
+                <th scope="row"
+                    onclick="populateTable('3rdPosition')">
+                  <div class="media align-items-center">
+                    <div class="media-body">
+                      <span class="name mb-0 text-sm">3rd Positions</span>
+                    </div>
+                  </div>
+                </th>
+                <td class="budget"
+                    onclick="populateTable('3rdPosition')">
+                  <%= positionStats.pos3stats.length %>
+                </td>
+              </tr>
+              <tr id="cell_hover">
+                <th scope="row"
+                    onclick="populateTable('4thPosition')">
+                  <div class="media align-items-center">
+                    <div class="media-body">
+                      <span class="name mb-0 text-sm">4th Positions</span>
+                    </div>
+                  </div>
+                </th>
+                <td class="budget"
+                    onclick="populateTable('4thPosition')">
+                  <%= positionStats.pos4stats.length %>
+                </td>
+              </tr>
+              <tr id="cell_hover">
+                <th scope="row"
+                    onclick="populateTable('allLoses')">
+                  <div class="media align-items-center">
+                    <div class="media-body">
+                      <span class="name mb-0 text-sm">Losses Total</span>
+                    </div>
+                  </div>
+                </th>
+                <td class="budget"
+                    onclick="populateTable('allLoses')">
+                  <%= positionStats.posAllLosesStats.length %>
+                </td>
+              </tr>
+              <tr id="cell_hover">
+                <th scope="row"
+                    onclick="populateTable('allGames')">
+                  <div class="media align-items-center">
+                    <div class="media-body">
+                      <span class="name mb-0 text-sm">Games Total</span>
+                    </div>
+                  </div>
+                </th>
+                <td class="budget"
+                    onclick="populateTable('allGames')">
+                  <%= positionStats.posAllGamesStats.length %>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- Card header -->
+        <div class="card-header border-0">
+          <h3 class="mb-0">Your opponents, <%= name %></h3>
+        </div>
+        <!-- Light table -->
+        <div class="table-responsive">
+          <table class="table align-items-center table-flush">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col"
+                    class="sort"
+                    data-sort="name">Name</th>
+                <th scope="col"
+                    class="sort"
+                    data-sort="budget">Wins</th>
+                <th scope="col"
+                    class="sort"
+                    data-sort="budget">Lost</th>
+                <th scope="col"
+                    class="sort"
+                    data-sort="budget">Ties</th>
+              </tr>
+            </thead>
+            <tbody class="list">
+              <% for (var i=0; i<opponents.length; i++){ %>
+              <tr id="cell_hover">
+                <th scope="row"
+                    <% if ( opponents[i]._id != 0){ %>
+                    onclick="populateTable('UserID:' + '<%= opponents[i]._id %>')">
+                  <% }else{ %>
+                  onclick="populateTable('UserName:' + '<%= opponents[i].name %>')">
+                  <% } %>
+                  <div class="media align-items-center">
+                    <div class="media-body">
+                      <span class="name mb-0 text-sm"><%= opponents[i].name %> </span>
+                    </div>
+                  </div>
+                </th>
+                <td class="budget"
+                    <% if ( opponents[i]._id != 0){ %>
+                    onclick="populateTable('UserID:' + '<%= opponents[i]._id %>')">
+                  <% }else{ %>
+                  onclick="populateTable('UserName:' + '<%= opponents[i].name %>')">
+                  <% } %>
+                  <%= opponents[i].victories %>
+                </td>
+                <td class="budget"
+                    <% if ( opponents[i]._id != 0){ %>
+                    onclick="populateTable('UserID:' + '<%= opponents[i]._id %>')">
+                  <% }else{ %>
+                  onclick="populateTable('UserName:' + '<%= opponents[i].name %>')">
+                  <% } %>
+                  <%= opponents[i].losses %>
+                </td>
+                <td class="budget"
+                    <% if ( opponents[i]._id != 0){ %>
+                    onclick="populateTable('UserID:' + '<%= opponents[i]._id %>')">
+                  <% }else{ %>
+                  onclick="populateTable('UserName:' + '<%= opponents[i].name %>')">
+                  <% } %>
+                  <%= opponents[i].ties %>
+                </td>
+              </tr>
+              <% } %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col-xl-9">
+        <!-- <div class="col"> -->
+          <div class="card">
+            <!-- Card header -->
+            <!-- TODO Fix css for table -->
+            <div class="card-header border-0">
+              <h3 class="mb-0"
+                  id="general-table-title">Your Games, <%= name %></h3>
+            </div>
+            <!-- Light table -->
+            <div class="table-responsive" >
+              <table class="table align-items-center table-flush">
+                <thead class="thead-light">
+                  <tr>
+                    <th>Your <br>Score</th>
+                    <th>Opponents</th>
+                    <th>Winner</th>
+                    <th>Your <br>Position</th>
+                    <th>Differences</th>
+                    <th>Result</th>
+                  </tr>
+                </thead>
+                <tbody class="list"
+                       id="general-table-body">
+                  <% for (var i=0; i<positionStats.posAllGamesStats.length; i++){ %>
+                  <tr id="cell_hover"
+                      class="all_cells_hover">
+                    <td scope="row">
+                      <form action="/game/<%= positionStats.posAllGamesStats[i]._id %>"
+                            method="post">
+                        <input type=hidden
+                               name="userID"
+                               value="<%= userID %>">
+                        <button type="submit"
+                                name="game_id"
+                                value="<%= positionStats.posAllGamesStats[i]._id %>"
+                                class="my-btn-link">
+                          <div class="media align-items-center">
+                            <div class="media-body">
+                              <span class="name mb-0 text-sm">
+                                <%= positionStats.posAllGamesStats[i].scores[0] %>
+                              </span>
+                            </div>
+                          </div>
+                        </button>
+                      </form>
+                    </td>
+                    <td scope="row">
+                      <form action="/game/<%= positionStats.posAllGamesStats[i]._id %>"
+                            method="post">
+                        <input type=hidden
+                               name="userID"
+                               value="<%= userID %>">
+                        <button type="submit"
+                                name="game_id"
+                                value="<%= positionStats.posAllGamesStats[i]._id %>"
+                                class="my-btn-link">
+                          <div class="media align-items-center">
+                            <div class="media-body">
+                              <span class="name mb-0 text-sm">
+                                <ul style="list-style-type:none;text-align:left;padding-left:0; margin-bottom:0;">
+                                  <% for (var j=1; j<positionStats.posAllGamesStats[i].playersNames.length; j++){ %>
+                                  <li> <%= positionStats.posAllGamesStats[i].playersNames[j] %> :
+                                    <%= positionStats.posAllGamesStats[i].scores[j] %> </li>
+                                  <% } %>
+                                </ul>
+                              </span>
+                            </div>
+                          </div>
+                        </button>
+                      </form>
+                    </td>
+                    <td scope="row">
+                      <form action="/game/<%= positionStats.posAllGamesStats[i]._id %>"
+                            method="post">
+                        <input type=hidden
+                               name="userID"
+                               value="<%= userID %>">
+                        <button type="submit"
+                                name="game_id"
+                                value="<%= positionStats.posAllGamesStats[i]._id %>"
+                                class="my-btn-link">
+                          <div class="media align-items-center">
+                            <div class="media-body">
+                              <span class="name mb-0 text-sm">
+                                <ul style="list-style-type:none;text-align:left;padding-left:0; margin-bottom:0;">
+                                  <% for (var j=0; j<positionStats.posAllGamesStats[i].playersNames.length; j++){ %>
+                                  <% if(positionStats.posAllGamesStats[i].positions[j] == 1){ %>
+                                  <li> <%= positionStats.posAllGamesStats[i].playersNames[j] %> </li>
+                                  <% } %>
+                                  <% } %>
+                                </ul>
+                              </span>
+                            </div>
+                          </div>
+                        </button>
+                      </form>
+                    </td>
+                    <td scope="row">
+                      <form action="/game/<%= positionStats.posAllGamesStats[i]._id %>"
+                            method="post">
+                        <input type=hidden
+                               name="userID"
+                               value="<%= userID %>">
+                        <button type="submit"
+                                name="game_id"
+                                value="<%= positionStats.posAllGamesStats[i]._id %>"
+                                class="my-btn-link">
+                          <div class="media align-items-center">
+                            <div class="media-body">
+                              <span class="name mb-0 text-sm">
+                                <%= positionStats.posAllGamesStats[i].positions[0] %>
+                              </span>
+                            </div>
+                          </div>
+                        </button>
+                      </form>
+                    </td>
+                    <td scope="row">
+                      <form action="/game/<%= positionStats.posAllGamesStats[i]._id %>"
+                            method="post">
+                        <input type=hidden
+                               name="userID"
+                               value="<%= userID %>">
+                        <button type="submit"
+                                name="game_id"
+                                value="<%= positionStats.posAllGamesStats[i]._id %>"
+                                class="my-btn-link">
+                          <div class="media align-items-center">
+                            <div class="media-body">
+                              <span class="name mb-0 text-sm">
+                                <ul style="list-style-type:none;text-align:left;padding-left:0; margin-bottom:0;">
+                                  <!-- TODO 1 pts bug: It should be 1 pt -->
+                                  <% for (var j=1; j<positionStats.posAllGamesStats[i].playersNames.length; j++){ %>
+                                  <% if(positionStats.posAllGamesStats[i].positions[0] - positionStats.posAllGamesStats[i].positions[j] > 0){ %>
+                                  <li> Defeat against <%= positionStats.posAllGamesStats[i].playersNames[j] %> with
+                                    <%= -1*positionStats.posAllGamesStats[i].diff[j]%> pts </li>
+                                  <% } else if (positionStats.posAllGamesStats[i].positions[0] === positionStats.posAllGamesStats[i].positions[j]) { %>
+                                  <li> Tie against <%= positionStats.posAllGamesStats[i].playersNames[j] %></li>
+                                  <% } else { %>
+                                  <li> Victory against <%= positionStats.posAllGamesStats[i].playersNames[j] %> with
+                                    <%= positionStats.posAllGamesStats[i].diff[j]%> pts </li>
+                                  <% } } %>
+                                </ul>
+                              </span>
+                            </div>
+                          </div>
+                        </button>
+                      </form>
+                    </td>
+                    <td scope="row">
+                      <form action="/game/<%= positionStats.posAllGamesStats[i]._id %>"
+                            method="post">
+                        <input type=hidden
+                               name="userID"
+                               value="<%= userID %>">
+                        <button type="submit"
+                                name="game_id"
+                                value="<%= positionStats.posAllGamesStats[i]._id %>"
+                                class="my-btn-link">
+                          <div class="media align-items-center">
+                            <div class="media-body">
+                              <span class="name mb-0 text-sm">
+                                <% if(positionStats.posAllGamesStats[i].positions[0] == 1){ %>
+                                <!-- TODO Tie result in case of more than one ones -->
+                                Victory
+                                <% } else { %>
+                                Defeat
+                                <% } %>
+                              </span>
+                            </div>
+                          </div>
+                        </button>
+                      </form>
+                    </td>
+                  </tr>
+                  <% } %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        <!-- </div> -->
+      </div>
+    </div>  
+  </div>
+</div>
+<!-- Footer -->
+<%- include('partials/footer'); -%>
+<%- include('partials/end_file'); -%>
+
+<script>
+  function populateTable(category) {
+
+    //Change the title of the general table & initialize variables
+    var length = 0;
+    var positionStats = <%-JSON.stringify(positionStats) %> ;
+    var posStats;
+
+    //Check if category is a specific user id or dummy name or a general category 
+    if (category.includes("UserID:")) {
+      //Specific user ID
+
+      //Bring all opponents 
+      var opponents = <%-JSON.stringify(opponents) %> ;
+
+      //Store current opponent id 
+      var userID = category.replace("UserID:", "");
+
+      /* Find opponent */
+      opponents.forEach(opponent => {
+        if (opponent._id === userID) {
+
+          //Replace title 
+          $("#general-table-title").text('Your matches against ' + opponent.name);
+          length = opponent.opponentsStats.length;
+          posStats = opponent.opponentsStats;
+        }
+      });
+    } else if (category.includes("UserName:")) {
+      //Dummy user name 
+
+      //Bring all opponents 
+      var opponents = <%-JSON.stringify(opponents) %> ;
+
+      //Store current dummy opponent name 
+      var userName = category.replace("UserName:", "");
+
+      opponents.forEach(opponent => {
+        if (opponent._id === '0' && userName === opponent.name) {
+
+          //Replace title 
+          $("#general-table-title").text('Your matches against ' + opponent.name);
+          length = opponent.opponentsStats.length;
+          posStats = opponent.opponentsStats;
+        }
+      });
+
+    } else {
+      //General category
+      switch (category) {
+        case "victories":
+          $("#general-table-title").text('Your Victories, <%= name %>');
+          length = positionStats.pos1stats.length;
+          posStats = positionStats.pos1stats;
+          break;
+        case "2ndPosition":
+          $("#general-table-title").text('Your 2nd positions, <%= name %>');
+          length = positionStats.pos2stats.length;
+          posStats = positionStats.pos2stats;
+          break;
+        case "3rdPosition":
+          $("#general-table-title").text('Your 3rd positions, <%= name %>');
+          length = positionStats.pos3stats.length;
+          posStats = positionStats.pos3stats;
+          break;
+        case "4thPosition":
+          $("#general-table-title").text('Your 4th positions, <%= name %>');
+          length = positionStats.pos4stats.length;
+          posStats = positionStats.pos4stats;
+          break;
+        case "allLoses":
+          $("#general-table-title").text('Your Defeats, <%= name %>');
+          length = positionStats.posAllLosesStats.length;
+          posStats = positionStats.posAllLosesStats;
+          break;
+        case "allGames":
+          $("#general-table-title").text('Your Games, <%= name %>');
+          length = positionStats.posAllGamesStats.length;
+          posStats = positionStats.posAllGamesStats;
+          break;
+        default:
+          $("#general-table-title").text('Arrived here!!');
+          break;
+      }
+    }
+
+    var userID = <%-JSON.stringify(userID) %> ;
+
+    //Delete previous table
+    $('#general-table-body').empty();
+
+    for (var i = 0; i < length; i++) {
+      //Repopulate table with appropriate cells
+      $('#general-table-body').append(
+        '<tr id="cell_hover" class="all_cells_hover">  \
+              <td scope="row"> \
+                      <form action="/game/' + posStats[i]._id + '" \
+                            method="post"> \
+                        <input type="hidden" \
+                               name="userID" \
+                               value="' + userID + '"> \
+                        <button type="submit" \
+                                name="game_id" \
+                                value="' + posStats[i]._id + '" \
+                                class="my-btn-link"> \
+                          <div class="media align-items-center"> \
+                            <div class="media-body"> \
+                              <span class="name mb-0 text-sm"> \
+                                ' + posStats[i].scores[0] + ' \
+                              </span> \
+                            </div> \
+                          </div> \
+                        </button> \
+                      </form> \
+                </td> \
+              <td scope="row"> \
+                      <form action="/game/' + posStats[i]._id + '" \
+                            method="post"> \
+                        <input type=hidden \
+                               name="userID" \
+                               value="' + userID + '"> \
+                        <button type="submit" \
+                                name="game_id" \
+                                value="' + posStats[i]._id + '" \
+                                class="my-btn-link"> \
+                          <div class="media align-items-center"> \
+                            <div class="media-body"> \
+                              <span class="name mb-0 text-sm"> \
+                                <ul id="opponentsFor' + i + 'game" style="list-style-type:none;text-align:left;padding-left:0; margin-bottom:0;"> \
+                                </ul> \
+                              </span> \
+                            </div> \
+                          </div> \
+                        </button> \
+                      </form> \
+                    </td> \
+            <td > \
+              <form action="/game/' + posStats[i]._id + '" \
+                            method="post"> \
+                        <input type=hidden \
+                               name="userID" \
+                               value="' + userID + '"> \
+                        <button type="submit" \
+                                name="game_id" \
+                                value="' + posStats[i]._id + '" \
+                                class="my-btn-link"> \
+                          <div class="media align-items-center"> \
+                            <div class="media-body"> \
+                              <span class="name mb-0 text-sm"> \
+                                <ul id="winnersFor' + i + 'game" style="list-style-type:none;text-align:left;padding-left:0; margin-bottom:0;"> \
+                                </ul> \
+                              </span> \
+                            </div> \
+                          </div> \
+                        </button> \
+                      </form> \
+            </td> \
+            <td > \
+              <form action="/game/' + posStats[i]._id + '" \
+                            method="post"> \
+                        <input type=hidden \
+                               name="userID" \
+                               value="' + userID + '"> \
+                        <button type="submit" \
+                                name="game_id" \
+                                value="' + posStats[i]._id + '" \
+                                class="my-btn-link"> \
+                          <div class="media align-items-center"> \
+                            <div class="media-body"> \
+                              <span class="name mb-0 text-sm"> \
+                                ' + posStats[i].positions[0] + ' \
+                              </span> \
+                            </div> \
+                          </div> \
+                        </button> \
+                      </form> \
+               </td> \
+              <td > \
+                <form action="/game/' + posStats[i]._id + '" \
+                            method="post"> \
+                        <input type=hidden \
+                               name="userID" \
+                               value="' + userID + '"> \
+                        <button type="submit" \
+                                name="game_id" \
+                                value="' + posStats[i]._id + '" \
+                                class="my-btn-link"> \
+                          <div class="media align-items-center"> \
+                            <div class="media-body"> \
+                              <span class="name mb-0 text-sm"> \
+                                <ul id="differencesFor' + i + 'game" style="list-style-type:none;text-align:left;padding-left:0; margin-bottom:0;"> \
+                                </ul> \
+                              </span> \
+                            </div> \
+                          </div> \
+                        </button> \
+                      </form> \
+            </td> \
+            <td> \
+              <form action="/game/' + posStats[i]._id + '" \
+                            method="post"> \
+                        <input type=hidden \
+                               name="userID" \
+                               value="' + userID + '"> \
+                        <button type="submit" \
+                                name="game_id" \
+                                value="' + posStats[i]._id + '" \
+                                class="my-btn-link"> \
+                          <div class="media align-items-center"> \
+                            <div class="media-body"> \
+                              <span id="resultsFor' + i + 'game" class="name mb-0 text-sm"> \
+                              </span> \
+                            </div> \
+                          </div> \
+                        </button> \
+                      </form> \
+            </td> \
+          </tr>'
+      );
+    }
+
+    //Populate opponents cell 
+    for (var i = 0; i < length; i++) {
+      var opponentsSingleGame = [];
+
+      for (var j = 1; j < posStats[i].playersNames.length; j++) {
+        opponentsSingleGame.push({
+          "playerName": posStats[i].playersNames[j],
+          "playerScore": posStats[i].scores[j]
+        })
+      }
+      var items = [];
+      $.each(opponentsSingleGame, function (i, item) {
+        items.push('<li>' + item.playerName + ' : ' + item.playerScore + '</li>');
+      });
+      $('#opponentsFor' + i + 'game').append(items.join(''));
+    }
+
+    //Populate winners cell
+    for (var i = 0; i < length; i++) {
+      var winnersSingleGame = [];
+      for (var j = 0; j < posStats[i].playersNames.length; j++) {
+        if (posStats[i].positions[j] === 1) {
+          winnersSingleGame.push({
+            "playerName": posStats[i].playersNames[j]
+          })
+        }
+      }
+      var items = [];
+      $.each(winnersSingleGame, function (i, item) {
+        items.push('<li>' + item.playerName + '</li>');
+      });
+      $('#winnersFor' + i + 'game').append(items.join(''));
+    }
+
+    //Populate differences cell
+    for (var i = 0; i < length; i++) {
+      var differencesSingleGame = [];
+      for (var j = 1; j < posStats[i].playersNames.length; j++) { //TODO 1 pt difference implementation
+        if (posStats[i].positions[0] - posStats[i].positions[j] > 0) {
+          differencesSingleGame.push({
+            "message": "Defeat against " + posStats[i].playersNames[j] + " with " + -1*posStats[i].diff[j] +  " pts"
+          })
+        }
+        else if (posStats[i].positions[0] - posStats[i].positions[j] === 0){
+          differencesSingleGame.push({
+            "message": "Tie against " + posStats[i].playersNames[j]
+          })
+        }
+        else {
+          differencesSingleGame.push({
+            "message": "Victory against " + posStats[i].playersNames[j] + " with " + posStats[i].diff[j] +  " pts"
+          })
+        }
+      }
+      var items = [];
+      $.each(differencesSingleGame, function (i, item) {
+        items.push('<li>' + item.message + '</li>');
+      });
+      $('#differencesFor' + i + 'game').append(items.join(''));
+    }
+
+    //Populate results cell
+    for (var i = 0; i < length; i++) {
+      var resultsSingleGame = [];
+
+      if (posStats[i].positions[0] === 1) {
+        resultsSingleGame.push({
+          "result": "Victory"
+        })
+      } else {
+        resultsSingleGame.push({
+          "result": "Defeat"
+        })
+      }
+
+      var items = [];
+      $.each(resultsSingleGame, function (i, item) {
+        items.push(item.result);
+      });
+      $('#resultsFor' + i + 'game').append(items.join(''));
+    }
+
+  }
+
+  //TODO sorting the table of games 
+  //TODO sorting the table of opponents 
+</script>

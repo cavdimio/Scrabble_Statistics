@@ -321,6 +321,68 @@ router.route("/test")
     }
   });
 
+router.route("/find")
+  .post(async function(req, res, next) {
+
+    //Search user by username 
+    try{
+      var foundUser = await User.findOne({username: req.body.username});
+    } catch {
+      /* Error during search */
+      console.log("User not found");
+      res.redirect("error-page"); //TODO more explainatory error message 
+    }
+    
+    if (foundUser === null){
+      /* Searched User doesn't exist */
+      res.redirect("error-page"); // TODO Better handling 
+    }
+    else{
+      
+      try{
+        await User.updateOne({_id: req.user._id}, { $push: {friends: foundUser._id}}); //TODO Check if already friends
+        await User.updateOne({_id: foundUser._id}, { $push: {friends: req.user._id}}); //TODO Check if already friends
+        res.redirect("profile");   
+      } catch (err){
+        console.log("Update unsuccessful. Try again");
+        res.redirect("error-page");
+      }
+    }
+
+    // //Search user by username 
+    // User.findOne({
+    //   username: req.body.username
+    // }, (err, foundUser) => {
+    //   if (err) {
+    //     /* Error during search */
+    //     console.log(err);
+    //     res.redirect("error-page"); //TODO more explainatory error message 
+    //   } else {
+    //     if (foundUser === null) {
+    //       /* Searched User doesn't exist */
+    //       res.redirect("error-page"); // TODO Better handling 
+    //     } else {
+    //       /* Searched User found */
+    //       //Add the _id directly to friends //TODO request system to be implemented 
+    //       Addfriend(); 
+    //     }
+
+    //   }
+    // });
+    //if yes return to friends and perhaps with modal running
+  });
+
+async function Addfriend(){
+  try{
+    User.updateOne({_id: user._id}, { $push: {friends: foundUser._id}}); //TODO Check if already friends
+    User.updateOne({_id: foundUser._id}, { $push: {friends: user._id}}); //TODO Check if already friends
+  } catch (err){
+    console.log("Update unsuccessful. Try again");
+    res.redirect("error-page");
+  }
+  res.redirect("profile")
+}
+
 router.route("/friends")
   .get((req, res, next) => {
     if (req.isAuthenticated()) {
@@ -334,6 +396,5 @@ router.route("/friends")
       });
     }
   });
-
 
 module.exports = router;

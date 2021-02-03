@@ -6,11 +6,11 @@ const userSchema = new mongoose.Schema({
     hash: String,
     name:  String,
     insertedGames: [ gameSchema ],
-    friends: [mongoose.Schema.Types.ObjectId],
-    dummyNames: [String],
-    requestSent: [mongoose.Schema.Types.ObjectId],
-    requestReceived: [mongoose.Schema.Types.ObjectId],
-    blockedList: [mongoose.Schema.Types.ObjectId]
+    friends: [ String ],
+    dummyNames: [ String ],
+    requestSent: [ String ],
+    requestReceived: [ String ],
+    blockedList: [ String ]
   });
 
   module.exports = userSchema;
