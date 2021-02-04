@@ -34,18 +34,6 @@ router.route("/")
   });
 
 router.route("/register")
-  // .get((req, res, next) => {
-  //   if (req.isAuthenticated()) {
-  //     res.render("register_page", { //TODO logic of register in case it is already logged in
-  //       loggedIn: req.isAuthenticated(),
-  //       name: req.user.name
-  //     });
-  //   } else {
-  //     res.render("register_page", {
-  //       loggedIn: req.isAuthenticated(),
-  //     });
-  //   }
-  // })
   .post((req, res, next) => {
     //TODO check if user is already signed-up 
     //TODO check if username already used 
@@ -97,18 +85,6 @@ router.route("/register")
   });
 
 router.route("/log-in")
-  // .get((req, res, next) => {
-  //   if (req.isAuthenticated()) {
-  //     res.render("login_page", { //TODO logic of log-in in case it is already logged in
-  //       loggedIn: req.isAuthenticated(),
-  //       name: req.user.name
-  //     });
-  //   } else {
-  //     res.render("login_page", {
-  //       loggedIn: req.isAuthenticated(),
-  //     });
-  //   }
-  // })
   .post(passport.authenticate("local", {
     failureRedirect: "/error-page",
     successRedirect: "/games"
@@ -313,20 +289,6 @@ router.route("/error-page")
       });
     } else {
       res.render("error_page", {
-        loggedIn: req.isAuthenticated()
-      });
-    }
-  });
-
-router.route("/test")
-  .get((req, res, next) => {
-    if (req.isAuthenticated()) {
-      res.render("partials/test", {
-        loggedIn: req.isAuthenticated(),
-        name: req.user.name
-      });
-    } else {
-      res.render("partials/test", {
         loggedIn: req.isAuthenticated()
       });
     }
