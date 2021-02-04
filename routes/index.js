@@ -96,15 +96,15 @@ router.route("/log-out")
     res.redirect("/");
   });
 
-router.route("/create-new-game")
+router.route("/new-game")
   .get((req, res, next) => {
     if (req.isAuthenticated()) {
-      res.render("create_new_game_page", {
+      res.render("new_game", {
         loggedIn: req.isAuthenticated(),
         name: req.user.name
       });
     } else {
-      res.render("create_new_game_page", {
+      res.render("new_game", {
         loggedIn: req.isAuthenticated(),
       });
     }
