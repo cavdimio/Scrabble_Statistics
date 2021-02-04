@@ -186,10 +186,9 @@
                                             class = "form-control" \
                                                id = "playersScoresRound ' + i + ' " \
                                              name = playersScoresRound \
-                                      placeholder = "Your score on round ' + i + '" \
                                             value = "0"/> </td> \
                 <\tr>'
-            );
+            ); //TODO delete 0 if player clicks on field
         }
 
         /* Create rows (Secondly the opponents inputs ) */
@@ -199,7 +198,6 @@
                                                       class = "form-control" \
                                                          id = "Opponent ' + j + ' ScoresRound ' + i + ' " \
                                                        name = OpponentsScores \
-                                                placeholder = "Opponents ' + j + ' score on round ' + i + '" \
                                                       value = "0"/> </td> ');
             }
         }

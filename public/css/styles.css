@@ -38,22 +38,6 @@ td a {
   text-align: center;
 }
 
-/* Deprecated with table.ejs */
-.player1-bg {
-  background-color: #dde0f3;
-}
-
-/* Deprecated with table.ejs */
-.player-text-sm {
-  font-size: 0.95rem;
-}
-
-/* Deprecated with table.ejs */
-.player2-bg {
-  background-color: #b9bdd6;
-}
-
-
 .sgs_players_name {
   margin: 0.2rem;
   text-align: center;
@@ -129,7 +113,14 @@ td a {
 
 /*-------- Navbar section end -----------*/
 
-.my-btn-link {
+/* ------- games section start ----------*/ 
+#opponents-table .opponents:hover{
+  cursor: pointer;
+  background-color: #a4addf;
+  color: white;
+} 
+
+.to-game-link {
   border: none;
   background-color: inherit;
   color: inherit;
@@ -138,10 +129,15 @@ td a {
   padding: 0.3rem;
 }
 
-.my-btn-link:active,
-.my-btn-link:focus {
+.to-game-link:active,
+.to-game-link:focus {
   outline: none;
 }
+
+/* ------- games section end ----------*/
+
+
+
 
 .home-page-bg-img,
 .error-page-bg-img {
@@ -159,8 +155,6 @@ td a {
 }
 
 /*-------- Footer section start -----------*/
-
-
 
 .global {
   position: relative;

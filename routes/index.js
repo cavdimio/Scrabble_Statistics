@@ -34,20 +34,21 @@ router.route("/")
   });
 
 router.route("/register")
-  .get((req, res, next) => {
-    if (req.isAuthenticated()) {
-      res.render("register_page", { //TODO logic of register in case it is already logged in
-        loggedIn: req.isAuthenticated(),
-        name: req.user.name
-      });
-    } else {
-      res.render("register_page", {
-        loggedIn: req.isAuthenticated(),
-      });
-    }
-  })
+  // .get((req, res, next) => {
+  //   if (req.isAuthenticated()) {
+  //     res.render("register_page", { //TODO logic of register in case it is already logged in
+  //       loggedIn: req.isAuthenticated(),
+  //       name: req.user.name
+  //     });
+  //   } else {
+  //     res.render("register_page", {
+  //       loggedIn: req.isAuthenticated(),
+  //     });
+  //   }
+  // })
   .post((req, res, next) => {
-
+    //TODO check if user is already signed-up 
+    //TODO check if username already used 
     const saltRounds = parseInt(process.env.SALT_ROUNDS);
     /* Password encryption */
     //TODO convert all users in order to use bcrypt 
@@ -82,7 +83,7 @@ router.route("/register")
               } else {
                 /* Go to profile page */
                 passport.authenticate('local')(req, res, function () {
-                  res.redirect('/profile');
+                  res.redirect('/games');
                 });
               }
             });
@@ -96,21 +97,21 @@ router.route("/register")
   });
 
 router.route("/log-in")
-  .get((req, res, next) => {
-    if (req.isAuthenticated()) {
-      res.render("login_page", { //TODO logic of log-in in case it is already logged in
-        loggedIn: req.isAuthenticated(),
-        name: req.user.name
-      });
-    } else {
-      res.render("login_page", {
-        loggedIn: req.isAuthenticated(),
-      });
-    }
-  })
+  // .get((req, res, next) => {
+  //   if (req.isAuthenticated()) {
+  //     res.render("login_page", { //TODO logic of log-in in case it is already logged in
+  //       loggedIn: req.isAuthenticated(),
+  //       name: req.user.name
+  //     });
+  //   } else {
+  //     res.render("login_page", {
+  //       loggedIn: req.isAuthenticated(),
+  //     });
+  //   }
+  // })
   .post(passport.authenticate("local", {
     failureRedirect: "/error-page",
-    successRedirect: "/profile"
+    successRedirect: "/games"
   }));
 
 router.route("/log-out")
@@ -162,6 +163,7 @@ router.route("/create-new-game")
       }
 
       /* If opponent is one, req returns just a string whereas if more opponents the req returns an array of strings */
+      //TODO lodash here names must change from mAriA --> Maria 
       if (opponentsNumber === 1) {
         tempOpponent.name = req.body.OpponentName;
       } else {
@@ -175,8 +177,17 @@ router.route("/create-new-game")
       /* Save the opponent */
       tempOpponents.push(tempOpponent);
 
-      //Save the dummy name  //TODO Check if dummy name already exists //TODO Correct here when friends system is implemented
-      req.user.dummyNames.push(tempOpponent.name);
+      /*Save the dummy name, ONLY if it doesn't exist already */ //TODO Correct here when friends system is implemented
+      var dummyNameAlreadyExist = false;
+      req.user.dummyNames.forEach(currentDummyName => {
+        if (currentDummyName === tempOpponent.name) {
+          dummyNameAlreadyExist = true;
+        }
+      });
+      if (!dummyNameAlreadyExist) {
+        req.user.dummyNames.push(tempOpponent.name);
+      }
+
     }
     newInsertedGame.opponents = tempOpponents;
 
@@ -189,13 +200,13 @@ router.route("/create-new-game")
         res.redirect("error-page"); //TODO more explainatory error message 
       } else {
         /* Go to profile page */
-        res.redirect("profile");
+        res.redirect("games");
       }
     });
 
   });
 
-router.route("/profile")
+router.route("/games")
   .get((req, res, next) => {
     if (req.isAuthenticated()) {
       /* Find friends */
@@ -210,7 +221,7 @@ router.route("/profile")
             /* Friends found, no need for action: friends table used directly in findPlayersGameStats */
           }
           const findPlayersGameStats = statisticsCalculations.findPlayersGameStats(req.user, friends);
-          res.render("my_profile_page", {
+          res.render("games", {
             loggedIn: req.isAuthenticated(),
             userID: req.user._id,
             name: req.user.name,
@@ -322,44 +333,46 @@ router.route("/test")
   });
 
 router.route("/find")
-  .post(async function(req, res, next) {
+  .post(async function (req, res, next) {
 
     //Search user by username 
-    try{
-      var foundUser = await User.findOne({username: req.body.username});
+    try {
+      var foundUser = await User.findOne({
+        username: req.body.username
+      });
     } catch {
       /* Error during search */
       console.log("User not found");
       res.redirect("error-page"); //TODO more explainatory error message 
     }
-    
-    if (foundUser === null){
+
+    if (foundUser === null) {
       /* Searched User doesn't exist */
       res.redirect("error-page"); // TODO Better handling 
-    }
-    else{
-      
-      try{
-        await User.updateOne({_id: req.user._id}, { $push: {friends: foundUser._id}}); //TODO Check if already friends
-        await User.updateOne({_id: foundUser._id}, { $push: {friends: req.user._id}}); //TODO Check if already friends
-        res.redirect("profile");   
-      } catch (err){
+    } else {
+
+      try {
+        await User.updateOne({
+          _id: req.user._id
+        }, {
+          $push: {
+            friends: foundUser._id
+          }
+        }); //TODO Check if already friends
+        await User.updateOne({
+          _id: foundUser._id
+        }, {
+          $push: {
+            friends: req.user._id
+          }
+        }); //TODO Check if already friends
+        res.redirect("games");
+      } catch (err) {
         console.log("Update unsuccessful. Try again");
         res.redirect("error-page");
       }
     }
   });
-
-async function Addfriend(){
-  try{
-    User.updateOne({_id: user._id}, { $push: {friends: foundUser._id}}); //TODO Check if already friends
-    User.updateOne({_id: foundUser._id}, { $push: {friends: user._id}}); //TODO Check if already friends
-  } catch (err){
-    console.log("Update unsuccessful. Try again");
-    res.redirect("error-page");
-  }
-  res.redirect("profile")
-}
 
 router.route("/friends")
   .get((req, res, next) => {
@@ -374,5 +387,25 @@ router.route("/friends")
       });
     }
   });
+
+router.route("/settings")
+  .get((req, res, next) => {
+    if (req.isAuthenticated()) {
+      res.render("settings", {
+        loggedIn: req.isAuthenticated(),
+        name: req.user.name,
+        username: req.user.username
+      });
+    } else {
+      res.render("settings", {
+        loggedIn: req.isAuthenticated(),
+      });
+    }
+  })
+  .post((req, res, next) => {
+    //TODO change of name, username or password 
+    console.log("I am here");
+    res.redirect("games");
+;  });
 
 module.exports = router;

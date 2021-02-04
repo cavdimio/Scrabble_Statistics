@@ -15,6 +15,8 @@
       <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12">
           <h1 class="display-2 text-white">Hello <%= name %></h1>
+          <a href="/create-new-game"
+             class="btn btn-neutral">Create a new game!</a>
         </div>
       </div>
     </div>
@@ -134,21 +136,20 @@
         </div>
         <!-- Light table -->
         <div class="table-responsive">
-          <table class="table align-items-center table-flush">
+          <table id="opponents-table"
+                 class="table align-items-center table-flush">
             <thead class="thead-light">
               <tr>
-                <th scope="col"
-                    class="sort"
-                    data-sort="name">Name</th>
-                <th scope="col"
-                    class="sort"
-                    data-sort="budget">Wins</th>
-                <th scope="col"
-                    class="sort"
-                    data-sort="budget">Lost</th>
-                <th scope="col"
-                    class="sort"
-                    data-sort="budget">Ties</th>
+                <th> Name</th>
+                <th id="opponents-wins"
+                    class="opponents"
+                    onclick="sortOpponentsTable('wins')">Wins &darr;</th>
+                <th id="opponents-losses"
+                    class="opponents"
+                    onclick="sortOpponentsTable('losses')">Lost &darr;</th>
+                <th id="opponents-ties"
+                    class="opponents"
+                    onclick="sortOpponentsTable('ties')">Ties &darr;</th>
               </tr>
             </thead>
             <tbody class="list">
@@ -198,188 +199,188 @@
       </div>
       <div class="col-xl-9">
         <!-- <div class="col"> -->
-          <div class="card">
-            <!-- Card header -->
-            <!-- TODO Fix css for table -->
-            <div class="card-header border-0">
-              <h3 class="mb-0"
-                  id="general-table-title">Your Games, <%= name %></h3>
-            </div>
-            <!-- Light table -->
-            <div class="table-responsive" >
-              <table class="table align-items-center table-flush">
-                <thead class="thead-light">
-                  <tr>
-                    <th>Your <br>Score</th>
-                    <th>Opponents</th>
-                    <th>Winner</th>
-                    <th>Your <br>Position</th>
-                    <th>Differences</th>
-                    <th>Result</th>
-                  </tr>
-                </thead>
-                <tbody class="list"
-                       id="general-table-body">
-                  <% for (var i=0; i<positionStats.posAllGamesStats.length; i++){ %>
-                  <tr id="cell_hover"
-                      class="all_cells_hover">
-                    <td scope="row">
-                      <form action="/game/<%= positionStats.posAllGamesStats[i]._id %>"
-                            method="post">
-                        <input type=hidden
-                               name="userID"
-                               value="<%= userID %>">
-                        <button type="submit"
-                                name="game_id"
-                                value="<%= positionStats.posAllGamesStats[i]._id %>"
-                                class="my-btn-link">
-                          <div class="media align-items-center">
-                            <div class="media-body">
-                              <span class="name mb-0 text-sm">
-                                <%= positionStats.posAllGamesStats[i].scores[0] %>
-                              </span>
-                            </div>
-                          </div>
-                        </button>
-                      </form>
-                    </td>
-                    <td scope="row">
-                      <form action="/game/<%= positionStats.posAllGamesStats[i]._id %>"
-                            method="post">
-                        <input type=hidden
-                               name="userID"
-                               value="<%= userID %>">
-                        <button type="submit"
-                                name="game_id"
-                                value="<%= positionStats.posAllGamesStats[i]._id %>"
-                                class="my-btn-link">
-                          <div class="media align-items-center">
-                            <div class="media-body">
-                              <span class="name mb-0 text-sm">
-                                <ul style="list-style-type:none;text-align:left;padding-left:0; margin-bottom:0;">
-                                  <% for (var j=1; j<positionStats.posAllGamesStats[i].playersNames.length; j++){ %>
-                                  <li> <%= positionStats.posAllGamesStats[i].playersNames[j] %> :
-                                    <%= positionStats.posAllGamesStats[i].scores[j] %> </li>
-                                  <% } %>
-                                </ul>
-                              </span>
-                            </div>
-                          </div>
-                        </button>
-                      </form>
-                    </td>
-                    <td scope="row">
-                      <form action="/game/<%= positionStats.posAllGamesStats[i]._id %>"
-                            method="post">
-                        <input type=hidden
-                               name="userID"
-                               value="<%= userID %>">
-                        <button type="submit"
-                                name="game_id"
-                                value="<%= positionStats.posAllGamesStats[i]._id %>"
-                                class="my-btn-link">
-                          <div class="media align-items-center">
-                            <div class="media-body">
-                              <span class="name mb-0 text-sm">
-                                <ul style="list-style-type:none;text-align:left;padding-left:0; margin-bottom:0;">
-                                  <% for (var j=0; j<positionStats.posAllGamesStats[i].playersNames.length; j++){ %>
-                                  <% if(positionStats.posAllGamesStats[i].positions[j] == 1){ %>
-                                  <li> <%= positionStats.posAllGamesStats[i].playersNames[j] %> </li>
-                                  <% } %>
-                                  <% } %>
-                                </ul>
-                              </span>
-                            </div>
-                          </div>
-                        </button>
-                      </form>
-                    </td>
-                    <td scope="row">
-                      <form action="/game/<%= positionStats.posAllGamesStats[i]._id %>"
-                            method="post">
-                        <input type=hidden
-                               name="userID"
-                               value="<%= userID %>">
-                        <button type="submit"
-                                name="game_id"
-                                value="<%= positionStats.posAllGamesStats[i]._id %>"
-                                class="my-btn-link">
-                          <div class="media align-items-center">
-                            <div class="media-body">
-                              <span class="name mb-0 text-sm">
-                                <%= positionStats.posAllGamesStats[i].positions[0] %>
-                              </span>
-                            </div>
-                          </div>
-                        </button>
-                      </form>
-                    </td>
-                    <td scope="row">
-                      <form action="/game/<%= positionStats.posAllGamesStats[i]._id %>"
-                            method="post">
-                        <input type=hidden
-                               name="userID"
-                               value="<%= userID %>">
-                        <button type="submit"
-                                name="game_id"
-                                value="<%= positionStats.posAllGamesStats[i]._id %>"
-                                class="my-btn-link">
-                          <div class="media align-items-center">
-                            <div class="media-body">
-                              <span class="name mb-0 text-sm">
-                                <ul style="list-style-type:none;text-align:left;padding-left:0; margin-bottom:0;">
-                                  <!-- TODO 1 pts bug: It should be 1 pt -->
-                                  <% for (var j=1; j<positionStats.posAllGamesStats[i].playersNames.length; j++){ %>
-                                  <% if(positionStats.posAllGamesStats[i].positions[0] - positionStats.posAllGamesStats[i].positions[j] > 0){ %>
-                                  <li> Defeat against <%= positionStats.posAllGamesStats[i].playersNames[j] %> with
-                                    <%= -1*positionStats.posAllGamesStats[i].diff[j]%> pts </li>
-                                  <% } else if (positionStats.posAllGamesStats[i].positions[0] === positionStats.posAllGamesStats[i].positions[j]) { %>
-                                  <li> Tie against <%= positionStats.posAllGamesStats[i].playersNames[j] %></li>
-                                  <% } else { %>
-                                  <li> Victory against <%= positionStats.posAllGamesStats[i].playersNames[j] %> with
-                                    <%= positionStats.posAllGamesStats[i].diff[j]%> pts </li>
-                                  <% } } %>
-                                </ul>
-                              </span>
-                            </div>
-                          </div>
-                        </button>
-                      </form>
-                    </td>
-                    <td scope="row">
-                      <form action="/game/<%= positionStats.posAllGamesStats[i]._id %>"
-                            method="post">
-                        <input type=hidden
-                               name="userID"
-                               value="<%= userID %>">
-                        <button type="submit"
-                                name="game_id"
-                                value="<%= positionStats.posAllGamesStats[i]._id %>"
-                                class="my-btn-link">
-                          <div class="media align-items-center">
-                            <div class="media-body">
-                              <span class="name mb-0 text-sm">
-                                <% if(positionStats.posAllGamesStats[i].positions[0] == 1){ %>
-                                <!-- TODO Tie result in case of more than one ones -->
-                                Victory
-                                <% } else { %>
-                                Defeat
-                                <% } %>
-                              </span>
-                            </div>
-                          </div>
-                        </button>
-                      </form>
-                    </td>
-                  </tr>
-                  <% } %>
-                </tbody>
-              </table>
-            </div>
+        <div class="card">
+          <!-- Card header -->
+          <!-- TODO Fix css for table -->
+          <div class="card-header border-0">
+            <h3 class="mb-0"
+                id="general-table-title">Your Games, <%= name %></h3>
           </div>
+          <!-- Light table -->
+          <div class="table-responsive">
+            <table class="table align-items-center table-flush">
+              <thead class="thead-light">
+                <tr>
+                  <th>Your <br>Score</th>
+                  <th>Opponents</th>
+                  <th>Winner</th>
+                  <th>Your <br>Position</th>
+                  <th>Differences</th>
+                  <th>Result</th>
+                </tr>
+              </thead>
+              <tbody class="list"
+                     id="general-table-body">
+                <% for (var i=0; i<positionStats.posAllGamesStats.length; i++){ %>
+                <tr id="cell_hover"
+                    class="all_cells_hover">
+                  <td scope="row">
+                    <form action="/game/<%= positionStats.posAllGamesStats[i]._id %>"
+                          method="post">
+                      <input type=hidden
+                             name="userID"
+                             value="<%= userID %>">
+                      <button type="submit"
+                              name="game_id"
+                              value="<%= positionStats.posAllGamesStats[i]._id %>"
+                              class="to-game-link">
+                        <div class="media align-items-center">
+                          <div class="media-body">
+                            <span class="name mb-0 text-sm">
+                              <%= positionStats.posAllGamesStats[i].scores[0] %>
+                            </span>
+                          </div>
+                        </div>
+                      </button>
+                    </form>
+                  </td>
+                  <td scope="row">
+                    <form action="/game/<%= positionStats.posAllGamesStats[i]._id %>"
+                          method="post">
+                      <input type=hidden
+                             name="userID"
+                             value="<%= userID %>">
+                      <button type="submit"
+                              name="game_id"
+                              value="<%= positionStats.posAllGamesStats[i]._id %>"
+                              class="to-game-link">
+                        <div class="media align-items-center">
+                          <div class="media-body">
+                            <span class="name mb-0 text-sm">
+                              <ul style="list-style-type:none;text-align:left;padding-left:0; margin-bottom:0;">
+                                <% for (var j=1; j<positionStats.posAllGamesStats[i].playersNames.length; j++){ %>
+                                <li> <%= positionStats.posAllGamesStats[i].playersNames[j] %> :
+                                  <%= positionStats.posAllGamesStats[i].scores[j] %> </li>
+                                <% } %>
+                              </ul>
+                            </span>
+                          </div>
+                        </div>
+                      </button>
+                    </form>
+                  </td>
+                  <td scope="row">
+                    <form action="/game/<%= positionStats.posAllGamesStats[i]._id %>"
+                          method="post">
+                      <input type=hidden
+                             name="userID"
+                             value="<%= userID %>">
+                      <button type="submit"
+                              name="game_id"
+                              value="<%= positionStats.posAllGamesStats[i]._id %>"
+                              class="to-game-link">
+                        <div class="media align-items-center">
+                          <div class="media-body">
+                            <span class="name mb-0 text-sm">
+                              <ul style="list-style-type:none;text-align:left;padding-left:0; margin-bottom:0;">
+                                <% for (var j=0; j<positionStats.posAllGamesStats[i].playersNames.length; j++){ %>
+                                <% if(positionStats.posAllGamesStats[i].positions[j] == 1){ %>
+                                <li> <%= positionStats.posAllGamesStats[i].playersNames[j] %> </li>
+                                <% } %>
+                                <% } %>
+                              </ul>
+                            </span>
+                          </div>
+                        </div>
+                      </button>
+                    </form>
+                  </td>
+                  <td scope="row">
+                    <form action="/game/<%= positionStats.posAllGamesStats[i]._id %>"
+                          method="post">
+                      <input type=hidden
+                             name="userID"
+                             value="<%= userID %>">
+                      <button type="submit"
+                              name="game_id"
+                              value="<%= positionStats.posAllGamesStats[i]._id %>"
+                              class="to-game-link">
+                        <div class="media align-items-center">
+                          <div class="media-body">
+                            <span class="name mb-0 text-sm">
+                              <%= positionStats.posAllGamesStats[i].positions[0] %>
+                            </span>
+                          </div>
+                        </div>
+                      </button>
+                    </form>
+                  </td>
+                  <td scope="row">
+                    <form action="/game/<%= positionStats.posAllGamesStats[i]._id %>"
+                          method="post">
+                      <input type=hidden
+                             name="userID"
+                             value="<%= userID %>">
+                      <button type="submit"
+                              name="game_id"
+                              value="<%= positionStats.posAllGamesStats[i]._id %>"
+                              class="to-game-link">
+                        <div class="media align-items-center">
+                          <div class="media-body">
+                            <span class="name mb-0 text-sm">
+                              <ul style="list-style-type:none;text-align:left;padding-left:0; margin-bottom:0;">
+                                <!-- TODO 1 pts bug: It should be 1 pt -->
+                                <% for (var j=1; j<positionStats.posAllGamesStats[i].playersNames.length; j++){ %>
+                                <% if(positionStats.posAllGamesStats[i].positions[0] - positionStats.posAllGamesStats[i].positions[j] > 0){ %>
+                                <li> Defeat against <%= positionStats.posAllGamesStats[i].playersNames[j] %> with
+                                  <%= -1*positionStats.posAllGamesStats[i].diff[j]%> pts </li>
+                                <% } else if (positionStats.posAllGamesStats[i].positions[0] === positionStats.posAllGamesStats[i].positions[j]) { %>
+                                <li> Tie against <%= positionStats.posAllGamesStats[i].playersNames[j] %></li>
+                                <% } else { %>
+                                <li> Victory against <%= positionStats.posAllGamesStats[i].playersNames[j] %> with
+                                  <%= positionStats.posAllGamesStats[i].diff[j]%> pts </li>
+                                <% } } %>
+                              </ul>
+                            </span>
+                          </div>
+                        </div>
+                      </button>
+                    </form>
+                  </td>
+                  <td scope="row">
+                    <form action="/game/<%= positionStats.posAllGamesStats[i]._id %>"
+                          method="post">
+                      <input type=hidden
+                             name="userID"
+                             value="<%= userID %>">
+                      <button type="submit"
+                              name="game_id"
+                              value="<%= positionStats.posAllGamesStats[i]._id %>"
+                              class="to-game-link">
+                        <div class="media align-items-center">
+                          <div class="media-body">
+                            <span class="name mb-0 text-sm">
+                              <% if(positionStats.posAllGamesStats[i].positions[0] == 1){ %>
+                              <!-- TODO Tie result in case of more than one ones -->
+                              Victory
+                              <% } else { %>
+                              Defeat
+                              <% } %>
+                            </span>
+                          </div>
+                        </div>
+                      </button>
+                    </form>
+                  </td>
+                </tr>
+                <% } %>
+              </tbody>
+            </table>
+          </div>
+        </div>
         <!-- </div> -->
       </div>
-    </div>  
+    </div>
   </div>
 </div>
 <!-- Footer -->
@@ -490,7 +491,7 @@
                         <button type="submit" \
                                 name="game_id" \
                                 value="' + posStats[i]._id + '" \
-                                class="my-btn-link"> \
+                                class="to-game-link"> \
                           <div class="media align-items-center"> \
                             <div class="media-body"> \
                               <span class="name mb-0 text-sm"> \
@@ -510,7 +511,7 @@
                         <button type="submit" \
                                 name="game_id" \
                                 value="' + posStats[i]._id + '" \
-                                class="my-btn-link"> \
+                                class="to-game-link"> \
                           <div class="media align-items-center"> \
                             <div class="media-body"> \
                               <span class="name mb-0 text-sm"> \
@@ -531,7 +532,7 @@
                         <button type="submit" \
                                 name="game_id" \
                                 value="' + posStats[i]._id + '" \
-                                class="my-btn-link"> \
+                                class="to-game-link"> \
                           <div class="media align-items-center"> \
                             <div class="media-body"> \
                               <span class="name mb-0 text-sm"> \
@@ -552,7 +553,7 @@
                         <button type="submit" \
                                 name="game_id" \
                                 value="' + posStats[i]._id + '" \
-                                class="my-btn-link"> \
+                                class="to-game-link"> \
                           <div class="media align-items-center"> \
                             <div class="media-body"> \
                               <span class="name mb-0 text-sm"> \
@@ -572,7 +573,7 @@
                         <button type="submit" \
                                 name="game_id" \
                                 value="' + posStats[i]._id + '" \
-                                class="my-btn-link"> \
+                                class="to-game-link"> \
                           <div class="media align-items-center"> \
                             <div class="media-body"> \
                               <span class="name mb-0 text-sm"> \
@@ -593,7 +594,7 @@
                         <button type="submit" \
                                 name="game_id" \
                                 value="' + posStats[i]._id + '" \
-                                class="my-btn-link"> \
+                                class="to-game-link"> \
                           <div class="media align-items-center"> \
                             <div class="media-body"> \
                               <span id="resultsFor' + i + 'game" class="name mb-0 text-sm"> \
@@ -647,17 +648,16 @@
       for (var j = 1; j < posStats[i].playersNames.length; j++) { //TODO 1 pt difference implementation
         if (posStats[i].positions[0] - posStats[i].positions[j] > 0) {
           differencesSingleGame.push({
-            "message": "Defeat against " + posStats[i].playersNames[j] + " with " + -1*posStats[i].diff[j] +  " pts"
+            "message": "Defeat against " + posStats[i].playersNames[j] + " with " + -1 * posStats[i].diff[j] +
+              " pts"
           })
-        }
-        else if (posStats[i].positions[0] - posStats[i].positions[j] === 0){
+        } else if (posStats[i].positions[0] - posStats[i].positions[j] === 0) {
           differencesSingleGame.push({
             "message": "Tie against " + posStats[i].playersNames[j]
           })
-        }
-        else {
+        } else {
           differencesSingleGame.push({
-            "message": "Victory against " + posStats[i].playersNames[j] + " with " + posStats[i].diff[j] +  " pts"
+            "message": "Victory against " + posStats[i].playersNames[j] + " with " + posStats[i].diff[j] + " pts"
           })
         }
       }
@@ -691,6 +691,83 @@
 
   }
 
-  //TODO sorting the table of games 
-  //TODO sorting the table of opponents 
+  function sortOpponentsTable(category) {
+
+    var IsAscending = false;
+    var old_text = $("#opponents-" + category).text();
+
+    /* Find if old_text has the ascending or the descending symbol */
+    if (old_text.includes("↑", 0)) {
+      /* Cut the old_text last character */
+      old_text = old_text.slice(0, old_text.length - 1);
+      /* Set new text */
+      $("#opponents-" + category).text(old_text + "↓");
+      /* Set variable for sorting */
+      IsAscending = false;
+    } else {
+      old_text = old_text.slice(0, old_text.length - 1);
+      $("#opponents-" + category).text(old_text + "↑");
+      IsAscending = true;
+    }
+
+    /* Initialize column variable */
+    var columnToBeSorted;
+    switch (category) {
+      case 'wins':
+        columnToBeSorted = 0;
+        break;
+      case 'losses':
+        columnToBeSorted = 1;
+        break;
+      case 'ties':
+        columnToBeSorted = 2;
+        break;
+      default:
+        break;
+    }
+
+    /* Sort the table appropriately */
+    var table, rows, switching, i, x, y, shouldSwitch;
+    table = document.getElementById("opponents-table");
+    switching = true;
+    /*Make a loop that will continue until
+    no switching has been done:*/
+    while (switching) {
+      /* Start by saying: no switching is done: */
+      switching = false;
+      rows = table.rows;
+      /*Loop through all table rows (except the
+      first, which contains table headers):*/
+      for (i = 1; i < (rows.length - 1); i++) {
+        //start by saying there should be no switching:
+        shouldSwitch = false;
+        /*Get the two elements you want to compare,
+        one from current row and one from the next:*/
+        x = rows[i].getElementsByTagName("TD")[columnToBeSorted];
+        y = rows[i + 1].getElementsByTagName("TD")[columnToBeSorted];
+        //check if the two rows should switch place:
+        if (IsAscending) {
+          if (parseInt(x.textContent) < parseInt(y.textContent)) {
+            //if so, mark as a switch and break the loop:
+            shouldSwitch = true;
+            break;
+          }
+        } else {
+          if (parseInt(x.textContent) > parseInt(y.textContent)) {
+            //if so, mark as a switch and break the loop:
+            shouldSwitch = true;
+            break;
+          }
+        }
+      }
+      if (shouldSwitch) {
+        /*If a switch has been marked, make the switch
+        and mark that a switch has been done:*/
+        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+        switching = true;
+      }
+    }
+  }
+
+  //TODO sorting the table of games
 </script>
