@@ -283,12 +283,12 @@ router.route("/game/:gameId")
 router.route("/error-page")
   .get((req, res, next) => {
     if (req.isAuthenticated()) {
-      res.render("error_page", {
+      res.render("error", {
         loggedIn: req.isAuthenticated(),
         name: req.user.name
       });
     } else {
-      res.render("error_page", {
+      res.render("error", {
         loggedIn: req.isAuthenticated()
       });
     }
@@ -344,9 +344,7 @@ router.route("/friends")
         name: req.user.name
       });
     } else {
-      res.render("error_page", {
-        loggedIn: req.isAuthenticated()
-      });
+      res.redirect("error-page");
     }
   });
 
