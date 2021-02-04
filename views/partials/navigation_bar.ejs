@@ -1,98 +1,158 @@
-<nav class="navbar navbar-expand-lg navbar-dark">
+<nav class="navbar navbar-expand-lg navbar-dark show-mobile">
+  <!-- Mobile nav -->
+  <div class="d-flex justify-content-between">
+    <button class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+            style="margin:4px;">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <ul class="navbar-nav"
+        style="margin:4px;padding:4px;">
+      <li>
+        <i class="fas fa-user-circle fa-2x"
+           style="padding:2px;"></i>
+        <% if (loggedIn){ %>
+        <span class="text-sm  font-weight-bold"><%= name %></span>
+        <!--TODO Alignment-->
+        <% }else{ %>
+        <span class="text-sm  font-weight-bold">Username</span>
+        <% } %>
+      </li>
+    </ul>
+  </div>
 
-  <a class="navbar-brand"
-     href="/">
-    <img src="/assets/Letter.png"
-         width="30"
-         height="30"
-         class="d-inline-block align-top"
-         alt="Img">
-  </a>
-
-  <button class="navbar-toggler"
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon mr-auto"></span>
-  </button>
   <div class="collapse navbar-collapse"
        id="navbarSupportedContent">
-    <ul class="navbar-nav">
+
+    <a class="navbar-brand"
+       href="/">
+      <img src="/assets/Letter.png"
+           width="30"
+           height="30"
+           class="d-inline-block align-top"
+           alt="Img">
+    </a>
+
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
       <% if (!loggedIn){ %>
-      <li class="nav-item active">
+      <li class="nav-item">
         <a class="nav-link font-weight-bold"
            href="/">Home <span class="sr-only">(current)</span></a>
       </li>
       <% }else{ %>
-      <li class="nav-item active">
+      <li class="nav-item">
         <a class="nav-link font-weight-bold"
            href="/games">My Games <span class="sr-only">(current)</span></a>
       </li>
-      <li class="nav-item active">
+      <li class="nav-item">
         <a class="nav-link font-weight-bold"
            href="/friends">My Friends <span class="sr-only">(current)</span></a>
       </li>
-      <li class="nav-item active">
+      <li class="nav-item">
         <a class="nav-link font-weight-bold"
            href="/new-game">Add a game <span class="sr-only">(current)</span></a>
       </li>
-      <li class="nav-item active">
+      <li class="nav-item">
         <a class="nav-link font-weight-bold"
            href="/settings">Settings <span class="sr-only">(current)</span></a>
       </li>
-      <li class="nav-item active">
+      <li class="nav-item">
         <a class="nav-link font-weight-bold"
-           href="/log-out">Log Out <span class="sr-only">(current)</span></a> 
+           href="/log-out">Log Out <span class="sr-only">(current)</span></a>
       </li>
       <% } %>
-      <!-- <li class="nav-item active">
-        <a class="nav-link font-weight-bold"
-           href="/scrabble-statistics">Scrabble Statistics <span class="sr-only">(current)</span></a>
-      </li> -->
-      <!-- <li class="nav-item active">
-        <a class="nav-link font-weight-bold"
-           href="/log-in">Log In <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item active">
-        <a class="nav-link font-weight-bold"
-           href="/register">Register <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item active">
-        <a class="nav-link font-weight-bold"
-           href="/new-game">Create a new game!<span class="sr-only">(current)</span></a>
-      </li> -->
     </ul>
   </div>
-  <ul class="navbar-nav align-items-center  ml-auto ml-md-0 ">
-    <li>
-      <!--TODO mobile view is not correct; bell must appear next to profile icon -->
-      <!-- <a class="nav-link pr-0"
-         href="#"
-         role="button"
-         data-toggle="dropdown"
-         aria-haspopup="true"
-         aria-expanded="false"> -->
-        <div class="media align-items-center">
-          <i class="fas fa-bell"></i> <!-- TODO implement notification system -->
-        </div>
-      <!-- </a> -->
-    </li>
-    <li>
-      <div class="media align-items-center">
-        <i class="fas fa-user-circle fa-2x"></i>
-        <div class="media-body  ml-2  d-none d-lg-block">
-          <% if (loggedIn){ %>
-          <span class="mb-0 text-sm  font-weight-bold"><%= name %></span>
-          <% }else{ %>
-          <span class="mb-0 text-sm  font-weight-bold">Username</span>
-          <% } %>
-        </div>
-      </div>
-    </li>
-  </ul>
+
+</nav>
 
 
+<nav class="navbar navbar-expand-lg navbar-dark hide-mobile">
+  <div class="container-fluid">
+    <a class="navbar-brand"
+       href="/">
+      <img src="/assets/Letter.png"
+           width="30"
+           height="30"
+           class="d-inline-block align-top"
+           alt="Img">
+    </a>
+
+    <div class="navbar-collapse">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <% if (!loggedIn){ %>
+        <li class="nav-item active">
+          <a class="nav-link font-weight-bold"
+             href="/">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <% }else{ %>
+        <li class="nav-item active">
+          <a class="nav-link font-weight-bold"
+             href="/games">My Games <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link font-weight-bold"
+             href="/friends">My Friends <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link font-weight-bold"
+             href="/new-game">Add a game <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link font-weight-bold"
+             href="/settings">Settings <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link font-weight-bold"
+             href="/log-out">Log Out <span class="sr-only">(current)</span></a>
+        </li>
+        <% } %>
+        <!-- <li class="nav-item active">
+          <a class="nav-link font-weight-bold"
+             href="/scrabble-statistics">Scrabble Statistics <span class="sr-only">(current)</span></a>
+        </li> -->
+        <!-- <li class="nav-item active">
+          <a class="nav-link font-weight-bold"
+             href="/log-in">Log In <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link font-weight-bold"
+             href="/register">Register <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link font-weight-bold"
+             href="/new-game">Create a new game!<span class="sr-only">(current)</span></a>
+        </li> -->
+      </ul>
+    </div>
+    <ul class="navbar-nav align-items-center mr-auto mr-md-0 ">
+      <li>
+        <!--TODO mobile view is not correct; bell must appear next to profile icon -->
+        <!-- <a class="nav-link pr-0"
+           href="#"
+           role="button"
+           data-toggle="dropdown"
+           aria-haspopup="true"
+           aria-expanded="false"> -->
+        <!-- <div class="media align-items-center">
+        <i class="fas fa-bell"></i> TODO implement notification system -->
+        <!-- </div> -->
+        <!-- </a> -->
+      </li>
+      <li>
+          <i class="fas fa-user-circle fa-2x"></i>
+            <% if (loggedIn){ %>
+            <span class="mb-0 text-sm  font-weight-bold"><%= name %></span>
+            <% }else{ %>
+            <span class="mb-0 text-sm  font-weight-bold">Username</span>
+            <% } %>
+      </li>
+    </ul>
+
+  </div>
 </nav>

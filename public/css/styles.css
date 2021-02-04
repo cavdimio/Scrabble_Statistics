@@ -76,17 +76,40 @@ td a {
 
 /*-------- Friends section start -----------*/
 #friends-table tr td {
-  padding-top: 10px; 
-  padding-bottom:10px
+  padding-top: 10px;
+  padding-bottom: 10px
 }
 
 #friends-table tr td.text-center {
-  padding-top: 15px; 
+  padding-top: 15px;
   padding-bottom: 15px;
-} 
+}
+
 /*-------- Friends section end -----------*/
 
 /*-------- Navbar section start -----------*/
+
+@media only screen and (max-device-width: 480px) {
+  .show-mobile {
+    display: block;
+  }
+
+  .hide-mobile {
+    display: none;
+  }
+}
+
+@media only screen and (min-device-width: 481px) {
+  .show-mobile {
+    display: none;
+  }
+
+  .hide-mobile {
+    display: block;
+  }
+}
+
+
 .navbar {
   padding-top: 0;
   padding-bottom: 0;
@@ -111,14 +134,130 @@ td a {
   color: inherit;
 }
 
+
+/* Smartphones (portrait and landscape) ----------- */
+@media only screen 
+and (min-device-width : 320px) 
+and (max-device-width : 480px) {
+  .show-mobile {
+    display: block;
+  }
+
+  .hide-mobile {
+    display: none;
+  }
+}
+
+/* Smartphones (landscape) ----------- */
+@media only screen 
+and (min-width : 321px) {
+  .show-mobile {
+    display: block;
+  }
+
+  .hide-mobile {
+    display: none;
+  }
+}
+
+/* Smartphones (portrait) ----------- */
+@media only screen 
+and (max-width : 320px) {
+  .show-mobile {
+    display: block;
+  }
+
+  .hide-mobile {
+    display: none;
+  }
+}
+
+/* iPads (portrait and landscape) ----------- */
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px) {
+  .show-mobile {
+    display: block;
+  }
+
+  .hide-mobile {
+    display: none;
+  }
+}
+
+/* iPads (landscape) ----------- */
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px) 
+and (orientation : landscape) {
+  .show-mobile {
+    display: block;
+  }
+
+  .hide-mobile {
+    display: none;
+  }
+}
+
+/* iPads (portrait) ----------- */
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px) 
+and (orientation : portrait) {
+  .show-mobile {
+    display: block;
+  }
+
+  .hide-mobile {
+    display: none;
+  }
+}
+
+/* Desktops and laptops ----------- */
+@media only screen 
+and (min-width : 992px) {
+.show-mobile {
+  display: none;
+}
+
+.hide-mobile {
+  display: block;
+}
+}
+
+/* Large screens ----------- */
+@media only screen 
+and (min-width : 1824px) {
+.show-mobile {
+  display: none;
+}
+
+.hide-mobile {
+  display: block;
+}
+}
+
+/* iPhone 4 ----------- */
+@media
+only screen and (-webkit-min-device-pixel-ratio : 1.5),
+only screen and (min-device-pixel-ratio : 1.5) {
+  .show-mobile {
+    display: block;
+  }
+
+  .hide-mobile {
+    display: none;
+  }
+}
+
 /*-------- Navbar section end -----------*/
 
-/* ------- games section start ----------*/ 
-#opponents-table .opponents:hover{
+/* ------- games section start ----------*/
+#opponents-table .opponents:hover {
   cursor: pointer;
   background-color: #a4addf;
   color: white;
-} 
+}
 
 .to-game-link {
   border: none;
