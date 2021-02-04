@@ -1,10 +1,10 @@
-<%- include('header'); -%>
+<%- include('partials/header'); -%>
 
 <!-- Main content -->
 <div class="main-content"
      id="panel">
     <!-- Navigation bar-->
-    <%- include('navigation_bar'); -%>
+    <%- include('partials/navigation_bar'); -%>
   <!-- Header -->
   <div class="header bg-primary pb-6"
        style="min-height: 500px; background-image: url(../assets/hannah-rodrigo-mf_3yZnC6ug-unsplash.jpg); background-size: cover; background-position: center top;">
@@ -20,7 +20,7 @@
           <div class="col-lg-6 col-7">
             <a href="/games"
              class="btn btn-neutral">Go back to my games</a>
-             <a href="/games" 
+             <a href="/error-page" 
              class="btn btn-neutral">Edit game</a> <!--TODO edit game functionality -->
           </div>
         </div>
@@ -31,7 +31,7 @@
           </div> -->
           <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
             <!-- Card stats -->
-            <%- include('card_stats'); -%>
+            <%- include('partials/card_stats'); -%>
           </div>
         </div>
 
@@ -98,8 +98,8 @@
 </div>
 
 <!-- Footer -->
-<%- include('footer'); -%>
-<%- include('end_file'); -%>
+<%- include('partials/footer'); -%>
+<%- include('partials/end_file'); -%>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
 

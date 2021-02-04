@@ -229,7 +229,7 @@ router.route("/game/:gameId")
             const gameStats = statisticsCalculations.findGameStats(currentGame);
             const sumScoresPerRound = statisticsCalculations.findSumScoresPerRoundSingleGame(currentGame);
             /* Go to game page */
-            res.render("partials/single-game-stats", {
+            res.render("game_statistics", {
               loggedIn: req.isAuthenticated(),
               userID: req.user._id,
               name: req.user.name,
@@ -259,7 +259,7 @@ router.route("/game/:gameId")
                     const gameStats = statisticsCalculations.findGameStats(currentGame);
                     const sumScoresPerRound = statisticsCalculations.findSumScoresPerRoundSingleGame(currentGame);
                     /* Go to game page */
-                    res.render("partials/single-game-stats", {
+                    res.render("game_statistics", {
                       loggedIn: req.isAuthenticated(),
                       userID: req.user._id,
                       name: req.user.name,
