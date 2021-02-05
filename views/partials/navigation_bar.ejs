@@ -14,14 +14,20 @@
     <ul class="navbar-nav"
         style="margin:4px;padding:4px;">
       <li>
-        <i class="fas fa-user-circle fa-2x"
-           style="padding:2px;"></i>
-        <% if (loggedIn){ %>
-        <span class="text-sm  font-weight-bold"><%= name %></span>
-        <!--TODO Alignment-->
-        <% }else{ %>
-        <span class="text-sm  font-weight-bold">Username</span>
-        <% } %>
+        <a class="nav-link pr-0"
+           href="\games"
+           role="button">
+          <div class="media align-items-center">
+            <i class="fas fa-user-circle fa-2x"></i>
+            <div class="media-body  ml-2  d-none d-lg-block">
+              <% if (loggedIn){ %>
+              <span class="mb-0 text-sm  font-weight-bold"><%= name %></span>
+              <% }else{ %>
+              <span class="mb-0 text-sm  font-weight-bold">Username</span>
+              <% } %>
+            </div>
+          </div>
+        </a>
       </li>
     </ul>
   </div>
@@ -112,22 +118,6 @@
              href="/log-out">Log Out <span class="sr-only">(current)</span></a>
         </li>
         <% } %>
-        <!-- <li class="nav-item active">
-          <a class="nav-link font-weight-bold"
-             href="/scrabble-statistics">Scrabble Statistics <span class="sr-only">(current)</span></a>
-        </li> -->
-        <!-- <li class="nav-item active">
-          <a class="nav-link font-weight-bold"
-             href="/log-in">Log In <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item active">
-          <a class="nav-link font-weight-bold"
-             href="/register">Register <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item active">
-          <a class="nav-link font-weight-bold"
-             href="/new-game">Create a new game!<span class="sr-only">(current)</span></a>
-        </li> -->
       </ul>
     </div>
     <ul class="navbar-nav align-items-center mr-auto mr-md-0 ">
@@ -145,12 +135,20 @@
         <!-- </a> -->
       </li>
       <li>
-          <i class="fas fa-user-circle fa-2x"></i>
-            <% if (loggedIn){ %>
-            <span class="mb-0 text-sm  font-weight-bold"><%= name %></span>
-            <% }else{ %>
-            <span class="mb-0 text-sm  font-weight-bold">Username</span>
-            <% } %>
+        <a class="nav-link pr-0"
+           href="\games"
+           role="button">
+          <div class="media align-items-center">
+            <i class="fas fa-user-circle fa-2x"></i>
+            <div class="media-body  ml-2  d-none d-lg-block">
+              <% if (loggedIn){ %>
+              <span class="mb-0 text-sm  font-weight-bold"><%= name %></span>
+              <% }else{ %>
+              <span class="mb-0 text-sm  font-weight-bold">Username</span>
+              <% } %>
+            </div>
+          </div>
+        </a>
       </li>
     </ul>
 
