@@ -3,6 +3,7 @@ const gameSchema = require("./gameSchema");
 
 const userSchema = new mongoose.Schema({
     username: { type: String /*, /* required: true, unique: true  */ },
+    email: String,
     hash: String,
     name:  String,
     insertedGames: [ gameSchema ],

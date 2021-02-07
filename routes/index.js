@@ -21,65 +21,85 @@ require('dotenv').config();
  */
 router.route("/")
   .get((req, res, next) => {
+
     if (req.isAuthenticated()) {
       res.render("home", {
         loggedIn: req.isAuthenticated(),
         name: req.user.name
       });
     } else {
-      res.render("home", {
-        loggedIn: req.isAuthenticated(),
-      });
+      res.render("home");
     }
   });
 
 router.route("/register")
-  .post((req, res, next) => {
-    //TODO check if user is already signed-up 
-    //TODO check if username already used 
-    const saltRounds = parseInt(process.env.SALT_ROUNDS);
-    /* Password encryption */
-    //TODO convert all users in order to use bcrypt 
-    bcrypt.hash(req.body.password, saltRounds, function (err, hash) {
-      if (err) {
-        console.log(err);
-        res.redirect("error-page");
-      } else {
-        /* Create user */
-        const newUser = new User({
-          username: req.body.username,
-          name: req.body.name,
-          hash: hash,
-          friends: [],
-          dummyNames: [],
-          insertedGames: [],
-        });
+  .post(async function (req, res, next) {
+    //TODO check if user is already signed-up
 
-        /* Save new user to the database */
-        newUser.save(function (err) {
-          if (err) {
-            console.log(err);
-            res.redirect("error-page"); //TODO more explainatory error message 
-          } else {
-            /* Find new user by username //TODO Change by email */ //TODO Use Lodash: capitalize or small letters must become irrelevant 
-            User.findOne({
-              username: req.body.username
-            }, (err, foundUser) => {
-              if (err) {
-                console.log(err);
-                res.redirect("error-page"); //TODO more explainatory error message 
-              } else {
-                /* Go to profile page */
-                passport.authenticate('local')(req, res, function () {
-                  res.redirect('/games');
-                });
-              }
-            });
-          }
-        });
-      }
-    });
 
+    /* Check if username already used */
+    try {
+      var foundUser = await User.findOne({
+        username: req.body.username
+      });
+    } catch {
+      /* Error during searching for username */
+      console.log("During searching an error oqquered");
+      res.redirect("error-page"); //TODO more explainatory error message 
+    }
+
+    /* Username is not being used, procceed with creating a new user */
+    if (foundUser === null) {
+      const saltRounds = parseInt(process.env.SALT_ROUNDS);
+      /* Password encryption */
+      //TODO convert all users in order to use bcrypt 
+      bcrypt.hash(req.body.password, saltRounds, function (err, hash) {
+        if (err) {
+          console.log(err);
+          res.redirect("error-page");
+        } else {
+          /* Create user */
+          const newUser = new User({
+            username: req.body.username,
+            name: req.body.name,
+            hash: hash,
+            friends: [],
+            dummyNames: [],
+            insertedGames: [],
+          });
+
+          /* Save new user to the database */
+          newUser.save(function (err) {
+            if (err) {
+              console.log(err);
+              res.redirect("error-page"); //TODO more explainatory error message 
+            } else {
+              /* Find new user by username //TODO Change by email */ //TODO Use Lodash: capitalize or small letters must become irrelevant 
+              User.findOne({
+                username: req.body.username
+              }, (err, foundUser) => {
+                if (err) {
+                  console.log(err);
+                  res.redirect("error-page"); //TODO more explainatory error message 
+                } else {
+                  /* Go to profile page */
+                  passport.authenticate('local')(req, res, function () {
+                    res.redirect('/games');
+                  });
+                }
+              });
+            }
+          });
+        }
+      });
+    } else {
+      /* Username already being used so redirect to home-page with error message */
+      res.render("home", {
+        error_message : "The chosen username is already being used" //TODO register appears in the url in case of reused username
+      });
+      
+      //TODO Handling of message
+    }
     //TODO Remember me functionality? 
     //TODO 3rd party authentication?
   });
@@ -104,9 +124,7 @@ router.route("/new-game")
         name: req.user.name
       });
     } else {
-      res.render("new_game", {
-        loggedIn: req.isAuthenticated(),
-      });
+      res.render("new_game");
     }
   })
   .post((req, res, next) => {
@@ -186,7 +204,7 @@ router.route("/games")
   .get((req, res, next) => {
     if (req.isAuthenticated()) {
       /* Find friends */
-      User.find()
+      User.find()  //TODO better implementation
         .where("_id")
         .in(req.user.friends)
         .exec(function (err, friends) {
@@ -288,9 +306,7 @@ router.route("/error-page")
         name: req.user.name
       });
     } else {
-      res.render("error", {
-        loggedIn: req.isAuthenticated()
-      });
+      res.render("error");
     }
   });
 
@@ -357,15 +373,13 @@ router.route("/settings")
         username: req.user.username
       });
     } else {
-      res.render("settings", {
-        loggedIn: req.isAuthenticated(),
-      });
+      res.render("settings");
     }
   })
   .post((req, res, next) => {
     //TODO change of name, username or password 
     console.log("I am here");
-    res.redirect("games");
-;  });
+    res.redirect("games");;
+  });
 
 module.exports = router;

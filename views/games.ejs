@@ -207,14 +207,19 @@
                 id="general-table-title">Your Games, <%= name %></h3>
           </div>
           <!-- Light table -->
-          <div class="table-responsive">
-            <table class="table align-items-center table-flush">
+          <div class="table-responsive"> <!--TODO games table mobile-friendly -->
+            <table id="games-table"
+                   class="table align-items-center table-flush">
               <thead class="thead-light">
                 <tr>
-                  <th>Your <br>Score</th>
+                  <th id="games-scores"
+                      class="games"
+                      onclick="sortGamesTable('scores')">Your Score &darr;</th>
                   <th>Opponents</th>
-                  <th>Winner</th>
-                  <th>Your <br>Position</th>
+                  <th> Winner</th>
+                  <th id="games-position"
+                  class="games"
+                  onclick="sortGamesTable('position')" >Your Position &darr;</th>
                   <th>Differences</th>
                   <th>Result</th>
                 </tr>
@@ -769,5 +774,79 @@
     }
   }
 
-  //TODO sorting the table of games
+  //TODO sorting the table of games for non-arithmetical categories
+  function sortGamesTable(category) {
+
+    var IsAscending = false;
+    var old_text = $("#games-" + category).text();
+
+    /* Find if old_text has the ascending or the descending symbol */
+    if (old_text.includes("↑", 0)) {
+      /* Cut the old_text last character */
+      old_text = old_text.slice(0, old_text.length - 1);
+      /* Set new text */
+      $("#games-" + category).text(old_text + "↓");
+      /* Set variable for sorting */
+      IsAscending = false;
+    } else {
+      old_text = old_text.slice(0, old_text.length - 1);
+      $("#games-" + category).text(old_text + "↑");
+      IsAscending = true;
+    }
+
+    /* Initialize column variable */
+    var columnToBeSorted;
+    switch (category) {
+      case 'scores':
+        columnToBeSorted = 0;
+        break;
+      case 'position':
+        columnToBeSorted = 3;
+        break;
+      default:
+        break;
+    }
+
+    /* Sort the table appropriately */
+    var table, rows, switching, i, x, y, shouldSwitch;
+    table = document.getElementById("games-table");
+    switching = true;
+    /*Make a loop that will continue until
+    no switching has been done:*/
+    while (switching) {
+      /* Start by saying: no switching is done: */
+      switching = false;
+      rows = table.rows;
+      /*Loop through all table rows (except the
+      first, which contains table headers):*/
+      for (i = 1; i < (rows.length - 1); i++) {
+        //start by saying there should be no switching:
+        shouldSwitch = false;
+        /*Get the two elements you want to compare,
+        one from current row and one from the next:*/
+        x = rows[i].getElementsByTagName("TD")[columnToBeSorted];
+        y = rows[i + 1].getElementsByTagName("TD")[columnToBeSorted];
+        //check if the two rows should switch place:
+        if (IsAscending) {
+          if (parseInt(x.textContent) < parseInt(y.textContent)) {
+            //if so, mark as a switch and break the loop:
+            shouldSwitch = true;
+            break;
+          }
+        } else {
+          if (parseInt(x.textContent) > parseInt(y.textContent)) {
+            //if so, mark as a switch and break the loop:
+            shouldSwitch = true;
+            break;
+          }
+        }
+      }
+      if (shouldSwitch) {
+        /*If a switch has been marked, make the switch
+        and mark that a switch has been done:*/
+        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+        switching = true;
+      }
+    }
+  }
 </script>
