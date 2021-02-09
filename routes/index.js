@@ -62,6 +62,7 @@ router.route("/register")
           const newUser = new User({
             username: req.body.username,
             name: req.body.name,
+            email: req.body.email,
             hash: hash,
             friends: [],
             dummyNames: [],
