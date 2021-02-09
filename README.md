@@ -1,11 +1,10 @@
-<!--  Headings -->
 # Scrabble game-saver
 
 ![Build Version](https://img.shields.io/badge/Build%20Version-v0.1alpha-red.svg?style=for-the-badge)
 
 This is a page to save your Scrabble scores and 
 enjoy various statistics of your Scrabble games.
-It is a project made purely for fun. Visit the current version [here](https://thawing-caverns-80697.herokuapp.com/)
+It is a project made purely for fun & it is still under construction. Visit the current version [here](https://thawing-caverns-80697.herokuapp.com/)
 
 ## Getting Started
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
