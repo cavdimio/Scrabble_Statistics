@@ -45,7 +45,7 @@ passport.use(new GoogleStrategy({
     //       return cb(err, user);
     //     });
     //   }
-    async function (accessToken, refreshToken, profile, done) {
+    async (accessToken, refreshToken, profile, done) => {
         //check user table for anyone with a facebook ID of profile.id
         try {
             var user = await User.findOne({

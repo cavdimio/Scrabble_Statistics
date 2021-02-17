@@ -33,7 +33,7 @@ router.route("/")
   });
 
 router.route("/register")
-  .post(async function (req, res, next) {
+  .post(async (req, res, next) => {
     //TODO check if user is already signed-up
 
 
@@ -225,7 +225,7 @@ router.route("/games")
           });
         });
     } else {
-      res.redirect("error-page");
+      res.status(401).redirect("error-page");
     }
   });
 
@@ -312,7 +312,7 @@ router.route("/error-page")
   });
 
 router.route("/find")
-  .post(async function (req, res, next) {
+  .post(async (req, res, next) => {
 
     //Search user by username 
     try {
